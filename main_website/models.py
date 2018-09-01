@@ -46,6 +46,8 @@ class Maintenance(models.Model):
     Maintenance_location = models.CharField(max_length=255)
     Maintenance_notes = models.TextField(blank=True, null=True)
 
+
+#TODO
 class Contact(models.Model):
     LANGUAGE_OPTIONS =(
         ('0', 'English'),
@@ -64,6 +66,7 @@ class Contact(models.Model):
     Maillist = models.BooleanField(default=False)
     Password = models.CharField(max_length=128)
     Membership_num = models.ForeignKey(Membership, on_delete=models.CASCADE)
+
 
 
 
