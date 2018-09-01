@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="itemDetails.css">
     <script type="text/javascript" src="itemDetails.js"></script>
 
@@ -87,23 +88,23 @@
             <div class="container">
               <div class="row">
                 <div class='col-lg-6'>
-                    <h6> From: </h6>
                     <div class="form-group">
-                        <div class='input-group date'>
+                      <label for="From"><b>From:</b></label>
+                        <div class='input-group date' id='datetimepicker1'>
                             <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                            <span class="input-group-append">
+                                <i class="far fa-calendar-alt"></i>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class='col-lg-6'>
-                  <h6> Until: </h6>
                     <div class="form-group">
-                        <div class='input-group date'>
+                      <label for="To"><b>To:</b></label>
+                        <div class='input-group date' id='datetimepicker2'>
                             <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                            <span class="input-group-append">
+                                <i class="far fa-calendar-alt"></i>
                             </span>
                         </div>
                     </div>
