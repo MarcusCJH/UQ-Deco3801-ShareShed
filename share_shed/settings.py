@@ -12,12 +12,16 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build  paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+
+#Stripe Settings
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLIC')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -80,7 +84,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST' : os.environ.get('DB_HOST'),
+        'HOST': os.environ.get('DB_HOST'),
     }
 }
 
