@@ -47,7 +47,7 @@ class Maintenance(models.Model):
     Maintenance_notes = models.TextField(blank=True, null=True)
 
 
-#TODO
+#TODO Incomplete enumeration on the documentation
 class Contact(models.Model):
     LANGUAGE_OPTIONS =(
         ('0', 'English'),
