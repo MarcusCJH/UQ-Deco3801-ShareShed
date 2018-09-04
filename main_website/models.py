@@ -26,6 +26,8 @@ class Maintenance(models.Model):
     Maintenance_location = models.CharField(max_length=255)
     Maintenance_notes = models.TextField(blank=True, null=True)
 
+
+#TODO Incomplete enumeration on the documentation
 class Contact(models.Model):
     LANGUAGE_OPTIONS =(
         ('0', 'English'),
