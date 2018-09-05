@@ -6,11 +6,19 @@
 </head>
 <body>
 <h2>Buy for $5.00</h2>
-<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key=""
-    data-description="A Django Charge"
-    data-amount="500"
-    data-locale="auto">
-</script>
+
+    <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key= '{{ stripe_key }}'
+    data-amount="999"
+    data-name="Demo Site"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-currency="aud">
+  </script>
+
+
+
 </body>
 </html>

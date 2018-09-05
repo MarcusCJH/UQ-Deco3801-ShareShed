@@ -17,11 +17,6 @@ def risyad(request, random_number):
     return HttpResponse("Hello, world. " + str(random_number))
 
 def paymenttest(request):
-    charge = stripe.Charge.create(
-      amount=2000,
-      currency="aud",
-      source="tok_mastercard", # obtained with Stripe.js
-      metadata={'order_id': '6735'}
-    )
-    print(charge)
-    return HttpResponse(charge)
+    context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
+    return render(request,'paymentsystest/test.html',context)
+
