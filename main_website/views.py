@@ -20,3 +20,6 @@ def paymenttest(request):
     context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
     return render(request,'paymentsystest/test.html',context)
 
+def subscriptiontest(request):
+    return render(request, 'paymentsystesttest2.html')
+
