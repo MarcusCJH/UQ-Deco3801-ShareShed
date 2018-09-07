@@ -11,13 +11,26 @@ class Member(models.Model):
         ('r', 'Regular'),
         ('l', 'Librarian'),
     )
-    membership = models.CharField(choices=membership_options, max_length=1, default='g')
-    start_time = models.DateTimeField('Start',default=datetime.datetime.now)
-    end_time = models.DateTimeField('End',default=datetime.datetime.now)
+    membership_type = models.CharField(choices=membership_options, max_length=1, default='g')
+    start_time = models.DateTimeField(blank=True,null=True)
+    end_time = models.DateTimeField(blank=True,null=True)
 
     @classmethod
     def get_new(cls):
         return cls.objects.create().id
+
+class Maintenance(models.Model):
+
+    MAINTENANCE_OPTIONS = (
+        ('0', 'Ok'),
+        ('1', 'At Repairer'),
+        ('2', 'With Staff Member'),
+    )
+    maintenance_id = models.AutoField(primary_key=True)
+    maintenance_status = models.CharField(choices=MAINTENANCE_OPTIONS, max_length=1)
+    maintenance_location = models.CharField(max_length=255)
+    maintenance_notes = models.TextField(blank=True, null=True)
+
 
 class User(models.Model):
     contact_id = models.AutoField(primary_key=True)
@@ -30,12 +43,13 @@ class User(models.Model):
         default=Member.get_new,
     )
     email = models.EmailField(unique=True)
-    subscriber = models.BooleanField(default=True)
-    telephone = models.CharField(max_length=15)
-    street = models.TextField(max_length=30)
-    city = models.CharField(max_length=30)
-    county = models.CharField(max_length=30)
+    maillist = models.BooleanField(default=True)
+    telephone_num = models.CharField(max_length=15)
+    address = models.TextField(max_length=30)
+    city = models.CharField(max_length=20)
+    county = models.CharField(max_length=50)
     postcode = models.CharField(max_length=4)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
     suburb = models.CharField(max_length=30)
+    password = models.CharField(max_length=100)
