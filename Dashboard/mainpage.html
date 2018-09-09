@@ -11,16 +11,17 @@
     <link rel="stylesheet" href="mainpage.css">
     <link rel="icon" href="../../../../favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <title>Dashboard</title>
   </head>
   <body>
     <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Share Shed</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
+          <a class="nav-link" href="#"><i class="fas fa-sign-out-alt navicon"></i>&nbsp;Sign out</a>
         </li>
       </ul>
     </nav>
@@ -38,6 +39,7 @@
                 Quick Add
               </button>
             </div>
+            <hr>
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link active" href="#">
@@ -75,37 +77,167 @@
                   Reports
                 </a>
               </li>
-              <br>
               <li class="nav-item">
+                <hr>
                 <a class="nav-link" href="#">
                   <i class="fas fa-sign-out-alt navicon"></i> &nbsp;
                   Sign Out
                 </a>
+                <hr>
               </li>
             </ul>
-
           </div>
         </nav>
-    <!--<div class="row">
-      <div class="col-md-2">
-        <div class="title">
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mb-3 border-bottom">
+            <h1 class="h4 align-botto">Dashboard</h1>
+            <div class="btn-toolbar mb-1 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
+                <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
+              </div>
+              <div class="dropdown mr-4">
+                <button class="btn btn-secondary dropdown-toggle pt-1 pb-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  This week
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">This Month</a>
+                  <a class="dropdown-item" href="#">This Year</a>
+                  <a class="dropdown-item" href="#">Overall</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0 fontb">
+                  <button class="btn btn-link fontb" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Latest Features and Updates &nbsp; <i class="fas fa-angle-down"></i>
+                  </button>
+                </h5>
+              </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body pl-4 pt-4">
+                <p>3/9/2018: This is some text within a card body.</p>
+                <p> 4/9/2018: This is some text within a card body.</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  </div>
+                  <div class="col-md-6">
+                    <a href="#" class="card-link float-right">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="nav">
-          <ul>
-            <li class="active"><a href="#"><i class="fa fa-home"></i><span class="hidden-xs hidden-sm">Dashboard</span></a></li>
-            <li><a href="#"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Member Site</span></a></li>
-            <li>Loans</li>
-            <li>Items</li>
-            <li>Contacts/Members</li>
-            <li>Reports</li>
-          </ul>
-        </div>
+
+          <br>
+          <div class="card-deck">
+            <div class="card">
+              <div class="card-body pt-3 pb-1">
+                <div class="row">
+                  <div class="col-md-4">
+                    <i class="fas fa-shopping-basket fa-3x"></i>
+                  </div>
+                  <div class="col-md-8">
+                    PENDING
+                    <h5 class="pt-1"> 0 </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer pt-1 pb-1">
+                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body pt-3 pb-1">
+                <div class="row">
+                  <div class="col-md-4">
+                    <i class="fas fa-shopping-basket fa-3x"></i>
+                  </div>
+                  <div class="col-md-8">
+                    ON LOAN
+                    <h5 class="pt-1"> 0 </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer pt-1 pb-1">
+                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body pt-3 pb-1">
+                <div class="row">
+                  <div class="col-md-4">
+                    <i class="fas fa-shopping-basket fa-3x"></i>
+                  </div>
+                  <div class="col-md-8">
+                    OVERDUE
+                    <h5 class="pt-1"> 0 </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer pt-1 pb-1">
+                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body pt-3 pb-1">
+                <div class="row">
+                  <div class="col-md-4">
+                    <i class="fas fa-shopping-basket fa-3x"></i>
+                  </div>
+                  <div class="col-md-8">
+                    RESERVATIONS
+                    <h5 class="pt-1"> 0 </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer pt-1 pb-1">
+                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-deck mt-4">
+            <div class="card pb-0">
+              <div class="card-body">
+                <h5 class="card-title text-muted">New Members</h5>
+                <canvas id="newMembers"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-muted">Total Memberships</h5>
+
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-muted">Loans per Month</h5>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
-    </div>-->
+    </div>
+
 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="mainpage.js"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
