@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.contrib.auth.models import AbstractUser
 import datetime
 
 # Create your models here.
@@ -32,17 +33,12 @@ class Maintenance(models.Model):
     maintenance_notes = models.TextField(blank=True, null=True)
 
 
-class User(models.Model):
-    contact_id = models.AutoField(primary_key=True)
-    added_on = models.DateTimeField(auto_now_add=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+class User(AbstractUser):
     membership = models.OneToOneField(
         Member,
         on_delete=models.CASCADE,
         default=Member.get_new,
     )
-    email = models.EmailField(unique=True)
     maillist = models.BooleanField(default=True)
     telephone_num = models.CharField(max_length=15)
     address = models.TextField(max_length=30)
@@ -52,4 +48,6 @@ class User(models.Model):
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
     suburb = models.CharField(max_length=30)
-    password = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.email
