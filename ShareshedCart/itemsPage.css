@@ -1,0 +1,24 @@
+.media-left {
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.left-column
+{
+    text-align: left;
+}
+
+.alignRight {
+  white-space: nowrap ;
+  text-align: right;
+}
+
+.topMargin{
+  margin-top: 5px;
+}
+
+.filter{
+  background-color: #d3d3d3;
+}
