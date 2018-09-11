@@ -20,7 +20,7 @@ class Product(models.Model):
     keywords = models.CharField(max_length=128)
     type = models.ForeignKey('ProductType',
         null=True, on_delete=models.SET_NULL)
-    tags = models.ForeignKey('ProductTags',
+    tags = models.ForeignKey('ProductTag',
         null=True, on_delete=models.SET_NULL)
     location = models.ForeignKey('ProductLocation',
         null=True, on_delete=models.SET_NULL)
@@ -48,7 +48,7 @@ class ProductType(models.Model):
         return str(self.type_name)
 
 
-class ProductTags(models.Model):
+class ProductTag(models.Model):
     tag_name = models.CharField(max_length=32)
 
     def __str__(self):

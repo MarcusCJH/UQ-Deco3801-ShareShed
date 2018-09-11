@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage, ProductType, ProductTags, \
+from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart
 from django.utils.html import mark_safe
 
@@ -31,7 +31,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
     list_display = ('type_name',)
 
 
-class ProductTagsAdmin(admin.ModelAdmin):
+class ProductTagAdmin(admin.ModelAdmin):
     list_display = ('tag_name',)
 
 
@@ -50,7 +50,7 @@ class CartAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(ProductType, ProductTypeAdmin)
-admin.site.register(ProductTags, ProductTagsAdmin)
+admin.site.register(ProductTag, ProductTagAdmin)
 admin.site.register(ProductLocation, ProductLocationAdmin)
 admin.site.register(ProductCondition, ProductConditionAdmin)
 admin.site.register(Cart, CartAdmin)
