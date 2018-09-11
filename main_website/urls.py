@@ -6,5 +6,4 @@ urlpatterns = [
     path('testing/<int:random_number>', views.louis, name='dynamic_web'),
 
     path('paymenttest/', views.paymenttest, name='Payment Test'),
-    path('paymenttest/',views.subscriptiontest, name="Payment Test 2")
 ]
