@@ -1,6 +1,7 @@
 
 $(function() {
 $('input[name="datetimes"]').daterangepicker({
+  autoUpdateInput: false,
   isInvalidDate: function(date) {
     var dateRanges = [
                   { 'start': moment('2018-09-10'), 'end': moment('2018-09-15') },
@@ -12,18 +13,23 @@ $('input[name="datetimes"]').daterangepicker({
   },
     timePicker: true,
     timePickerIncrement: 30,
-    startDate: moment().startOf('hour'),
-    endDate: moment().startOf('hour').add(24, 'hour'),
     autoApply: true,
     maxSpan: {
         days: 7
     },
     locale: {
-      format: ' DD/MM/YY hh:mm A '
+      cancelLabel: 'Clear'
     },
     alwaysShowCalendars: true,
 }, function(start, end, label) {
   console.log('New date range selected: ' + start.format('DD-MM-YY') + ' to ' + end.format('DD-MM-YY') + ' (predefined range: ' + label + ')');
 },
 );
+$('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('  DD/MM/YY hh:mm A ') + ' - ' + picker.endDate.format(' DD/MM/YY hh:mm A'));
+  });
+
+  $('input[name="datetimes"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+  });
 });
