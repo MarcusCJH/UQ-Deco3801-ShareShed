@@ -37,8 +37,12 @@ def checkout(request):
                         "plan": "plan_DYkJBVyTAFAbx8",
                         "quantity": 1,
                     },
-                ]
+                ],
+                billing='send_invoice',
+                days_until_due=30,
             )
+
+
 
             messages.info(request, "Payment is successful")
         except stripe.error.CardError as ce:
