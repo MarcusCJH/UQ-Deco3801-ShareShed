@@ -27,8 +27,19 @@ def checkout(request):
                 amount=999,
                 currency="aud",
                 source=token,
-                description="The product charged to the user"
+                description="The product charged to the user",
             )
+
+            subscription = stripe.Subscription.create(
+                customer="cus_DaMnpxcZSGJY1y",
+                items=[
+                    {
+                        "plan": "plan_DYkJBVyTAFAbx8",
+                        "quantity": 1,
+                    },
+                ]
+            )
+
             messages.info(request, "Payment is successful")
         except stripe.error.CardError as ce:
             return False, ce
