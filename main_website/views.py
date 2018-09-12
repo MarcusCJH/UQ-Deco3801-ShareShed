@@ -28,19 +28,25 @@ def checkout(request):
                 currency="aud",
                 source=token,
                 description="The product charged to the user",
+                receipt_email=request.POST['stripeEmail'],
             )
 
-            subscription = stripe.Subscription.create(
-                customer="cus_DaMnpxcZSGJY1y",
-                items=[
-                    {
-                        "plan": "plan_DYkJBVyTAFAbx8",
-                        "quantity": 1,
-                    },
-                ],
-                billing='send_invoice',
-                days_until_due=30,
-            )
+            print(request.POST['stripeEmail'])
+            print(token)
+            print(charge)
+
+
+            #subscription = stripe.Subscription.create(
+            #    customer="cus_DaMnpxcZSGJY1y",
+            #    items=[
+            #        {
+            #            "plan": "plan_DYkJBVyTAFAbx8",
+            #            "quantity": 1,
+            #        },
+            #    ],
+            #    billing='send_invoice',
+            #   days_until_due=30,
+            #)
 
 
 
