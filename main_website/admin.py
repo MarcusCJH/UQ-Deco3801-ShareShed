@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
-    ProductLocation, ProductCondition, Cart
+    ProductLocation, ProductCondition, Cart, Lending
 from django.utils.html import mark_safe
 
 # Register your models here.
@@ -47,6 +47,11 @@ class CartAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'item')
 
 
+class LendingAdmin(admin.ModelAdmin):
+    list_display = ('productId', 'userId', 'startDate', 'endDate', 'productStatus')
+    list_editable = ('productStatus',)
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(ProductType, ProductTypeAdmin)
@@ -54,6 +59,7 @@ admin.site.register(ProductTag, ProductTagAdmin)
 admin.site.register(ProductLocation, ProductLocationAdmin)
 admin.site.register(ProductCondition, ProductConditionAdmin)
 admin.site.register(Cart, CartAdmin)
+admin.site.register(Lending, LendingAdmin)
 admin.site.site_header = "Share Shed Admin"
 admin.site.site_title = "Share Shed admin login"
 admin.site.index_title = "Hello"
