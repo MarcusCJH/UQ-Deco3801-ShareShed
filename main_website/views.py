@@ -24,7 +24,7 @@ def checkout(request):
         token = request.POST['stripeToken']
         try:
             charge = stripe.Charge.create(
-                amount=999,
+                amount=8000,
                 currency="aud",
                 source=token,
                 description="The product charged to the user",
