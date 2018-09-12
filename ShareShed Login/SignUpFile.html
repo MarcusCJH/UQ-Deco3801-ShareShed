@@ -3,19 +3,46 @@
 <head>
 	<title> Create An Account</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    button{
+    background-color:#84C3F3;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-size: 17px;
+  }
+  #wrap{
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  form {
+	padding:10px 50px;
+	border:1px solid blue;
+	border-radius:2 px;
+	background-color:#D7D7D7;
+	max-width: 100%;
+}
+  .formdiv{
+  	text-align: center;
+  }
+  input[type=text], input[type=password]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: Quicksand;
+  }
+  label{
+    font-size: 17px;
+    font-family: Quicksand;
+  }
+</style>
 </head>
 <body>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -23,10 +50,11 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 	<div class="container-fluid" id="">
-		<div class="row">
-			<div class = "col-xs-12 col-sm-4">
-			<form action="">
-				<h2>Create An Account</h2>
+		<div class="row" id="wrap">
+			<br>
+			<div class = "formdiv col-lg-9 col-sm-10 col-md-10 col-xs-12 col-md-offset-2">
+			<form action="" method="post">
+				<h2 style="font-family: 'Open Sans', sans-serif;"><b>Create An Account</b></h2><br>
 				<input id="firstname" name="firstname" placeholder="First Name" type="text">
 				<input id="lastname" name="lastname" placeholder="Last Name" type="text">
 				<input id="email" name="email" placeholder="Email Address" type="text">
@@ -40,7 +68,8 @@
 		        <input id="postcode" name="postcode" placeholder="Postcode" type="text"><br>
 		        <label> Choose a profile picture:</label>
 		        <input type="file" name="pic" accept="image/*">
- 				<input type="submit" value="Create An Account">
+		        <br>
+ 				<button type="submit" value="Create An Account">Create An Account</button>
 		    </form>
 		</div>
 		</div>
