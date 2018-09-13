@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
@@ -18,6 +18,8 @@ def louis(request, random_number):
 def risyad(request, random_number):
     return HttpResponse("Hello, world. " + str(random_number))
 
+
+
 @csrf_exempt
 def checkout(request):
     if request.method == "POST":
@@ -31,29 +33,14 @@ def checkout(request):
                 receipt_email=request.POST['stripeEmail'],
             )
 
-            print(request.POST['stripeEmail'])
-            print(token)
-            print(charge)
+            if charge.paid is True:
+                return redirect('success')
 
-
-            #subscription = stripe.Subscription.create(
-            #    customer="cus_DaMnpxcZSGJY1y",
-            #    items=[
-            #        {
-            #            "plan": "plan_DYkJBVyTAFAbx8",
-            #            "quantity": 1,
-            #        },
-            #    ],
-            #    billing='send_invoice',
-            #   days_until_due=30,
-            #)
-
-
-
-            messages.info(request, "Payment is successful")
         except stripe.error.CardError as ce:
             return False, ce
 
     context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
-    return render(request,'paymentsystest/test.html',context)
+    return render(request,'paymentsystest/index.html',context)
 
+def success(request):
+    return render(request, 'paymentsystest/success.html')
