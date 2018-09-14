@@ -8,13 +8,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="loans.css">
+    <link rel="stylesheet" href="payments.css">
     <link rel="icon" href="../../../../favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <title>Payment Reports</title>
   </head>
   <body>
@@ -164,7 +162,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -173,7 +171,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">3</th>
@@ -182,7 +180,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">4</th>
@@ -191,7 +189,7 @@
               <td>Payment</td>
               <td>Stripe</td>
               <td></td>
-              <td>10.00</td>
+              <td id="green">10.00</td>
             </tr>
             <tr>
               <th scope="row">5</th>
@@ -200,7 +198,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">6</th>
@@ -209,7 +207,7 @@
               <td>Payment</td>
               <td>Cash</td>
               <td>Check-in fee for Pasta Maker</td>
-              <td>6.00</td>
+              <td id="red">-6.00</td>
             </tr>
             <tr>
               <th scope="row">7</th>
@@ -218,7 +216,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">8</th>
@@ -227,7 +225,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">9</th>
@@ -236,7 +234,7 @@
               <td>Payment</td>
               <td>Stripe</td>
               <td>Late fees</td>
-              <td>2.00</td>
+              <td id="red">-2.00</td>
             </tr>
             <tr>
               <th scope="row">10</th>
@@ -245,7 +243,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">11</th>
@@ -254,7 +252,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">12</th>
@@ -263,7 +261,7 @@
               <td>Payment</td>
               <td>Cash</td>
               <td>Cash payment for Late fee</td>
-              <td>3.00</td>
+              <td id="red">-3.00</td>
             </tr>
             <tr>
               <th scope="row">13</th>
@@ -272,7 +270,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">14</th>
@@ -281,7 +279,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">15</th>
@@ -290,7 +288,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">16</th>
@@ -299,7 +297,7 @@
               <td>Payment</td>
               <td>Cash</td>
               <td>Added credit into account</td>
-              <td>6.00</td>
+              <td id="green">20.00</td>
             </tr>
             <tr>
               <th scope="row">17</th>
@@ -308,7 +306,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">18</th>
@@ -317,7 +315,7 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">19</th>
@@ -326,16 +324,16 @@
               <td>Loan</td>
               <td>-</td>
               <td></td>
-              <td>0.00</td>
+              <td id="red">-0.00</td>
             </tr>
             <tr>
               <th scope="row">19</th>
               <td>3 Feb 2018 09:42</td>
               <td>Jinny</td>
-              <td>Loan</td>
+              <td>Payment</td>
               <td>-</td>
-              <td></td>
-              <td>0.00</td>
+              <td>Returned check-in fee</td>
+              <td id="green">3.00</td>
             </tr>
           </tbody>
         </table>
@@ -349,7 +347,6 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="loans.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
