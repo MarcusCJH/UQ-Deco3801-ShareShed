@@ -67,4 +67,3 @@ def checkout(request):
 
 def success(request):
     return render(request, 'paymentsystest/success.html')
- 

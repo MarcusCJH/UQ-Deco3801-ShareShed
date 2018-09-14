@@ -5,6 +5,10 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.email }}!
+    <br>
+    You are currently a {{ user.membership.membership_type }}
+    <br>
+    From {{ user.membership.start_time }} to {{ user.membership.end_time }}
   <p><a href="{% url 'logout' %}">logout</a></p>
   <form action="{% url 'membership' %}" method="post">
     {% csrf_token %}
