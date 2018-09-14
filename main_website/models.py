@@ -97,3 +97,4 @@ class Member(models.Model):
     membership_type = models.CharField(choices=membership_options, max_length=1)
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
+

@@ -32,6 +32,21 @@ def SignUp(request):
 def membershipRenew(request):
     current_user = request.user
     if request.method == 'POST' :
+
+        #PAYMENT
+        token = request.POST['stripeToken']
+        try:
+            charge = stripe.Charge.create(
+                amount=8000,
+                currency="aud",
+                source=token,
+                description="The product charged to the user",
+                receipt_email=request.POST['stripeEmail'],
+            )
+
+        except stripe.error.CardError as ce:
+            return False, ce
+
         member = Member.objects.get(user_id=current_user.id)
         if member.start_time == None and member.end_time == None:
             member.membership_type = "m"
