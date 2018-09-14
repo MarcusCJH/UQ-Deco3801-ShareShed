@@ -80,5 +80,4 @@ def checkout(request):
     context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
     return render(request,'paymentsystest/index.html',context)
 
-def success(request):
-    return render(request, 'paymentsystest/success.html')
+
