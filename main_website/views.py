@@ -46,7 +46,7 @@ def membershipRenew(request):
 
         except stripe.error.CardError as ce:
             return False, ce
-
+        #ENDPAYMENT
         member = Member.objects.get(user_id=current_user.id)
         if member.start_time == None and member.end_time == None:
             member.membership_type = "m"
