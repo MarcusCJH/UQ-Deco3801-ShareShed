@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from dateutil.relativedelta import relativedelta
 import stripe
-import datetime
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -35,7 +35,7 @@ def membershipRenew(request):
         member = Member.objects.get(user_id=current_user.id)
         if member.start_time == None and member.end_time == None:
             member.membership_type = "m"
-            member.start_time = datetime.datetime.now()
+            member.start_time = timezone.now()
             member.end_time = member.start_time + relativedelta(years=1)
         elif (member.end_time):
             member.end_time = member.end_time + relativedelta(years=1)
