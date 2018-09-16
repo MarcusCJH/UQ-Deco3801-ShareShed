@@ -1,8 +1,9 @@
+
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
-from django.contrib import messages
+
 from django.contrib.auth import login, authenticate
 from dateutil.relativedelta import relativedelta
 import stripe
@@ -15,6 +16,7 @@ from .models import User, Member
 
 from .forms import UserCreationForm
 
+
 def SignUp(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -24,16 +26,21 @@ def SignUp(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
             login(request, user)
+
             return redirect('home')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
 def membershipRenew(request):
     current_user = request.user
-    if request.method == 'POST' :
-
-        #PAYMENT
+    if request.method == 'POST':
+        #TEST EMAIL HERE
+        #TODO: Seems like there's a problem sending email
+        send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,
+                  ['shareshed@risyad.cloud'], fail_silently=False)
+        # PAYMENT
         token = request.POST['stripeToken']
         try:
             charge = stripe.Charge.create(
@@ -44,17 +51,24 @@ def membershipRenew(request):
                 receipt_email=request.POST['stripeEmail'],
             )
 
+
         except stripe.error.CardError as ce:
             return False, ce
-        #ENDPAYMENT
+        # ENDPAYMENT
         member = Member.objects.get(user_id=current_user.id)
         if member.start_time == None and member.end_time == None:
             member.membership_type = "m"
             member.start_time = datetime.datetime.now()
             member.end_time = member.start_time + relativedelta(years=1)
+
+
         elif (member.end_time):
             member.end_time = member.end_time + relativedelta(years=1)
+
         member.save()
+
+
+
     return redirect('home')
 
 
@@ -78,6 +92,4 @@ def checkout(request):
             return False, ce
 
     context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
-    return render(request,'paymentsystest/index.html',context)
-
-
+    return render(request, 'paymentsystest/index.html', context)
