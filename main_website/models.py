@@ -98,3 +98,8 @@ class Member(models.Model):
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
 
+class Payment(models.Model):
+    id = models.IntegerField
+    user = models.ForeignKey('User', blank=True, null=True, on_delete=models.CASCADE)
+    stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
+    stripe_payment_date = models.DateTimeField(blank=True, null=True)
