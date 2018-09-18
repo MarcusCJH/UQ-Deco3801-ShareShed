@@ -38,8 +38,8 @@ def membershipRenew(request):
     if request.method == 'POST':
         #TEST EMAIL HERE
         #TODO: Seems like there's a problem sending email
-        send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,
-                  ['shareshed@risyad.cloud'], fail_silently=False)
+        #send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,
+        #          ['shareshed@risyad.cloud'], fail_silently=False)
         # PAYMENT
         token = request.POST['stripeToken']
         try:
