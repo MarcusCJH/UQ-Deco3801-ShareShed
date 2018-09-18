@@ -1,4 +1,4 @@
-
+import time
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-from .models import User, Member
+from .models import User, Member, Payment
 
 from .forms import UserCreationForm
 
@@ -35,7 +35,9 @@ def SignUp(request):
 
 def membershipRenew(request):
     current_user = request.user
+
     if request.method == 'POST':
+
         #TEST EMAIL HERE
         #TODO: Seems like there's a problem sending email
         #send_mail('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER,
@@ -54,6 +56,10 @@ def membershipRenew(request):
 
         except stripe.error.CardError as ce:
             return False, ce
+        else:
+            #If charge was successful
+            payment = Payment(user_id = current_user.id, stripe_payment_id=charge.id, stripe_payment_date=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(charge.created)))
+            payment.save()
         # ENDPAYMENT
         member = Member.objects.get(user_id=current_user.id)
         if member.start_time == None and member.end_time == None:
