@@ -27,7 +27,9 @@ class UserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('email', 'first_name', 'last_name', 'telephone_num', 'postcode', 'address', 'city', 'county', 'country', 'suburb', 'password1', 'password2')
+        fields = ('email', 'first_name', 'last_name', 'telephone_num',
+                  'postcode', 'address', 'city', 'county', 'country', 'suburb',
+                  'password1', 'password2')
 
 class UserChangeForm(UserChangeForm):
 

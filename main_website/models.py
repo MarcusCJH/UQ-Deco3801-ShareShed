@@ -91,13 +91,13 @@ class Member(models.Model):
     )
     membership_options = (
         ('g', 'Guest'),
-        ('r', 'Regular'),
+        ('m', 'Member'),
         ('l', 'Librarian'),
     )
     membership_type = models.CharField(choices=membership_options, max_length=1)
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
-    
+
 class Product(models.Model):
     name = models.CharField(max_length=128)
     long_description = models.TextField()
