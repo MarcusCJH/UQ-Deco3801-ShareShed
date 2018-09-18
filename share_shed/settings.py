@@ -12,12 +12,16 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build  paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+
+#Stripe Settings
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLIC')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -37,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main_website',
+    'main_website.apps.MainWebsiteConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +84,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST' : os.environ.get('DB_HOST'),
+        'HOST': os.environ.get('DB_HOST'),
     }
 }
 
@@ -109,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Australia/Brisbane'
 
 USE_I18N = True
 
@@ -124,3 +128,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+AUTH_USER_MODEL = 'main_website.User'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'

@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <h2>Buy for $5.00</h2>
+    <form action="" method="POST">
+        <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key= '{{ stripe_key }}'
+    data-amount="8000"
+    data-name="Share Shed"
+    data-description="Membership Subscription"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-currency="aud"
+    data-allow-remember-me="false">
+
+
+  </script>
+</form>
+
+
+
+
+
+  </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+</body>
+</html>
