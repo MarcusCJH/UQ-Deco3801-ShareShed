@@ -31,7 +31,9 @@
     {% if not is_popup %}
     <!-- Header -->
 
+
         {% block side-nav %}
+        {% if has_permission %}
         <div class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <div class="searchBar">
@@ -96,7 +98,8 @@
               </li>
             </ul>
           </div>
-      </div>
+        </div>
+        {% endif %}
         {% endblock %}
 
       <div class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow" id="header">
