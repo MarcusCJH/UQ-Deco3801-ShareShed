@@ -9,7 +9,6 @@ from dateutil.relativedelta import relativedelta
 import stripe
 import datetime
 from django.views.decorators.csrf import csrf_exempt
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 from .models import User, Member, Payment
@@ -58,7 +57,9 @@ def membershipRenew(request):
             return False, ce
         else:
             #If charge was successful
-            payment = Payment(user_id = current_user.id, stripe_payment_id=charge.id, stripe_payment_date=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(charge.created)))
+            #TODO: RuntimeWarning: DateTimeField  received a naive datetime _____ while time zone support is active. Not sure if this is an issue
+
+            payment = Payment(user_id = current_user.id, stripe_payment_id=charge.id, stripe_payment_date=datetime.datetime.fromtimestamp(charge.created).strftime('%Y-%m-%d %H:%M:%S'))
             payment.save()
         # ENDPAYMENT
         member = Member.objects.get(user_id=current_user.id)
