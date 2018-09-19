@@ -135,3 +135,36 @@ class Lending(models.Model):
         duration = self.startDate - self.endDate
         return str(duration)
 
+    def __str__(self):
+        name = self.productId.name
+        return str(name)
+
+class LendingHistory(models.Model):
+    productId = models.ForeignKey('Product', null=False, on_delete=models.PROTECT)
+    userId = models.ForeignKey(settings.AUTH_USER_MODEL,
+        null=False, on_delete=models.CASCADE)
+    startDate = models.DateField(validators=[validate_date])
+    endDate = models.DateField(validators=[validate_date])
+
+    productStatusChoices = (
+        ('ONLOAN', 'ON LOAN'),
+        ('RETURNTODAY','RETURN TODAY'),
+        ('RETURNLATE', 'RETURN LATE'),
+        ('RESERVED','RESERVED'),
+        ('COLLECTTODAY','COLLECT TODAY'),
+        ('COLLECTLATE','COLLECT LATE'),
+    )
+
+    productStatus = models.CharField(
+        max_length=12,
+        choices=productStatusChoices,
+        null=False,
+    )
+
+    def duration(self):
+        duration = self.startDate - self.endDate
+        return str(duration)
+
+    def __str__(self):
+        name = self.productId.name
+        return str(name)
