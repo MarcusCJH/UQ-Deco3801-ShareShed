@@ -11,7 +11,7 @@
 {% block content %}
 <div class="container-fluid" id="">
   <div class="row" id="wrap">
-    <div class = "formdiv col-lg-7 col-sm-10 col-md-10 col-xs-12 col-md-offset-2">
+    <div class = "formdiv col-lg-9 col-sm-10 col-md-10 col-xs-12 col-md-offset-2">
     <form method="post">
       <h2 style = "font-family: 'Open Sans', sans-serif;">Sign up</h2>
         {% csrf_token %}
@@ -27,7 +27,7 @@
             {% endfor %}
           </p>
         {% endfor %}
-        <button id="btn" type="submit">Sign up</button>
+        <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 22px; font-size: 17px;" type="submit">Sign up</button>
       </form>
     </div>
   </div>

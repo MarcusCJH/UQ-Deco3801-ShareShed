@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
 
 {% block title %}Login{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'loginSignUp/css/signup.css' %}"
+{% endblock %}
 
 {% block content %}
 <h2>Login</h2>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Login</button>
+  <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 30px; font-size: 20px;"type="submit">Login</button>
 </form>
 {% endblock %}
