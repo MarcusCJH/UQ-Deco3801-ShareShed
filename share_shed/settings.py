@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main_website.apps.MainWebsiteConfig',
-    'main_website',
     'widget_tweaks',
 ]
 
