@@ -6,8 +6,5 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^signup/$', views.SignUp , name='signup'),
-    path('index/', views.index, name='homepage'),
-    path('testing/<int:random_number>', views.louis, name='dynamic_web'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
