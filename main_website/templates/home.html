@@ -23,14 +23,61 @@
     data-description="Membership Subscription"
     data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
     data-locale="auto"
-    data-label="Pay Membership"
+    data-label="Pay 1 year Membership"
     data-currency="aud"
     data-allow-remember-me="false">
-
-
   </script>
     <!--<input type="submit" value="Add Membership" /> -->
   </form>
+
+     <form id="myForm" action="{% url 'topup' %}" method="POST">
+     {% csrf_token %}
+  <input type="text" id="amountInDollars" />
+  <input type="hidden" id="stripeToken" name="stripeToken" />
+  <input type="hidden" id="stripeEmail" name="stripeEmail" />
+  <input type="hidden" id="amountInCents" name="amountInCents" />
+
+
+     <input type="submit" id="customButton" value="Pay">
+</form>
+
+
+<script>
+            var handler = StripeCheckout.configure({
+              key: 'pk_test_juvZMCiyaZxZjw2nulcmFC02',
+              image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+              token: function(token) {
+                $("#stripeToken").val(token.id);
+                $("#stripeEmail").val(token.email);
+                $("#amountInCents").val(Math.floor($("#amountInDollars").val() * 100));
+                $("#myForm").submit();
+              }
+            });
+
+            $('#customButton').on('click', function(e) {
+              var amountInCents = Math.floor($("#amountInDollars").val() * 100);
+              var displayAmount = parseFloat(Math.floor($("#amountInDollars").val() * 100) / 100).toFixed(2);
+              // Open Checkout with further options
+              handler.open({
+                name: 'Demo Site',
+                description: 'Custom amount ($' + displayAmount + ')',
+                amount: amountInCents,
+              });
+              e.preventDefault();
+            });
+
+            // Close Checkout on page navigation
+            $(window).on('popstate', function() {
+              handler.close();
+            });
+</script>
+
+
+
+
+
+
+
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a> |
