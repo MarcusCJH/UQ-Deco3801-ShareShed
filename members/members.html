@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+      <link rel="icon" href="../../../../favicon.ico">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="members.css">
+    <script src="members.js"></script>
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Share Shed Admin</a>
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" href="#"><i class="fas fa-sign-out-alt navicon"></i>&nbsp;Sign out</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <div class="searchBar">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+          </div>
+          <div class="add">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"">
+              <i class="fas fa-plus"></i>
+              Quick Add
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Items</a>
+              <a class="dropdown-item" href="#">Members</a>
+              <a class="dropdown-item" href="#">Reports</a>
+            </div>
+          </div>
+          <hr>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <i class="fas fa-home navicon"></i> &nbsp;
+                Dashboard <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-desktop navicon"></i> &nbsp;
+                Member Site
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-shopping-basket navicon"></i> &nbsp;
+                Loans
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-box-open navicon"></i> &nbsp;
+                Items
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-users navicon"></i> &nbsp;
+                Contacts/Members
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-chart-line navicon"></i> &nbsp;
+                Reports
+              </a>
+            </li>
+            <li class="nav-item">
+              <hr>
+              <a class="nav-link" href="#">
+                <i class="fas fa-sign-out-alt navicon"></i> &nbsp;
+                Sign Out
+              </a>
+              <hr>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    <div class="button">
+        <button type="button" class="btn btn-primary active">Add Member</button>
+    </div>
+    <div class="entries">
+        <b>Show: </b><input type="number" id="myNumber"> <b>entries</b>
+    </div>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
+        <h1 class="h4">View Members</h1>
+        <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+          <div class="btn-group">
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
+          </div>
+        </div>
+      </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table id="mytable" class="table table-bordred table-striped">
+              <thead>
+
+                  <th><input type="checkbox" id="checkall" /></th>
+                  <th id="tableId">ID</th>
+                   <th>Full Name</th>
+                    <th>E-mail</th>
+                    <th>Tel No.</th>
+                     <th>Bal($)</th>
+                     <th></th>
+                  </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" class="checkthis" /></td>
+            <td>0001</td>
+            <td>Adam Wond</td>
+            <td>adam@example.com</td>
+            <td>045234679</td>
+            <td>0.00</td>
+            <td><a href="#">View</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="checkthis" /></td>
+              <td>0001</td>
+              <td>Adam Wond</td>
+              <td>adam@example.com</td>
+              <td>045234679</td>
+              <td>0.00</td>
+              <td><a href="#">View</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" class="checkthis" /></td>
+                <td>0001</td>
+                <td>Adam Wond</td>
+                <td>adam@example.com</td>
+                <td>045234679</td>
+                <td>0.00</td>
+                <td><a href="#">View</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="checkthis" /></td>
+                  <td>0001</td>
+                  <td>Adam Wond</td>
+                  <td>adam@example.com</td>
+                  <td>045234679</td>
+                  <td>0.00</td>
+                  <td><a href="#">View</td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" class="checkthis" /></td>
+                    <td>0001</td>
+                    <td>Adam Wond</td>
+                    <td>adam@example.com</td>
+                    <td>045234679</td>
+                    <td>0.00</td>
+                    <td><a href="#">View</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="checkthis" /></td>
+                      <td>0001</td>
+                      <td>Adam Wond</td>
+                      <td>adam@example.com</td>
+                      <td>045234679</td>
+                      <td>0.00</td>
+                      <td><a href="#">View</td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" class="checkthis" /></td>
+                        <td>0001</td>
+                        <td>Adam Wond</td>
+                        <td>adam@example.com</td>
+                        <td>045234679</td>
+                        <td>0.00</td>
+                        <td><a href="#">View</td>
+                        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  </div>
+</div>
+</main>
+</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+
+</html>
