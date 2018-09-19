@@ -76,25 +76,40 @@ def membershipRenew(request):
 
     return redirect('home')
 
-
 @csrf_exempt
-def checkout(request):
-    if request.method == "POST":
+def topupCredit(request):
+    current_user = request.user;
+    if request.method == 'POST':
+        # PAYMENT
         token = request.POST['stripeToken']
         try:
             charge = stripe.Charge.create(
-                amount=8000,
+                amount=request.POST['amountInCents'],
                 currency="aud",
                 source=token,
                 description="The product charged to the user",
                 receipt_email=request.POST['stripeEmail'],
             )
-
-            if charge.paid is True:
-                return redirect('success')
-
         except stripe.error.CardError as ce:
             return False, ce
+        else:
+            # If charge was successful
+            # TODO: RuntimeWarning: DateTimeField  received a naive datetime _____ while time zone support is active. Not sure if this is an issue
 
-    context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
-    return render(request, 'paymentsystest/index.html', context)
+            payment = Payment(user_id=current_user.id, stripe_payment_id=charge.id,
+                              stripe_payment_date=datetime.datetime.fromtimestamp(charge.created).strftime(
+                                  '%Y-%m-%d %H:%M:%S'), amount=(charge.amount / 100))
+            payment.save()
+
+            #Logic for payment balance
+            user = User.objects.get(id=current_user.id)
+            user.balance = user.balance + (charge.amount/100)
+            user.save()
+        # ENDPAYMENT
+    return redirect('home')
+
+
+
+    return redirect('home')
+
+
