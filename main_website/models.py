@@ -212,6 +212,7 @@ class Payment(models.Model):
     user = models.ForeignKey('User', blank=True, null=True, on_delete=models.CASCADE)
     stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
     stripe_payment_date = models.DateTimeField(blank=True, null=True)
+    amount = models.FloatField(blank=True, null=True)
 class Lending(models.Model):
     productId = models.ForeignKey('Product', null=False, on_delete=models.PROTECT)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,
