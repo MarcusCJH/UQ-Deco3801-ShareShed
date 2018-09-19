@@ -5,8 +5,9 @@ from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
-
-
+from .models import Product, ProductImage, ProductType, ProductTag, \
+    ProductLocation, ProductCondition, Cart
+from django.utils.html import mark_safe
 from .forms import UserCreationForm, UserChangeForm
 
 @admin.register(User)
