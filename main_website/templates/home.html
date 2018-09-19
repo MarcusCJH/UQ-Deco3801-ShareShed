@@ -6,7 +6,7 @@
 {% if user.is_authenticated %}
   Hi {{ user.email }}!
     <br>
-    You are currently a {{ user.membership.membership_type }}
+    You are currently a {{ user.membership.membership_type }} has a balance of {{ user.balance }}
     <br>
     From {{ user.membership.start_time }} to {{ user.membership.end_time }}
 
