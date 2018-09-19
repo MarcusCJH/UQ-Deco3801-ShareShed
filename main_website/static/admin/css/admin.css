@@ -6,6 +6,10 @@ body {
  * Sidebar
  */
 
+#welcome-user{
+    padding-right: 20px;
+}
+
 .sidebar {
   position: fixed;
   top: 0;

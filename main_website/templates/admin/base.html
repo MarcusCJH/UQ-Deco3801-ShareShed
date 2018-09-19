@@ -53,13 +53,13 @@
             <hr>
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="/admin/">
                   <i class="fas fa-home navicon"></i> &nbsp;
                   Dashboard <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ site_url }}">
                   <i class="fas fa-desktop navicon"></i> &nbsp;
                   Member Site
                 </a>
@@ -71,13 +71,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/main_website/product/">
                   <i class="fas fa-box-open navicon"></i> &nbsp;
                   Items
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/main_website/member/">
                   <i class="fas fa-users navicon"></i> &nbsp;
                   Contacts/Members
                 </a>
@@ -88,11 +88,19 @@
                   Reports
                 </a>
               </li>
+              {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/auth/group/">
+                  <i class="fas fa-address-card navicon"></i> &nbsp;
+                  Permissions
+                </a>
+              </li>
+              {% endif %}
               <li class="nav-item">
                 <hr>
-                <a class="nav-link" href="#">
-                  <i class="fas fa-sign-out-alt navicon"></i> &nbsp;
-                  Sign Out
+
+                <a href="{% url 'admin:logout' %}" class="nav-link">
+                  <i class="fas fa-sign-out-alt navicon"></i> {% trans 'Log out' %}
                 </a>
                 <hr>
               </li>
@@ -115,19 +123,9 @@
                 <strong>{% firstof user.get_short_name user.get_username %}</strong>
                 {% endblock %}
                 {% block userlinks %}
-                {% if site_url %}
-                <a href="{{ site_url }}">{% trans 'View site' %}</a> /
-                {% endif %}
-                {% if user.is_active and user.is_staff %}
-                {% url 'django-admindocs-docroot' as docsroot %}
-                {% if docsroot %}
-                <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
-                {% endif %}
-                {% endif %}
                 {% if user.has_usable_password %}
-                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+                / <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
                 {% endif %}
-                <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
                 {% endblock %}
             </div>
         </div>
