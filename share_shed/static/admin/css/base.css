@@ -835,7 +835,6 @@ table#change-history tbody th {
     align-items: center;
     padding: 10px 40px;
     overflow: hidden;
-    z-index: 100;
 }
 
 #header a:link, #header a:visited {
