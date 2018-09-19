@@ -36,48 +36,33 @@
         {% if has_permission %}
         <div class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
-            <div class="searchBar">
-              <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-            </div>
-            <div class="add">
-              <button class="btn btn-sm btn-outline-secondary dropdown-toggle  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"">
-                <i class="fas fa-plus"></i>
-                Quick Add
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Items</a>
-                <a class="dropdown-item" href="#">Members</a>
-                <a class="dropdown-item" href="#">Reports</a>
-              </div>
-            </div>
-            <hr>
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link {% ifequal request.path '/admin/' %} active {% endifequal %}" href="/admin/">
                   <i class="fas fa-home navicon"></i> &nbsp;
-                  Dashboard <span class="sr-only">(current)</span>
+                  Dashboard
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ site_url }}">
                   <i class="fas fa-desktop navicon"></i> &nbsp;
                   Member Site
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/lending/' %} active {% endifequal %}" href="/admin/main_website/lending/">
                   <i class="fas fa-shopping-basket navicon"></i> &nbsp;
                   Loans
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/product/' %} active {% endifequal %}" href="/admin/main_website/product/">
                   <i class="fas fa-box-open navicon"></i> &nbsp;
                   Items
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/member/' %} active {% endifequal %}" href="/admin/main_website/member/">
                   <i class="fas fa-users navicon"></i> &nbsp;
                   Contacts/Members
                 </a>
@@ -88,11 +73,19 @@
                   Reports
                 </a>
               </li>
+              {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link {% ifequal request.path '/admin/auth/group/' %} active {% endifequal %}" href="/admin/auth/group/">
+                  <i class="fas fa-address-card navicon"></i> &nbsp;
+                  Permissions
+                </a>
+              </li>
+              {% endif %}
               <li class="nav-item">
                 <hr>
-                <a class="nav-link" href="#">
-                  <i class="fas fa-sign-out-alt navicon"></i> &nbsp;
-                  Sign Out
+
+                <a href="{% url 'admin:logout' %}" class="nav-link">
+                  <i class="fas fa-sign-out-alt navicon"></i> {% trans 'Log out' %}
                 </a>
                 <hr>
               </li>
@@ -115,19 +108,9 @@
                 <strong>{% firstof user.get_short_name user.get_username %}</strong>
                 {% endblock %}
                 {% block userlinks %}
-                {% if site_url %}
-                <a href="{{ site_url }}">{% trans 'View site' %}</a> /
-                {% endif %}
-                {% if user.is_active and user.is_staff %}
-                {% url 'django-admindocs-docroot' as docsroot %}
-                {% if docsroot %}
-                <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
-                {% endif %}
-                {% endif %}
                 {% if user.has_usable_password %}
-                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+                / <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
                 {% endif %}
-                <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
                 {% endblock %}
             </div>
         </div>
@@ -140,12 +123,7 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
 
         <!-- END Header -->
-        {% block breadcrumbs %}
-        <div class="breadcrumbs">
-        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-        {% if title %} &rsaquo; {{ title }}{% endif %}
-        </div>
-        {% endblock %}
+
         {% endif %}
 
         {% block messages %}
