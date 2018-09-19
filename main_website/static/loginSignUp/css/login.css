@@ -4,24 +4,24 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-#btn{
-    background-color:#84C3F3 !important;
+   #id{
+    color:white;
+    text-align: center;
+    width:100%;
+    margin: 0 auto;
+  }
+  #bgc{
+    background-color: #D7D7D7;
+    border:1px solid blue;
+    border-radius:2 px;
+  }
+  button{
+    background-color:#84C3F3;
     border-radius: 10px;
     padding: 12px 30px;
-    font-size: 17px;
+    font-size: 20px;
   }
-#wrap{
-  max-width: 70%;
-  margin: 0 auto;
-  }
-  form {
-	padding:10px 50px;
-	border:1px solid blue;
-	border-radius:2 px;
-	background-color:#D7D7D7;
-	max-width: 70%;
-}
-  input[type=text], input[type=password], input[type=email]{
+  input[type=text], input[type=password]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -29,9 +29,20 @@
     border: 1px solid #ccc;
     box-sizing: border-box;
     font-family: Quicksand;
-    font-size: 17px;
   }
   label{
     font-size: 17px;
     font-family: Quicksand;
+  }
+  .buttonHolder{
+      text-align: center;
+  }
+  .ctr{
+      text-align: center;
+      font-size: 18px;
+      color:black;
+  }
+  #wrap{
+    max-width: 80%;
+    margin: 0 auto;
   }
