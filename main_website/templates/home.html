@@ -1,39 +1,122 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  Hi {{ user.email }}!
-    <br>
-    You are currently a {{ user.membership.membership_type }}
-    <br>
-    From {{ user.membership.start_time }} to {{ user.membership.end_time }}
 
 
-  <p><a href="{% url 'logout' %}">logout</a></p>
-  <form action="{% url 'membership' %}" method="post">
-    {% csrf_token %}
-       $80 BOIS FOR 1 YEAR CHEAP AF<br>
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
-    data-amount="8000"
-    data-name="Share Shed"
-    data-description="Membership Subscription"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    data-locale="auto"
-    data-label="Pay Membership"
-    data-currency="aud"
-    data-allow-remember-me="false">
+    {% block hero-image %}
+        <div class="hero-image">
+          <div class="hero-text">
+            <img src='{% static 'main_website/img/icon-shareshed.png' %}' width="150px">
+            <br><br>
+            <p style=" text-shadow: 1px 1px grey;"> Share Shed is a Brisbane-based Library of Things where members can borrow all sorts of useful items for $80 a year. Whether you want to use a lawn mower, a bread maker, a tennis racquet or a disco ball, we want to share our catalogue with you.</p>
+            <button class="btn btn-outline-light my-2 my-sm-0" style=" text-shadow: 1px 1px black;" type="submit"> Sign up now! </button>
+          </div>
+        </div>
+    {% endblock %}
 
+    {% block catalogue %}
+    <div class="album py-5 bg-light">
+        <div class="container">
+          <h4 class="center-align"> Categories </h4>
+          <br>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align"> Art and Hobbies</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Board Games</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Camping</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Gardening</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Catering</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Household</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Mobility Aids</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Party & Events</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Sports & Leisure</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Tools</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text center-align">Music</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <h5 class="pt-6 center-align"style="font-weight:normal;" >See More &nbsp;<i class="fas fa-arrow-right"></i> </h4>
+            </div>
+          </div>
+        </div>
+    {% endblock %}
 
-  </script>
-    <!--<input type="submit" value="Add Membership" /> -->
-  </form>
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a> |
-  <a href="{% url 'signup' %}">signup</a>
-{% endif %}
 {% endblock %}
