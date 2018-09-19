@@ -75,9 +75,12 @@
                 </ul>
               </div>
           </div>
-      {% endblock %}
+          {% endblock %}
           {% block content %}
           {% endblock %}
+          <p style="visibility: hidden;">
+              {{user.membership.membership_type}}
+          </p>
     </main>
   </body>
 </html>

@@ -5,6 +5,7 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from annoying.fields import AutoOneToOneField
 from datetime import datetime
 
 class UserManager(BaseUserManager):
@@ -75,17 +76,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
-    def save(self, **kwargs):
-        super(User, self).save(**kwargs)
-        member = Member(user=self)
-        if self.is_staff:
-            member.membership_type = 'l'
-        else:
-            member.membership_type = 'g'
-        member.save()
 
 class Member(models.Model):
-    user = models.OneToOneField(
+    user = AutoOneToOneField(
         User,
         related_name='membership',
         primary_key=True,
@@ -94,9 +87,8 @@ class Member(models.Model):
     membership_options = (
         ('g', 'Guest'),
         ('m', 'Member'),
-        ('l', 'Librarian'),
     )
-    membership_type = models.CharField(choices=membership_options, max_length=1)
+    membership_type = models.CharField(choices=membership_options, max_length=1, default='g')
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
 
