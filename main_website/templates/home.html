@@ -13,7 +13,12 @@
             <img src='{% static 'main_website/img/icon-shareshed.png' %}' width="150px">
             <br><br>
             <p style=" text-shadow: 1px 1px grey;"> Share Shed is a Brisbane-based Library of Things where members can borrow all sorts of useful items for $80 a year. Whether you want to use a lawn mower, a bread maker, a tennis racquet or a disco ball, we want to share our catalogue with you.</p>
-            <button class="btn btn-outline-light my-2 my-sm-0" style=" text-shadow: 1px 1px black;" type="submit"> Sign up now! </button>
+            {% if not user.is_authenticated %}
+
+            <form action="{% url 'signup' %}" method="get">
+                <button class="btn btn-outline-light my-2 my-sm-0" style=" text-shadow: 1px 1px black;" type="submit"> Sign up now! </button>
+            </form>
+            {% endif %}
           </div>
         </div>
     {% endblock %}
