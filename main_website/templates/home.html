@@ -39,7 +39,9 @@
   <input type="hidden" id="amountInCents" name="amountInCents" />
 </form>
 
-<input type="button" id="customButton" value="Pay">
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<button id="customButton">Top up</button>
+
 
 <script>
   var handler = StripeCheckout.configure({
@@ -61,6 +63,7 @@ $('#customButton').on('click', function(e) {
     name: 'Demo Site',
     description: 'Custom amount ($' + displayAmount + ')',
     amount: amountInCents,
+       allowRememberMe:false
   });
   e.preventDefault();
 });
