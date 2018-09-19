@@ -8,14 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="calendar.css">
+    <link rel="stylesheet" href="loans.css">
     <link rel="icon" href="../../../../favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <title>Calendar</title>
+    <title>Loan Reports</title>
   </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -94,23 +94,103 @@
             </ul>
           </div>
         </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
 
-            <br><br><br><br><br>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
+            <h1 class="h4">Loan Reports</h1>
+            <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+              <div class="btn-group">
+                <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
+                <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export CSV</button>
               </div>
-              <input type="text" name="datetimes" size="37" placeholder=" Enter a borrowing period ..."/>
             </div>
+          </div>
+
+          <div id="filter-panel" class="filter-panel">
+            <div class="card" style="width:900px;">
+                <div class="card-body pt-2 pb-2 pl-2">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">View by:</label>
+                            <select id="pref-perpage" class="form-control">
+                                <option selected="selected" value="Status">Status</option>
+                                <option value="Closed">Member</option>
+                                <option value="Cancelled">Suburb</option>
+                            </select>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">Date Range:</label>
+                            <input type="text" name="datetimes" size="37" placeholder=" Enter a period ..."/>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">View by:</label>
+                            <select id="pref-perpage" class="form-control">
+                                <option selected="selected" value="AllStatus">All status</option>
+                                <option value="Closed">Closed</option>
+                                <option value="Cancelled">Cancelled</option>
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Reserved">Reserved</option>
+                            </select>
+                        </div>
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-default filter-col">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br><br>
+
+        <table class="table table-hover">
+          <caption>Showing 1 to 5 of 5 entries</caption>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Status</th>
+              <th scope="col">Number of Loans</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>CLOSED</td>
+              <td>226</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>CANCELLED</td>
+              <td>56</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>ACTIVE</td>
+              <td>17</td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>PENDING</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>RESERVED</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
+
 
         </main>
       </div>
     </div>
 
-    <script src="calendar.js"></script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="loans.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
   </body>
 </html>
