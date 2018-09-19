@@ -182,3 +182,38 @@ body {
   margin-top: 50px;
   margin-right: 10px;
 }
+
+.card{
+  background-color: #d3d3d3;
+}
+
+#selectEntryNum{
+  width: 10%;
+}
+#filterButton{
+  background-color: white;
+}
+
+.card-body input[type=text] {
+    padding: 6px 10px;
+    margin: 6px 0;
+    box-sizing: border-box;
+}
+
+#assignedInput{
+  width: 70%;
+}
+
+#conditionInput{
+  width: 70%;
+}
+
+#badgeCSS{
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight:normal;
+}
+
+.media-body span{
+  padding: 4px 8px;
+}
