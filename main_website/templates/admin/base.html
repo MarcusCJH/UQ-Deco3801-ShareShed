@@ -53,9 +53,9 @@
             <hr>
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="/admin/">
+                <a class="nav-link {% ifequal request.path '/admin/' %} active {% endifequal %}" href="/admin/">
                   <i class="fas fa-home navicon"></i> &nbsp;
-                  Dashboard <span class="sr-only">(current)</span>
+                  Dashboard
                 </a>
               </li>
               <li class="nav-item">
@@ -71,13 +71,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/admin/main_website/product/">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/product/' %} active {% endifequal %}" href="/admin/main_website/product/">
                   <i class="fas fa-box-open navicon"></i> &nbsp;
                   Items
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/admin/main_website/member/">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/member/' %} active {% endifequal %}" href="/admin/main_website/member/">
                   <i class="fas fa-users navicon"></i> &nbsp;
                   Contacts/Members
                 </a>
@@ -90,7 +90,7 @@
               </li>
               {% if user.is_superuser %}
               <li class="nav-item">
-                <a class="nav-link" href="/admin/auth/group/">
+                <a class="nav-link {% ifequal request.path '/admin/auth/group/' %} active {% endifequal %}" href="/admin/auth/group/">
                   <i class="fas fa-address-card navicon"></i> &nbsp;
                   Permissions
                 </a>
@@ -138,12 +138,7 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
 
         <!-- END Header -->
-        {% block breadcrumbs %}
-        <div class="breadcrumbs">
-        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-        {% if title %} &rsaquo; {{ title }}{% endif %}
-        </div>
-        {% endblock %}
+        
         {% endif %}
 
         {% block messages %}
