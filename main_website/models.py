@@ -4,7 +4,8 @@ from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-import datetime
+from django.core.exceptions import ValidationError
+from datetime import datetime
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -99,6 +100,36 @@ class Member(models.Model):
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
 
+
+def validate_date(value):
+    if value.weekday() in [1,2,3,6]:
+        raise ValidationError(
+            ('Share Shed is not open'),
+        )
+
+
+    expirydate = '2018-09-30'
+    expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
+    if value >expiry:
+        raise ValidationError(
+            ('Please borrow within membership period'),
+        )
+    dateList = []
+    fridate = '2018-09-14'
+    friexpiry = datetime.strptime(fridate, '%Y-%m-%d').date()
+    satdate = '2018-09-15'
+    satexpiry = datetime.strptime(satdate, '%Y-%m-%d').date()
+    mondate = '2018-09-17'
+    monexpiry = datetime.strptime(mondate, '%Y-%m-%d').date()
+    dateList.append(friexpiry)
+    dateList.append(satexpiry)
+    dateList.append(monexpiry)
+    if value not in dateList:
+        raise ValidationError(
+            ('Sorry we are closed.'),
+        )
+
+
 class Product(models.Model):
     name = models.CharField(max_length=128)
     long_description = models.TextField()
@@ -175,8 +206,68 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.item)
 
+
 class Payment(models.Model):
     id = models.IntegerField
     user = models.ForeignKey('User', blank=True, null=True, on_delete=models.CASCADE)
     stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
     stripe_payment_date = models.DateTimeField(blank=True, null=True)
+class Lending(models.Model):
+    productId = models.ForeignKey('Product', null=False, on_delete=models.PROTECT)
+    userId = models.ForeignKey(settings.AUTH_USER_MODEL,
+        null=False, on_delete=models.CASCADE)
+    startDate = models.DateField(validators=[validate_date])
+    endDate = models.DateField(validators=[validate_date])
+
+    productStatusChoices = (
+        ('ONLOAN', 'ON LOAN'),
+        ('RETURNTODAY','RETURN TODAY'),
+        ('RETURNLATE', 'RETURN LATE'),
+        ('RESERVED','RESERVED'),
+        ('COLLECTTODAY','COLLECT TODAY'),
+        ('COLLECTLATE','COLLECT LATE'),
+    )
+
+    productStatus = models.CharField(
+        max_length=12,
+        choices=productStatusChoices,
+        null=False,
+    )
+
+    def duration(self):
+        duration = self.startDate - self.endDate
+        return str(duration)
+
+    def __str__(self):
+        name = self.productId.name
+        return str(name)
+
+class LendingHistory(models.Model):
+    productId = models.ForeignKey('Product', null=False, on_delete=models.PROTECT)
+    userId = models.ForeignKey(settings.AUTH_USER_MODEL,
+        null=False, on_delete=models.CASCADE)
+    startDate = models.DateField(validators=[validate_date])
+    endDate = models.DateField(validators=[validate_date])
+
+    productStatusChoices = (
+        ('ONLOAN', 'ON LOAN'),
+        ('RETURNTODAY','RETURN TODAY'),
+        ('RETURNLATE', 'RETURN LATE'),
+        ('RESERVED','RESERVED'),
+        ('COLLECTTODAY','COLLECT TODAY'),
+        ('COLLECTLATE','COLLECT LATE'),
+    )
+
+    productStatus = models.CharField(
+        max_length=12,
+        choices=productStatusChoices,
+        null=False,
+    )
+
+    def duration(self):
+        duration = self.startDate - self.endDate
+        return str(duration)
+
+    def __str__(self):
+        name = self.productId.name
+        return str(name)
