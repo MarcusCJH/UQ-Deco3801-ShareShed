@@ -5,10 +5,31 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.email }}!
+    <br>
+    You are currently a {{ user.membership.membership_type }}
+    <br>
+    From {{ user.membership.start_time }} to {{ user.membership.end_time }}
+
+
   <p><a href="{% url 'logout' %}">logout</a></p>
   <form action="{% url 'membership' %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="Add Membership" />
+       $80 BOIS FOR 1 YEAR CHEAP AF<br>
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
+    data-amount="8000"
+    data-name="Share Shed"
+    data-description="Membership Subscription"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-label="Pay Membership"
+    data-currency="aud"
+    data-allow-remember-me="false">
+
+
+  </script>
+    <!--<input type="submit" value="Add Membership" /> -->
   </form>
 {% else %}
   <p>You are not logged in</p>

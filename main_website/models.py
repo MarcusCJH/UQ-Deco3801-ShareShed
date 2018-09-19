@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
@@ -173,3 +174,9 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.item)
+
+class Payment(models.Model):
+    id = models.IntegerField
+    user = models.ForeignKey('User', blank=True, null=True, on_delete=models.CASCADE)
+    stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
+    stripe_payment_date = models.DateTimeField(blank=True, null=True)
