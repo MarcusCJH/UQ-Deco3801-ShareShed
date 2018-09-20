@@ -21,7 +21,7 @@ def validate_date(value):
         raise ValidationError(
             ('Please borrow within membership period'),
         )
-    
+
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
