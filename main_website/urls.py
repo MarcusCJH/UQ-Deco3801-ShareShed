@@ -6,7 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('signup', views.SignUp , name='signup'),
-    path('membership',views.membershipRenew, name='membership'),
-    path('topup',views.topupCredit, name='topup'),
+    path('signup', views.sign_up , name='signup'),
+    path('membership',views.membership_renew, name='membership'),
+    path('topup',views.top_up_credit, name='topup'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

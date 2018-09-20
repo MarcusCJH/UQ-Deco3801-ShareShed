@@ -12,7 +12,7 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def SignUp(request):
+def sign_up(request):
     """Method to invoke user sign up form."""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -29,7 +29,7 @@ def SignUp(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-def membershipRenew(request):
+def membership_renew(request):
     """Method to renew membership"""
     current_user = request.user
 
@@ -87,7 +87,7 @@ def membershipRenew(request):
     return redirect('home')
 
 @csrf_exempt
-def topupCredit(request):
+def top_up_credit(request):
     """Payment for credits"""
     current_user = request.user;
     if request.method == 'POST':
