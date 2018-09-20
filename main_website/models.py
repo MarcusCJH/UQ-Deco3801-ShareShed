@@ -107,7 +107,8 @@ class Member(models.Model):
         ('g', 'Guest'),
         ('m', 'Member'),
     )
-    membership_type = models.CharField(choices=membership_options, max_length=1, default='g')
+    membership_type = models.CharField(choices=membership_options,
+                                        max_length=1, default='g')
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
 
