@@ -21,20 +21,7 @@ def validate_date(value):
         raise ValidationError(
             ('Please borrow within membership period'),
         )
-    dateList = []
-    fridate = '2018-09-14'
-    friexpiry = datetime.strptime(fridate, '%Y-%m-%d').date()
-    satdate = '2018-09-15'
-    satexpiry = datetime.strptime(satdate, '%Y-%m-%d').date()
-    mondate = '2018-09-17'
-    monexpiry = datetime.strptime(mondate, '%Y-%m-%d').date()
-    dateList.append(friexpiry)
-    dateList.append(satexpiry)
-    dateList.append(monexpiry)
-    if value not in dateList:
-        raise ValidationError(
-            ('Sorry we are closed.'),
-        )
+
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -128,7 +115,8 @@ class Member(models.Model):
         ('g', 'Guest'),
         ('m', 'Member'),
     )
-    membership_type = models.CharField(choices=membership_options, max_length=1, default='g')
+    membership_type = models.CharField(choices=membership_options,
+                                        max_length=1, default='g')
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
 
