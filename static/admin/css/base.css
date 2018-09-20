@@ -835,6 +835,7 @@ table#change-history tbody th {
     align-items: center;
     padding: 10px 40px;
     overflow: hidden;
+    z-index: 100;
 }
 
 #header a:link, #header a:visited {
@@ -983,4 +984,8 @@ table#change-history tbody th {
 
 .popup #header {
     padding: 10px 20px;
+}
+
+caption{
+  caption-side: top !important;
 }
