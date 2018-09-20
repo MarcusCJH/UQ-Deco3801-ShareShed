@@ -125,6 +125,15 @@ class Member(models.Model):
     end_time = models.DateTimeField(blank=True,null=True)
 
 
+class MemberImage(models.Model):
+    member = models.ForeignKey(Member, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='members', blank=False)
+    verified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.alt)
+
+
 class Product(models.Model):
     """Define the product model according to lend-engine specification"""
     name = models.CharField(max_length=128)
@@ -153,6 +162,7 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 
 
 class ProductImage(models.Model):
