@@ -34,7 +34,7 @@ class UserAdmin(UserAdmin):
         }),
     )
     list_display = ('email', 'first_name', 'last_name',
-        'is_staff', 'get_member')
+                    'is_staff', 'get_member')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
                      'address', 'city', 'county', 'postcode', 'country',
                      'suburb')
@@ -76,7 +76,7 @@ class ProductImageInline(admin.TabularInline):
         height='200px'
         return mark_safe(
         '<img src="{}" width={} height={}/>'.format(obj.image.url,
-        width, height))
+                                                    width, height))
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -114,12 +114,12 @@ class CartAdmin(admin.ModelAdmin):
 
 class LendingAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
-        'endDate', 'productStatus')
+                    'endDate', 'productStatus')
     list_editable = ('productStatus',)
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
-        'endDate', 'productStatus')
+                    'endDate', 'productStatus')
     list_editable = ('productStatus',)
 
 

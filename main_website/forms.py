@@ -15,7 +15,8 @@ class UserCreationForm(UserCreationForm):
     telephone_num = forms.CharField(
         max_length=15,
         validators=[RegexValidator('(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}'
-            '|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})',
+                                    '|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}'
+                                    '|\d{3}[-\.\s]??\d{4})',
         message="Please enter valid phone number")],
         label='Telephone Number')
 
