@@ -1,4 +1,4 @@
-import time
+import datetime
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
@@ -53,8 +53,6 @@ def membershipRenew(request):
                 description="The product charged to the user",
                 receipt_email=request.POST['stripeEmail'],
             )
-
-
         except stripe.error.CardError as ce:
             return False, ce
         else:
@@ -64,11 +62,13 @@ def membershipRenew(request):
             Not sure if this is an issue'''
 
             payment = Payment(user_id = current_user.id,
-                stripe_payment_id=charge.id,
-                stripe_payment_date=datetime.datetime
-                    .fromtimestamp(charge.created)
-                    .strftime('%Y-%m-%d %H:%M:%S'))
+                                stripe_payment_id=charge.id,
+                                stripe_payment_date=datetime.datetime
+                                .fromtimestamp(charge.created)
+                                .strftime('%Y-%m-%d %H:%M:%S'),
+                                amount=(charge.amount/100))
             payment.save()
+
         # ENDPAYMENT
         member = Member.objects.get(user_id=current_user.id)
         if member.start_time == None and member.end_time == None:
@@ -86,26 +86,40 @@ def membershipRenew(request):
 
     return redirect('home')
 
-
 @csrf_exempt
-def checkout(request):
-    """Payment for membership"""
-    if request.method == "POST":
+def topupCredit(request):
+    """Payment for credits"""
+    current_user = request.user;
+    if request.method == 'POST':
+        # PAYMENT
         token = request.POST['stripeToken']
         try:
             charge = stripe.Charge.create(
-                amount=8000,
+                amount=request.POST['amountInCents'],
                 currency="aud",
                 source=token,
                 description="The product charged to the user",
                 receipt_email=request.POST['stripeEmail'],
             )
-
-            if charge.paid is True:
-                return redirect('success')
-
         except stripe.error.CardError as ce:
             return False, ce
+        else:
+            '''If charge was successful
+            TODO: RuntimeWarning: DateTimeField
+            received a naive datetime _____ while time zone support is active.
+            Not sure if this is an issue'''
 
-    context = {"stripe_key": settings.STRIPE_PUBLISHABLE_KEY}
-    return render(request, 'paymentsystest/index.html', context)
+            payment = Payment(user_id=current_user.id,
+                              stripe_payment_id=charge.id,
+                              stripe_payment_date=datetime.datetime
+                              .fromtimestamp(charge.created)
+                              .strftime('%Y-%m-%d %H:%M:%S'),
+                              amount=(charge.amount / 100))
+            payment.save()
+
+            #Logic for payment balance
+            user = User.objects.get(id=current_user.id)
+            user.balance = user.balance + (charge.amount/100)
+            user.save()
+        # ENDPAYMENT
+    return redirect('home')

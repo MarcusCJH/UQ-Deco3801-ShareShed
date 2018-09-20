@@ -224,6 +224,7 @@ class Payment(models.Model):
         on_delete=models.CASCADE)
     stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
     stripe_payment_date = models.DateTimeField(blank=True, null=True)
+    amount = models.FloatField(blank=True, null=True)
 
 
 class Lending(models.Model):
