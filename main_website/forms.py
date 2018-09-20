@@ -6,29 +6,29 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserCreationForm(UserCreationForm):
     """Form for user signup."""
-    first_name = forms.CharField(max_length=30, required=False,
-        help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False,
-        help_text='Optional.')
-    email = forms.EmailField(max_length=254,
-        help_text='Required. Inform a valid email address.')
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=254, required=True)
     telephone_num = forms.CharField(
         max_length=15,
         validators=[RegexValidator('(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}'
                                     '|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}'
                                     '|\d{3}[-\.\s]??\d{4})',
         message="Please enter valid phone number")],
-        label='Telephone Number')
+        label='Telephone Number',
+        required=True)
 
     postcode = forms.CharField(
         max_length=4,
         validators=[RegexValidator('\d{4}',
-        message="Please enter valid Post Code")])
-    address = forms.CharField(max_length=30, label='Street Address')
+        message="Please enter valid Post Code")],
+        required=True)
+    address = forms.CharField(max_length=30, label='Street Address',
+        required=True)
     city = forms.CharField(max_length=20, required=True)
-    county = forms.CharField(max_length=20)
-    country = forms.CharField(max_length=30)
-    suburb = forms.CharField(max_length=30)
+    county = forms.CharField(max_length=20, required=True)
+    country = forms.CharField(max_length=30, required=True)
+    suburb = forms.CharField(max_length=30, required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User

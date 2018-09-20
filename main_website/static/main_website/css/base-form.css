@@ -1,0 +1,28 @@
+.pageColor{
+  background-color: #f2f2f2;
+}
+.formdiv{
+  padding: 30px;
+  padding-top: 40px;
+  margin: 0 auto;
+  border: 10px;
+  border-style: solid;
+  border-width: 8px;
+  border-color: #d9d9d9;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: white;
+}
+
+.loginformdiv{
+  padding: 30px;
+  padding-top: 40px;
+  margin: 0 auto;
+  border: 10px;
+  border-style: solid;
+  border-width: 8px;
+  border-color: #d9d9d9;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  background-color: white;
+}
