@@ -5,6 +5,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% block profile %}{% static "main_website/css/profile.css" %}{% endblock %}">
+
 {% endblock %}
 
 {% block title %}Profile{% endblock %}
@@ -33,7 +34,66 @@
                 <p>
                     Post Code   : {{ user.postcode }}
                 </p>
+
+                <p>
+                    Balance : ${{ user.balance }}
+                </p>
+
             </div>
+        </div>
+
+        <div class="user-information">
+                <div class="information-header">
+                    <h3>Top Up Credit</h3>
+                    <hr />
+                </div>
+                <div class="information-content">
+                    <p>
+                        <form id="myForm" action="{% url 'topup' %}" method="POST">
+                        {% csrf_token %}
+                          <input type="text" id="amountInDollars" />
+                          <input type="hidden" id="stripeToken" name="stripeToken" />
+                          <input type="hidden" id="stripeEmail" name="stripeEmail" />
+                          <input type="hidden" id="amountInCents" name="amountInCents" />
+                        </form>
+
+                        <input type="button" id="customButton" value="Pay">
+                        <script src="https://checkout.stripe.com/checkout.js"></script>
+                        <script>
+                            var handler = StripeCheckout.configure({
+                              key: 'pk_test_juvZMCiyaZxZjw2nulcmFC02',
+                              image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+                              token: function(token) {
+                                $("#stripeToken").val(token.id);
+                                $("#stripeEmail").val(token.email);
+                                $("#amountInCents").val(Math.floor($("#amountInDollars").val() * 100));
+                                $("#myForm").submit();
+                              }
+                            });
+
+                            $('#customButton').on('click', function(e) {
+                              var amountInCents = Math.floor($("#amountInDollars").val() * 100);
+                              var displayAmount = parseFloat(Math.floor($("#amountInDollars").val() * 100) / 100).toFixed(2);
+                              // Open Checkout with further options
+                              handler.open({
+                                name: 'Share Shed',
+                                description: 'Top Up Amount ($' + displayAmount + ')',
+                                amount: amountInCents,
+                                 allowRememberMe:false,
+                              });
+                              e.preventDefault();
+                            });
+
+                            // Close Checkout on page navigation
+                            $(window).on('popstate', function() {
+                              handler.close();
+                            });
+
+
+
+                        </script>
+                    </p>
+                </div>
         </div>
 
         {% if user.membership.membership_type == 'm' %}
