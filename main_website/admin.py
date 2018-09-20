@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .models import Product, ProductImage, ProductType, ProductTag, \
-    ProductLocation, ProductCondition, Cart
+    ProductLocation, ProductCondition, Cart, UserImage
 from django.utils.html import mark_safe
 from .forms import UserCreationForm, UserChangeForm
 
@@ -52,6 +52,26 @@ class UserAdmin(UserAdmin):
 
     get_member.short_description = "Member"
 
+class UserImageInline(admin.TabularInline):
+    """Display list of images for a user admin dashboard"""
+    model = UserImage
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self,obj):
+        """Display te actual image with 200x200 pixel size"""
+        width='200px'
+        height='200px'
+        return mark_safe(
+            '<img src="{}" width={} height={}/>'.format(obj.image.url,
+                                                        width, height))
+
+class UserImageAdmin(admin.ModelAdmin):
+    """Display list of images for admin dashboard"""
+    list_display = ('user', 'alt')
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, obj):
+        return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 class MemberAdmin(admin.ModelAdmin):
     """Display list of members for admin dashboard"""
@@ -67,6 +87,8 @@ class MemberAdmin(admin.ModelAdmin):
         return obj.user.email
     get_email.short_description = "Email"
     get_email.admin_order_field = 'user__email'
+
+
 
 
 class ProductImageInline(admin.TabularInline):
@@ -137,6 +159,7 @@ class LendingHistoryAdmin(admin.ModelAdmin):
 
 
 """Register all the admin view"""
+admin.site.register(UserImage, UserImageAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(ProductType, ProductTypeAdmin)
