@@ -59,7 +59,7 @@ class MemberAdmin(admin.ModelAdmin):
 
     list_display = ('get_email', 'membership_type', 'start_time',
                     'end_time')
-    search_fields = ('user_id', 'get_email', 'membership_type')
+    #search_fields = ('user_id', 'get_email', 'membership_type')
     ordering = ('user_id', 'membership_type', 'start_time',
                 'end_time')
 
