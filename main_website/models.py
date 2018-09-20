@@ -129,6 +129,7 @@ class MemberImage(models.Model):
     member = models.ForeignKey(Member, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='members', blank=False)
     verified = models.BooleanField(default=False)
+    alt = models.CharField(max_length=128, blank=True)
 
     def __str__(self):
         return str(self.alt)
