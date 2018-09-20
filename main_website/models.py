@@ -6,9 +6,37 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
+def validate_date(value):
+    """Validator to be used for lending model."""
+    if value.weekday() in [1,2,3,6]:
+        raise ValidationError(
+            ('Share Shed is not open'),
+        )
+
+
+    expirydate = '2018-09-30'
+    expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
+    if value >expiry:
+        raise ValidationError(
+            ('Please borrow within membership period'),
+        )
+    dateList = []
+    fridate = '2018-09-14'
+    friexpiry = datetime.strptime(fridate, '%Y-%m-%d').date()
+    satdate = '2018-09-15'
+    satexpiry = datetime.strptime(satdate, '%Y-%m-%d').date()
+    mondate = '2018-09-17'
+    monexpiry = datetime.strptime(mondate, '%Y-%m-%d').date()
+    dateList.append(friexpiry)
+    dateList.append(satexpiry)
+    dateList.append(monexpiry)
+    if value not in dateList:
+        raise ValidationError(
+            ('Sorry we are closed.'),
+        )
+
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
-
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
@@ -41,7 +69,7 @@ class UserManager(BaseUserManager):
 
 
 class Maintenance(models.Model):
-
+    """Define the model for maintenance status."""
     MAINTENANCE_OPTIONS = (
         ('0', 'Ok'),
         ('1', 'At Repairer'),
@@ -55,6 +83,7 @@ class Maintenance(models.Model):
 
 
 class User(AbstractUser):
+    """Define the user model."""
     username = None
     email = models.EmailField(_('email address'), unique=True)
     maillist = models.BooleanField(default=True)
@@ -73,7 +102,8 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        """Returns the user email as the default print statement."""
+        return str(self.email)
 
     def save(self, **kwargs):
         super(User, self).save(**kwargs)
@@ -84,7 +114,9 @@ class User(AbstractUser):
             member.membership_type = 'g'
         member.save()
 
+
 class Member(models.Model):
+    """Further extends the user model. Add membership model."""
     user = models.OneToOneField(
         User,
         related_name='membership',
@@ -101,36 +133,8 @@ class Member(models.Model):
     end_time = models.DateTimeField(blank=True,null=True)
 
 
-def validate_date(value):
-    if value.weekday() in [1,2,3,6]:
-        raise ValidationError(
-            ('Share Shed is not open'),
-        )
-
-
-    expirydate = '2018-09-30'
-    expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
-    if value >expiry:
-        raise ValidationError(
-            ('Please borrow within membership period'),
-        )
-    dateList = []
-    fridate = '2018-09-14'
-    friexpiry = datetime.strptime(fridate, '%Y-%m-%d').date()
-    satdate = '2018-09-15'
-    satexpiry = datetime.strptime(satdate, '%Y-%m-%d').date()
-    mondate = '2018-09-17'
-    monexpiry = datetime.strptime(mondate, '%Y-%m-%d').date()
-    dateList.append(friexpiry)
-    dateList.append(satexpiry)
-    dateList.append(monexpiry)
-    if value not in dateList:
-        raise ValidationError(
-            ('Sorry we are closed.'),
-        )
-
-
 class Product(models.Model):
+    """Define the product model according to lend-engine specification"""
     name = models.CharField(max_length=128)
     long_description = models.TextField()
     short_description = models.CharField(max_length=50)
@@ -160,6 +164,7 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
+    """Image model to extend the product model."""
     product = models.ForeignKey(Product, related_name='images',
         on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products', blank=False)
@@ -170,6 +175,7 @@ class ProductImage(models.Model):
 
 
 class ProductType(models.Model):
+    """Product type model to extend the product model."""
     type_name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -177,6 +183,7 @@ class ProductType(models.Model):
 
 
 class ProductTag(models.Model):
+    """Product tag model to extend the product model."""
     tag_name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -184,6 +191,7 @@ class ProductTag(models.Model):
 
 
 class ProductCondition(models.Model):
+    """Product condition model to extend the product model."""
     condition_name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -191,6 +199,7 @@ class ProductCondition(models.Model):
 
 
 class ProductLocation(models.Model):
+    """Product location model to extend the product model."""
     location_name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -198,6 +207,7 @@ class ProductLocation(models.Model):
 
 
 class Cart(models.Model):
+    """Cart model to allow users add items to cart."""
     item = models.ForeignKey('Product',
         null=False, on_delete=models.CASCADE)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -208,11 +218,14 @@ class Cart(models.Model):
 
 
 class Payment(models.Model):
+    """Payment model to store all payment history"""
     id = models.IntegerField
     user = models.ForeignKey('User', blank=True, null=True,
         on_delete=models.CASCADE)
     stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
     stripe_payment_date = models.DateTimeField(blank=True, null=True)
+
+
 class Lending(models.Model):
     productId = models.ForeignKey('Product', null=False,
         on_delete=models.PROTECT)
@@ -245,6 +258,7 @@ class Lending(models.Model):
         return str(name)
 
 class LendingHistory(models.Model):
+    """Lending history model to store history of lendings"""
     productId = models.ForeignKey('Product', null=False,
         on_delete=models.PROTECT)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -268,6 +282,7 @@ class LendingHistory(models.Model):
     )
 
     def duration(self):
+        """Return the duration of lending."""
         duration = self.startDate - self.endDate
         return str(duration)
 

@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
 class UserCreationForm(UserCreationForm):
-
+    """Form for user signup."""
     first_name = forms.CharField(max_length=30, required=False,
         help_text='Optional.')
     last_name = forms.CharField(max_length=30, required=False,
@@ -38,7 +38,7 @@ class UserCreationForm(UserCreationForm):
 
 
 class UserChangeForm(UserChangeForm):
-
+    """Form for changing user."""
     class Meta:
         model = User
         fields = ('email',)

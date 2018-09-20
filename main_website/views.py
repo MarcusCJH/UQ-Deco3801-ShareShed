@@ -13,6 +13,7 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def SignUp(request):
+    """Method to invoke user sign up form."""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -29,6 +30,7 @@ def SignUp(request):
 
 
 def membershipRenew(request):
+    """Method to renew membership"""
     current_user = request.user
 
     if request.method == 'POST':
@@ -87,6 +89,7 @@ def membershipRenew(request):
 
 @csrf_exempt
 def checkout(request):
+    """Payment for membership"""
     if request.method == "POST":
         token = request.POST['stripeToken']
         try:
