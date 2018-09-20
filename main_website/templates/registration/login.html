@@ -5,14 +5,21 @@
 {% block title %}Login{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'loginSignUp/css/signup.css' %}"
+<link rel="stylesheet" type="text/css" href="{% static 'main_website/css/base-form.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 30px; font-size: 20px;"type="submit">Login</button>
-</form>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="loginformdiv">
+        <h2>Login</h2>
+        <br>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 30px; font-size: 20px;"type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -5,13 +5,14 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'loginSignUp/css/signup.css' %}"
+<link rel="stylesheet" type="text/css" href="{% static 'main_website/css/base-form.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="pageColor">
 <div class="container-fluid" id="">
-  <div class="row" id="wrap">
-    <div class = "formdiv col-lg-9 col-sm-10 col-md-10 col-xs-12 col-md-offset-2">
+  <div class="row">
+    <div class = "formdiv">
     <form method="post">
       <h2 style = "font-family: 'Open Sans', sans-serif;">Sign up</h2>
         {% csrf_token %}
@@ -31,5 +32,6 @@
       </form>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}
