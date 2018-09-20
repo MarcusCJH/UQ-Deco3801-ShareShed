@@ -49,7 +49,8 @@ class Maintenance(models.Model):
         ('2', 'With Staff Member'),
     )
     maintenance_id = models.AutoField(primary_key=True)
-    maintenance_status = models.CharField(choices=MAINTENANCE_OPTIONS, max_length=1)
+    maintenance_status = models.CharField(choices=MAINTENANCE_OPTIONS,
+        max_length=1)
     maintenance_location = models.CharField(max_length=255)
     maintenance_notes = models.TextField(blank=True, null=True)
 
@@ -209,11 +210,13 @@ class Cart(models.Model):
 
 class Payment(models.Model):
     id = models.IntegerField
-    user = models.ForeignKey('User', blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey('User', blank=True, null=True,
+        on_delete=models.CASCADE)
     stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
     stripe_payment_date = models.DateTimeField(blank=True, null=True)
 class Lending(models.Model):
-    productId = models.ForeignKey('Product', null=False, on_delete=models.PROTECT)
+    productId = models.ForeignKey('Product', null=False,
+        on_delete=models.PROTECT)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,
         null=False, on_delete=models.CASCADE)
     startDate = models.DateField(validators=[validate_date])
@@ -243,7 +246,8 @@ class Lending(models.Model):
         return str(name)
 
 class LendingHistory(models.Model):
-    productId = models.ForeignKey('Product', null=False, on_delete=models.PROTECT)
+    productId = models.ForeignKey('Product', null=False,
+        on_delete=models.PROTECT)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,
         null=False, on_delete=models.CASCADE)
     startDate = models.DateField(validators=[validate_date])

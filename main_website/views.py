@@ -1,20 +1,16 @@
 import time
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
-
 from django.contrib.auth import login, authenticate
 from dateutil.relativedelta import relativedelta
-import stripe
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
 from .models import User, Member, Payment
-
 from .forms import UserCreationForm
+import stripe
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def SignUp(request):
     if request.method == 'POST':
@@ -44,7 +40,7 @@ def membershipRenew(request):
             settings.EMAIL_HOST_USER,
             ['shareshed@risyad.cloud'],
             fail_silently=False)
-            
+
         # PAYMENT
         token = request.POST['stripeToken']
         try:
@@ -60,10 +56,16 @@ def membershipRenew(request):
         except stripe.error.CardError as ce:
             return False, ce
         else:
-            #If charge was successful
-            #TODO: RuntimeWarning: DateTimeField  received a naive datetime _____ while time zone support is active. Not sure if this is an issue
+            '''If charge was successful
+            TODO: RuntimeWarning: DateTimeField
+            received a naive datetime _____ while time zone support is active.
+            Not sure if this is an issue'''
 
-            payment = Payment(user_id = current_user.id, stripe_payment_id=charge.id, stripe_payment_date=datetime.datetime.fromtimestamp(charge.created).strftime('%Y-%m-%d %H:%M:%S'))
+            payment = Payment(user_id = current_user.id,
+                stripe_payment_id=charge.id,
+                stripe_payment_date=datetime.datetime
+                    .fromtimestamp(charge.created)
+                    .strftime('%Y-%m-%d %H:%M:%S'))
             payment.save()
         # ENDPAYMENT
         member = Member.objects.get(user_id=current_user.id)

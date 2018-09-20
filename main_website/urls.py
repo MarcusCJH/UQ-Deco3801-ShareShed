@@ -7,6 +7,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    url(r'^signup/$', views.SignUp , name='signup'),
-    url(r'^membership/$',views.membershipRenew, name='membership')
+    path('signup', views.SignUp , name='signup'),
+    path('membership',views.membershipRenew, name='membership')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
-    ProductLocation, ProductCondition, Cart, User, Member, Lending, LendingHistory
+    ProductLocation, ProductCondition, Cart, User, Member, Lending, \
+    LendingHistory
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -32,7 +33,8 @@ class UserAdmin(UserAdmin):
                        'county', 'postcode', 'country', 'suburb'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'is_staff', 'get_member')
+    list_display = ('email', 'first_name', 'last_name',
+        'is_staff', 'get_member')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
                      'address', 'city', 'county', 'postcode', 'country',
                      'suburb')
@@ -46,6 +48,7 @@ class UserAdmin(UserAdmin):
             'l': 'Librarian'
         }
         return membership_options[member.membership_type]
+
     get_member.short_description = "Member"
 
 
@@ -63,7 +66,7 @@ class MemberAdmin(admin.ModelAdmin):
     get_email.short_description = "Email"
     get_email.admin_order_field = 'user__email'
 
-# Register your models here.
+
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     readonly_fields = ('image_tag',)
@@ -71,7 +74,9 @@ class ProductImageInline(admin.TabularInline):
     def image_tag(self, obj):
         width='200px'
         height='200px'
-        return mark_safe('<img src="{}" width={} height={}/>'.format(obj.image.url, width, height))
+        return mark_safe(
+        '<img src="{}" width={} height={}/>'.format(obj.image.url,
+        width, height))
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -108,11 +113,13 @@ class CartAdmin(admin.ModelAdmin):
 
 
 class LendingAdmin(admin.ModelAdmin):
-    list_display = ('productId', 'userId', 'startDate', 'endDate', 'productStatus')
+    list_display = ('productId', 'userId', 'startDate',
+        'endDate', 'productStatus')
     list_editable = ('productStatus',)
 
 class LendingHistoryAdmin(admin.ModelAdmin):
-    list_display = ('productId', 'userId', 'startDate', 'endDate', 'productStatus')
+    list_display = ('productId', 'userId', 'startDate',
+        'endDate', 'productStatus')
     list_editable = ('productStatus',)
 
 
