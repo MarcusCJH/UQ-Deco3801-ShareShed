@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% block profile %}{% static "main_website/css/profile.css" %}{% endblock %}">
+{% endblock %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+
+    {% if user.is_authenticated %}
+    <div class="container">
+        <div class="user-information">
+            <div class="information-header">
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <hr />
+            </div>
+            <div class="information-content">
+                <p>
+                    E-mail  : {{ user.email }}
+                </p>
+                <p>
+                    Phone Number   : {{ user.last_name }}
+                </p>
+                </p>
+                <p>
+                    Address  : {{ user.address }}, {{ user.suburb }}, {{ user.county }}, {{ user.country }}
+                </p>
+                <p>
+                    Post Code   : {{ user.postcode }}
+                </p>
+            </div>
+        </div>
+
+        {% if user.membership.membership_type == 'm' %}
+            <div class="user-information">
+                <div class="information-header">
+                    <h3>Membership Status</h3>
+                    <hr />
+                </div>
+                <div class="information-content">
+                    <p>
+                        Your membership will end at : {{ user.membership.end_time }}
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+        <form action="{% url 'membership' %}" method="post">
+          {% csrf_token %}
+        <script
+          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
+          data-amount="8000"
+          data-name="Share Shed"
+          data-description="Membership Subscription"
+          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-locale="auto"
+          data-label="Buy Membership"
+          data-currency="aud"
+          data-allow-remember-me="false">
+
+
+        </script>
+          <!--<input type="submit" value="Add Membership" /> -->
+        </form>
+
+    </div>
+    <p>
+    </p>
+    {% endif %}
+
+
+{% endblock %}
