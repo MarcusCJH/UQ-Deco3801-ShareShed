@@ -1,14 +1,11 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory
+    LendingHistory, OpeningHour
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
-from .models import Product, ProductImage, ProductType, ProductTag, \
-    ProductLocation, ProductCondition, Cart
-from django.utils.html import mark_safe
 from .forms import UserCreationForm, UserChangeForm
 
 @admin.register(User)
@@ -136,6 +133,11 @@ class LendingHistoryAdmin(admin.ModelAdmin):
     list_editable = ('productStatus',)
 
 
+class OpeningHourAdmin(admin.ModelAdmin):
+    """Display list of product tag for admin dashboard"""
+    list_display = ('opening_date',)
+
+
 """Register all the admin view"""
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
@@ -147,6 +149,7 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Lending, LendingAdmin)
 admin.site.register(LendingHistory, LendingHistoryAdmin)
+admin.site.register(OpeningHour, OpeningHourAdmin)
 
 """Set admin header and title"""
 admin.site.site_header = "Share Shed Admin"

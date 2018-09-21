@@ -279,3 +279,7 @@ class LendingHistory(models.Model):
     def __str__(self):
         name = self.productId.name
         return str(name)
+
+
+class OpeningHour(models.Model):
+    opening_date = models.DateTimeField()
