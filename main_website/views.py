@@ -84,7 +84,7 @@ def membership_renew(request):
 
 
 
-    return redirect('home')
+    return redirect('profile')
 
 @csrf_exempt
 def top_up_credit(request):
@@ -122,4 +122,4 @@ def top_up_credit(request):
             user.balance = user.balance + (charge.amount/100)
             user.save()
         # ENDPAYMENT
-    return redirect('home')
+    return redirect('profile')
