@@ -238,8 +238,7 @@ class Lending(models.Model):
         return str(duration)
 
     def __str__(self):
-        name = self.productId.name
-        return str(name)
+        return str(self.productId.name)
 
 
 class LendingHistory(models.Model):
@@ -277,9 +276,11 @@ class LendingHistory(models.Model):
         return str(duration)
 
     def __str__(self):
-        name = self.productId.name
-        return str(name)
+        return str(self.productId.name)
 
 
 class OpeningHour(models.Model):
     opening_date = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.opening_date)
