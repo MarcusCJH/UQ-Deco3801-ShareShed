@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="itemsPage.css">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Share Shed Admin</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#"><i class="fas fa-sign-out-alt navicon"></i>&nbsp;Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <div class="searchBar">
+              <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </div>
+            <div class="add">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"">
+                <i class="fas fa-plus"></i>
+                Quick Add
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Items</a>
+                <a class="dropdown-item" href="#">Members</a>
+                <a class="dropdown-item" href="#">Reports</a>
+              </div>
+            </div>
+            <hr>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-home navicon"></i> &nbsp;
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-desktop navicon"></i> &nbsp;
+                  Member Site
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-shopping-basket navicon"></i> &nbsp;
+                  Loans
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <i class="fas fa-box-open navicon"></i> &nbsp;
+                  Items
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-users navicon"></i> &nbsp;
+                  Contacts/Members
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-chart-line navicon"></i> &nbsp;
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <hr>
+                <a class="nav-link" href="#">
+                  <i class="fas fa-sign-out-alt navicon"></i> &nbsp;
+                  Sign Out
+                </a>
+                <hr>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-6-5 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
+            <h1 class="h4">Items</h1>
+            <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+              <div class="btn-group">
+                <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
+              </div> &nbsp;
+              <button class="btn btn-secondary ml-2 pt-1 pb-1">Add Items</button>
+            </div>
+          </div>
+
+          <div class="card mb-3">
+            <div class="card-body">
+              <form>
+                <div class = "form-row">
+                  <div class = "col">
+                    <label for = "tagInput">Tag</label>
+                  </div>
+                  <div class = "col">
+                    <label for = "locationInput">Location</label>
+                  </div>
+                  <div class = "col">
+                    <label for = "assignedInput">Assigned</label>
+                  </div>
+                  <div class = "col">
+                    <label for = "conditionInput">Condition</label>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="col">
+                    <input type="text" id="tagInput" placeholder="Enter a tag">
+                  </div>
+                  <div class="col">
+                    <input type="text" id="locationInput" placeholder="Enter a location">
+                  </div>
+                  <div class="col">
+                    <select class="form-control" id="assignedInput">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <select class="form-control" id="conditionInput">
+                      <option>New</option>
+                      <option>Used</option>
+                      <option>Old</option>
+                    </select>
+                  </div>
+                  <button type="button" class="btn btn-default mb-1" id = "filterButton">Filter</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <form>
+            <div class = "form-row">
+              <div class = "col">
+              <span><label>Show</label>
+               <select class="form-control" id="selectEntryNum">
+                 <option>1</option>
+                 <option>2</option>
+                 <option>3</option>
+                 <option>4</option>
+                 <option>5</option>
+               </select><p>entries</p></span>
+              </div>
+              <div class = "col">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+
+
+
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 ml-2 mr-2">
+                <table class = "table">
+                  <thead>
+                    <h4>Products</h4>
+                  </thead>
+                  <tbody>
+                        <tr>
+                            <td class="col-sm-7 col-md-7">
+                              <div class="media">
+                                <div class = "media-left">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" height = "72px" width = "72px"></a>
+                              </div><div class="media-body">
+                                    <p><b>Air Bed - single (Requires power for built in pump)</b><br/>
+                                    Fee: 0 for 8 days<br/>
+                                    Condition: A<br/>
+                                    Code: MASS0276<br/>
+                                    Item Note: Inflatable Air Bed</p>
+                                    <span class="badge badge-secondary">Art: Hobbies and Music</span>&nbsp;&nbsp;<span class="badge badge-secondary">Household Needs</span>
+                                </div>
+                            </div>
+                          </td>
+                            <td class="col-sm-5 col-md-5 alignRight">
+                            <span class="badge badge-success" id = "badgeCSS">Available</span>
+                            <p align = "right" class = "topMargin">In Stock</p>
+                            <div class="dropdown">
+                              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                Action
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Update</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-sm-7 col-md-7">
+                              <div class="media">
+                                <div class = "media-left">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" height = "72px" width = "72px"></a>
+                              </div><div class="media-body">
+                                    <p><b>Air Compressor</b><br/>
+                                    Fee: 0 for 7 days<br/>
+                                    Condition: B<br/>
+                                    Code: MASS0266<br/>
+                                    Item Note: Air Compressor</p>
+                                    <span class="badge badge-secondary">Tools</span>
+                                </div>
+                            </div>
+                          </td>
+                            <td class="col-sm-5 col-md-5 alignRight">
+                            <span class="badge badge-warning" id = "badgeCSS">On Loan</span>
+                            <p align = "right" class = "topMargin"><a href = "#">Allison Peel</a>&nbsp;(04 Aug to 10 Aug 2018)</p>
+                            <div class="dropdown">
+                              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                Action
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Update</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-sm-7 col-md-7">
+                              <div class="media">
+                                <div class = "media-left">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" height = "72px" width = "72px"></a>
+                              </div><div class="media-body">
+                                    <p><b>Amplifier - single unit bass amp</b><br/>
+                                    Fee: 0 for 8 days<br/>
+                                    Condition: A<br/>
+                                    Code: MASS0243<br/>
+                                    Item Note: Large Amp</p>
+                                    <span class="badge badge-secondary">Art: Hobbies and Music</span>
+                                </div>
+                            </div>
+                          </td>
+                            <td class="col-sm-5 col-md-5 alignRight">
+                            <span class="badge badge-danger" id = "badgeCSS">On Hold</span>
+                            <p align = "right" class = "topMargin">Repair</p>
+                            <div class="dropdown">
+                              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                Action
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Update</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-sm-7 col-md-7">
+                              <div class="media">
+                                <div class = "media-left">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" height = "72px" width = "72px"></a>
+                              </div><div class="media-body">
+                                    <p><b>Backgammon</b><br/>
+                                    Fee: 0 for 8 days<br/>
+                                    Condition: A<br/>
+                                    Code: MASS0106<br/>
+                                    Item Note: Backgammon</p>
+                                    <span class="badge badge-secondary">Board Games</span>
+                                </div>
+                            </div>
+                          </td>
+                            <td class="col-sm-5 col-md-5 alignRight">
+                            <span class="badge badge-success" id = "badgeCSS">Available</span>
+                            <p align = "right" class = "topMargin">In Stock</p>
+                            <div class="dropdown">
+                              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                Action
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Update</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-sm-7 col-md-7">
+                              <div class="media">
+                                <div class = "media-left">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" height = "72px" width = "72px"></a>
+                              </div><div class="media-body">
+                                    <p><b>Baking Moulds</b><br/>
+                                    Fee: 0 for 8 days<br/>
+                                    Condition: A<br/>
+                                    Code: MASS0376<br/>
+                                    Item Note: Christmas themed baking moulds</p>
+                                    <span class="badge badge-secondary">Kitchen & Cooking</span>
+                                </div>
+                            </div>
+                          </td>
+                            <td class="col-sm-5 col-md-5 alignRight">
+                            <span class="badge badge-success" id = "badgeCSS">Available</span>
+                            <p align = "right" class = "topMargin">In Stock</p>
+                            <div class="dropdown">
+                              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                Action
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Update</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                </table>
+              </div>
+            </div>
+
+            <nav aria-label="Page navigation example" class = "paginationBottom">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="mainpage.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
