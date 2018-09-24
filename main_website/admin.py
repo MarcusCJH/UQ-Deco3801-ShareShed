@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningHour
+    LendingHistory, OpeningHour, UserImage
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -49,6 +49,27 @@ class UserAdmin(UserAdmin):
 
     get_member.short_description = "Member"
 
+
+class UserImageInline(admin.TabularInline):
+    """Display list of images for a user admin dashboard"""
+    model = UserImage
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self,obj):
+        """Display te actual image with 200x200 pixel size"""
+        width='200px'
+        height='200px'
+        return mark_safe(
+            '<img src="{}" width={} height={}/>'.format(obj.image.url,
+                                                        width, height))
+
+class UserImageAdmin(admin.ModelAdmin):
+    """Display list of images for admin dashboard"""
+    list_display = ('user', 'alt')
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, obj):
+        return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 class MemberAdmin(admin.ModelAdmin):
     """Display list of members for admin dashboard"""
@@ -150,6 +171,7 @@ admin.site.register(Member, MemberAdmin)
 admin.site.register(Lending, LendingAdmin)
 admin.site.register(LendingHistory, LendingHistoryAdmin)
 admin.site.register(OpeningHour, OpeningHourAdmin)
+admin.site.register(UserImage, UserImageAdmin)
 
 """Set admin header and title"""
 admin.site.site_header = "Share Shed Admin"
