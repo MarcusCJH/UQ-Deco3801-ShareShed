@@ -64,6 +64,10 @@ body {
   padding-top: 48px; /* Space for fixed navbar */
 }
 
+.dashboard #content {
+    width: 100%;
+}
+
 /*
  * Navbar
  */
