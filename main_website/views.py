@@ -37,10 +37,11 @@ def sign_up(request):
                 'token':account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
+            send_mail(mail_subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                [to_email],
+                fail_silently=False)
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreationForm()
