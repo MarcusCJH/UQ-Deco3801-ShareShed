@@ -125,12 +125,15 @@ class LendingAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
                     'endDate', 'productStatus')
     list_editable = ('productStatus',)
+    list_filter = ('productStatus',)
+    search_fields = ('product__name', 'user__id')
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
     list_display = ('productId', 'userId', 'startDate',
                     'endDate', 'productStatus')
     list_editable = ('productStatus',)
+
 
 
 class OpeningHourAdmin(admin.ModelAdmin):
