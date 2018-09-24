@@ -87,13 +87,7 @@ class User(AbstractUser):
     balance = models.FloatField(default=0)
     suburb = models.CharField(max_length=30)
     has_identified = models.BooleanField(default=False)
-    member = AutoOneToOneField(
-        'Member',
-        related_name='membershipType',
-        null=True,
-        on_delete=models.CASCADE,
-    )
-
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

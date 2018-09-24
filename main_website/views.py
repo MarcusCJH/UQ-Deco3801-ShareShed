@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .tokens import account_activation_token
 from .models import User, Member, Payment
-from .forms import UserCreationForm
+from .forms import UserCreationForm, IdentificationForm
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -61,6 +61,19 @@ def user_activation(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+def upload_identification(request):
+    current_user = request.user;
+    if request.method == 'POST':
+        form = IdentificationForm(request.POST, request.FILES)
+        if form.is_valid():
+            # file is saved
+            image = form.save(commit=False)
+            image.user_id = current_user.id
+            image.save()
+            return redirect('/profile')
+    else:
+        form = IdentificationForm()
+    return render(request, 'user/idupload.html', {'form': form})
 
 def membership_renew(request):
     """Method to renew membership"""
@@ -122,7 +135,7 @@ def membership_renew(request):
 @csrf_exempt
 def top_up_credit(request):
     """Payment for credits"""
-    current_user = request.user;
+    current_user = request.user
     if request.method == 'POST':
         # PAYMENT
         token = request.POST['stripeToken']
