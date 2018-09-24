@@ -4,29 +4,10 @@
   padding-top: 0.6rem!important;
   padding-bottom: 0.6rem!important;
 }
-.form-group input[type="checkbox"] {
-    display: none;
-}
 
-.form-group input[type="checkbox"] + .btn-group > label span {
-    width: 20px;
-}
 
-.form-group input[type="checkbox"] + .btn-group > label span:first-child {
-    display: none;
-}
-.form-group input[type="checkbox"] + .btn-group > label span:last-child {
-    display: inline-block;
-}
-
-.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-    display: inline-block;
-}
-.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-    display: none;
-}
-
-#html{
+html, body {
+    max-width: 100%;
     overflow-x: hidden;
 }
 
@@ -38,4 +19,25 @@
 }
 .card{
   border: none;
+}
+.yellowdot{
+  height: 18px;
+  width: 18px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+}
+.reddot{
+  height: 18px;
+  width: 18px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+.greendot{
+  height: 18px;
+  width: 18px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
 }
