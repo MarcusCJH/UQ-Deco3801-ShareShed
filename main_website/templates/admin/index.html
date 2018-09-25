@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card-footer pt-1 pb-1">
-                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+                <a href="{% url 'admin:index'%}main_website/lending/?productStatus__in=COLLECTLATE,RETURNLATE" class="fontb d-flex justify-content-center text-muted">View List</a>
             </div>
         </div>
         <div class="card border-success">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="card-footer pt-1 pb-1">
-                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+                <a href="{% url 'admin:index'%}main_website/lending/?productStatus__exact=ONLOAN" class="fontb d-flex justify-content-center text-muted">View List</a>
             </div>
         </div>
         <div class="card border-danger">
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="card-footer pt-1 pb-1">
-                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+                <a href="{% url 'admin:index'%}main_website/lending/?productStatus__in=COLLECTLATE,RETURNLATE" class="fontb d-flex justify-content-center text-muted">View List</a>
             </div>
         </div>
         <div class="card border-info">
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="card-footer pt-1 pb-1">
-                <a href="#" class="fontb d-flex justify-content-center text-muted">View List</a>
+                <a href="{% url 'admin:index'%}main_website/lending/?productStatus__exact=RESERVED" class="fontb d-flex justify-content-center text-muted">View List</a>
             </div>
         </div>
     </div>
