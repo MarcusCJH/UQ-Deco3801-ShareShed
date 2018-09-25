@@ -62,7 +62,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/member/' %} active {% endifequal %}" href="/admin/main_website/member/">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/user/' %} active {% endifequal %}" href="/admin/main_website/user/">
                   <i class="fas fa-users navicon"></i> &nbsp;
                   Contacts/Members
                 </a>
@@ -101,7 +101,7 @@
         {% endif %}
         {% endblock %}
 
-      <div class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow" id="header">
+      <div class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow fixed-top" id="header">
         <div id="branding" class="navbar-brand col-sm-3 col-md-2 mr-0">
               <a  href="#">Share Shed Admin</a>
         </div>

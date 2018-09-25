@@ -22,6 +22,9 @@ def validate_date(value):
             ('Please borrow within membership period'),
         )
 
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -83,6 +86,7 @@ class User(AbstractUser):
     city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
+    has_identified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -92,6 +96,16 @@ class User(AbstractUser):
     def __str__(self):
         """Returns the user email as the default print statement."""
         return str(self.email)
+
+class IdentificationImage(models.Model):
+    """Image model to extend the product model."""
+    user = AutoOneToOneField(
+        User,
+        related_name='identification',
+        primary_key=True,
+        on_delete=models.CASCADE,
+    )
+    image = models.FileField(upload_to=user_directory_path, blank=False)
 
 
 class UserImage(models.Model):
@@ -119,6 +133,9 @@ class Member(models.Model):
                                         max_length=1, default='g')
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
+
+    def __str__(self):
+        return str(self.membership_type)
 
 
 class Product(models.Model):
