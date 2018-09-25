@@ -10,11 +10,18 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block title %}Dashboard{% endblock %}
-{% block content_title %}{% if title %}<h1>Dashboard</h1>{% endif %}{% endblock %}
+{% block content_title %}{% if title %}<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
+    <h1 class="h4">Dashboard</h1>
+    <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+        <div class="btn-group">
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
+        </div>
+    </div>
+</div>{% endif %}{% endblock %}
 
 {% block content %}
 <div id="content-main">
-
     <div class="card-deck">
         <div class="card border-warning">
             <div class="card-body pt-3 pb-1">
@@ -24,12 +31,12 @@
                     </div>
                     <div class="col-md-8">
                        TODAY
-                        <h5 class="pt-1"> 0 </h5>
+                        <h5 class="pt-1"> {{ count_status }} </h5>
                     </div>
                 </div>
             </div>
             <div class="card-footer pt-1 pb-1">
-                <a href="/admin/main_website/lending/?productStatus__in=COLLECTTODAY%2CRETURNTODAY" class="fontb d-flex justify-content-center text-muted">View List</a>
+                <a href="{% url 'admin:index'%}main_website/lending/?productStatus__in=COLLECTTODAY,RETURNTODAY" class="fontb d-flex justify-content-center text-muted">View List</a>
             </div>
         </div>
         <div class="card border-success">

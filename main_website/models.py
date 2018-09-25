@@ -233,7 +233,6 @@ class Lending(models.Model):
     class Meta:
         verbose_name = 'Loan'
 
-
     def duration(self):
         duration = self.startDate - self.endDate
         return str(duration)
@@ -241,8 +240,6 @@ class Lending(models.Model):
     def __str__(self):
         name = self.productId.name
         return str(name)
-
-
 
 
 class LendingHistory(models.Model):
