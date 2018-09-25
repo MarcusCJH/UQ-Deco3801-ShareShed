@@ -94,6 +94,14 @@ class User(AbstractUser):
         return str(self.email)
 
 
+class UserImage(models.Model):
+    user = models.ForeignKey(User, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='users', blank=False)
+    verified = models.BooleanField(default=False)
+    alt = models.CharField(max_length=128, blank=True)
+
+    def __str__(self):
+        return str(self.alt)
 
 class Member(models.Model):
     """Further extends the user model. Add membership model."""
@@ -111,6 +119,9 @@ class Member(models.Model):
                                         max_length=1, default='g')
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
+
+
+
 
 
 class Product(models.Model):
@@ -141,6 +152,7 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 
 
 class ProductImage(models.Model):
@@ -238,8 +250,7 @@ class Lending(models.Model):
         return str(duration)
 
     def __str__(self):
-        name = self.productId.name
-        return str(name)
+        return str(self.productId.name)
 
 
 class LendingHistory(models.Model):
@@ -277,9 +288,24 @@ class LendingHistory(models.Model):
         return str(duration)
 
     def __str__(self):
-        name = self.productId.name
-        return str(name)
+        return str(self.productId.name)
 
 
-class OpeningHour(models.Model):
-    opening_date = models.DateTimeField()
+class OpeningDay(models.Model):
+    days = (
+        (0, 'Monday'),
+        (1,'Tuesday'),
+        (2, 'Wednesday'),
+        (3,'Thursday'),
+        (4,'Friday'),
+        (5,'Saturday'),
+        (6,'Sunday'),
+    )
+    opening_day = models.IntegerField(choices=days,
+                                      null=False,)
+    opening_hour = models.TimeField()
+
+    def __str__(self):
+        hour = str(self.opening_hour)
+        day = str(self.opening_day)
+        return '{} {}'.format(day, hour)
