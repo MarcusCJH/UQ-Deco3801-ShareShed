@@ -77,12 +77,12 @@ class User(AbstractUser):
     maillist = models.BooleanField(default=True)
     telephone_num = models.CharField(_('Telephone Number'), max_length=15)
     address = models.TextField(max_length=30)
-    city = models.CharField(max_length=20)
-    county = models.CharField(max_length=30)
+    suburb = models.CharField(max_length=30)
     postcode = models.CharField(max_length=4)
+    state = models.CharField(max_length=30)
+    city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
-    suburb = models.CharField(max_length=30)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -121,9 +121,6 @@ class Member(models.Model):
     end_time = models.DateTimeField(blank=True,null=True)
 
 
-
-
-
 class Product(models.Model):
     """Define the product model according to lend-engine specification"""
     name = models.CharField(max_length=128)
@@ -152,7 +149,6 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.name)
-
 
 
 class ProductImage(models.Model):

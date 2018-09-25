@@ -17,8 +17,8 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'county', 'postcode', 'country',
-                                         'suburb', 'balance')}),
+                                         'suburb','state', 'postcode',
+                                         'country', 'balance')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')})
@@ -28,15 +28,15 @@ class UserAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'first_name',
                        'last_name', 'telephone_num', 'address', 'city',
-                       'county', 'postcode', 'country', 'suburb'),
+                       'suburb', 'state', 'postcode', 'country'),
         }),
     )
     list_display = ('email', 'first_name', 'last_name',
                     'is_staff', 'get_member')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
-                     'address', 'city', 'county', 'postcode', 'country',
+                     'address', 'city', 'state', 'postcode', 'country',
                      'suburb')
-    ordering = ('email',)
+    ordering = ('first_name',)
 
     def get_member(self, obj):
         member = Member.objects.get(user_id=obj.id)
