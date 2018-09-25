@@ -131,10 +131,14 @@ def get_status_count(request):
     reservernumber = len(Lending.objects.all().filter(productStatus='RESERVED'))
     strreservednumber = str(reservernumber)
 
-    pendingnumber = len(Lending.objects.all().filter(productStatus='RETURNTODAY' or 'COLLECTTODAY'))
+    returntoday = len(Lending.objects.all().filter(productStatus='RETURNTODAY'))
+    collecttoday = len(Lending.objects.all().filter(productStatus='COLLECTTODAY'))
+    pendingnumber = returntoday+collecttoday
     strpendingnumber = str(pendingnumber)
 
-    overduenumber = len(Lending.objects.all().filter(productStatus='RETURNLATE' or 'COLLECTLATE'))
+    returnlate = len(Lending.objects.all().filter(productStatus='RETURNLATE'))
+    collectlate = len(Lending.object.all().filter(productStatus='COLLECTLATE'))
+    overduenumber = returnlate + collectlate
     stroverduenumber = str(overduenumber)
 
     return render(request, 'admin/mainpage.html', {'onloan':[stronloannumber], 'reserve': [strreservednumber], 'pending': [strpendingnumber], 'overdue': [stroverduenumber]})
