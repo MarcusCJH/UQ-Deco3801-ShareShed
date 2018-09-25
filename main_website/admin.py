@@ -37,6 +37,7 @@ class UserAdmin(UserAdmin):
                      'address', 'city', 'state', 'postcode', 'country',
                      'suburb')
     ordering = ('first_name',)
+    readonly_fields = ('date_joined', 'last_login')
 
     def get_member(self, obj):
         member = Member.objects.get(user_id=obj.id)
