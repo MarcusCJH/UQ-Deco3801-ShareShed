@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-from .models import User, Member, Payment
+from .models import User, Member, Payment, Lending
 from .forms import UserCreationForm
 import stripe
 
@@ -123,3 +123,5 @@ def top_up_credit(request):
             user.save()
         # ENDPAYMENT
     return redirect('profile')
+
+

@@ -128,6 +128,11 @@ class LendingAdmin(admin.ModelAdmin):
     list_filter = ('productStatus',)
     search_fields = ('product__name', 'user__id')
 
+    def count_status(self):
+        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+        return number
+
+
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
     list_display = ('productId', 'userId', 'startDate',
