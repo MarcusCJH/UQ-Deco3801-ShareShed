@@ -12,7 +12,5 @@ urlpatterns = [
     path('topup',views.top_up_credit, name='topup'),
     path('profile', TemplateView.as_view(template_name='user/profile.html'),
           name='profile'),
-    path('mainpage', TemplateView.as_view(template_name='admin/mainpage.html'),
-          name='mainpage'),
-
+    path('mainpage', views.get_status_count, name='get_status_count'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
