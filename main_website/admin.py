@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningHour, UserImage
+    LendingHistory, OpeningDay, UserImage
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -154,9 +154,9 @@ class LendingHistoryAdmin(admin.ModelAdmin):
     list_editable = ('productStatus',)
 
 
-class OpeningHourAdmin(admin.ModelAdmin):
+class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
-    list_display = ('opening_date',)
+    list_display = ('opening_day','opening_hour')
 
 
 """Register all the admin view"""
@@ -170,7 +170,7 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Lending, LendingAdmin)
 admin.site.register(LendingHistory, LendingHistoryAdmin)
-admin.site.register(OpeningHour, OpeningHourAdmin)
+admin.site.register(OpeningDay, OpeningDayAdmin)
 admin.site.register(UserImage, UserImageAdmin)
 
 """Set admin header and title"""
