@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningHour
+    LendingHistory, OpeningDay, UserImage
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -17,8 +17,8 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'county', 'postcode', 'country',
-                                         'suburb', 'balance')}),
+                                         'suburb','state', 'postcode',
+                                         'country', 'balance')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')})
@@ -28,15 +28,16 @@ class UserAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'first_name',
                        'last_name', 'telephone_num', 'address', 'city',
-                       'county', 'postcode', 'country', 'suburb'),
+                       'suburb', 'state', 'postcode', 'country'),
         }),
     )
     list_display = ('email', 'first_name', 'last_name',
                     'is_staff', 'get_member')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
-                     'address', 'city', 'county', 'postcode', 'country',
+                     'address', 'city', 'state', 'postcode', 'country',
                      'suburb')
-    ordering = ('email',)
+    ordering = ('first_name',)
+    readonly_fields = ('date_joined', 'last_login')
 
     def get_member(self, obj):
         member = Member.objects.get(user_id=obj.id)
@@ -49,6 +50,27 @@ class UserAdmin(UserAdmin):
 
     get_member.short_description = "Member"
 
+
+class UserImageInline(admin.TabularInline):
+    """Display list of images for a user admin dashboard"""
+    model = UserImage
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self,obj):
+        """Display te actual image with 200x200 pixel size"""
+        width='200px'
+        height='200px'
+        return mark_safe(
+            '<img src="{}" width={} height={}/>'.format(obj.image.url,
+                                                        width, height))
+
+class UserImageAdmin(admin.ModelAdmin):
+    """Display list of images for admin dashboard"""
+    list_display = ('user', 'alt')
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, obj):
+        return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 class MemberAdmin(admin.ModelAdmin):
     """Display list of members for admin dashboard"""
@@ -140,10 +162,9 @@ class LendingHistoryAdmin(admin.ModelAdmin):
     list_editable = ('productStatus',)
 
 
-
-class OpeningHourAdmin(admin.ModelAdmin):
+class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
-    list_display = ('opening_date',)
+    list_display = ('opening_day','opening_hour')
 
 
 """Register all the admin view"""
@@ -157,7 +178,8 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Lending, LendingAdmin)
 admin.site.register(LendingHistory, LendingHistoryAdmin)
-admin.site.register(OpeningHour, OpeningHourAdmin)
+admin.site.register(OpeningDay, OpeningDayAdmin)
+admin.site.register(UserImage, UserImageAdmin)
 
 """Set admin header and title"""
 admin.site.site_header = "Share Shed Admin"
