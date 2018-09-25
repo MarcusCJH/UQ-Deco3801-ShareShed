@@ -125,11 +125,10 @@ class LendingAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
                     'endDate', 'productStatus')
     list_editable = ('productStatus',)
-    list_filter = ('productStatus',)
     search_fields = ('product__name', 'user__id')
 
     def count_status(self):
-        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+        number = len(Lending.objects.all())
         return number
 
 
