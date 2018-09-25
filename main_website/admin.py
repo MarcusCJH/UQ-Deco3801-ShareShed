@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningHour, IdentificationImage
+    LendingHistory, OpeningDay, IdentificationImage
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -22,6 +22,7 @@ class UserIdentificationInline(admin.StackedInline):
         '<img src="{}" width={} height={}/>'.format(obj.image.url,
                                                     width, height))
 
+
 class MemberInline(admin.StackedInline):
     """Display list of members for admin dashboard"""
     model = Member
@@ -33,7 +34,6 @@ class MemberInline(admin.StackedInline):
                 'end_time')
 
 
-
 @admin.register(User)
 class UserAdmin(UserAdmin):
     """Display list of users for admin dashboard"""
@@ -43,8 +43,8 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'county', 'postcode', 'country',
-                                         'suburb', 'balance')}),
+                                         'suburb','state', 'postcode',
+                                         'country', 'balance')}),
         (_('Options'), {'fields': ('has_identified', 'maillist')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
@@ -55,15 +55,16 @@ class UserAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'first_name',
                        'last_name', 'telephone_num', 'address', 'city',
-                       'county', 'postcode', 'country', 'suburb', 'maillist'),
+                       'suburb', 'state', 'postcode', 'country', 'maillist'),
         }),
     )
     list_display = ('email', 'first_name', 'last_name',
                     'is_staff', 'get_member', 'has_identified')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
-                     'address', 'city', 'county', 'postcode', 'country',
+                     'address', 'city', 'state', 'postcode', 'country',
                      'suburb')
-    ordering = ('email',)
+    ordering = ('first_name',)
+    readonly_fields = ('date_joined', 'last_login')
     inlines = [MemberInline, UserIdentificationInline]
 
     def get_member(self, obj):
@@ -76,7 +77,6 @@ class UserAdmin(UserAdmin):
         return membership_options[member.membership_type]
 
     get_member.short_description = "Member"
-
 
 
 class MemberAdmin(admin.ModelAdmin):
@@ -155,6 +155,13 @@ class LendingAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
                     'endDate', 'productStatus')
     list_editable = ('productStatus',)
+    list_filter = ('productStatus',)
+    search_fields = ('product__name', 'user__id')
+
+    def count_status(self):
+        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+        return number
+
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
@@ -163,9 +170,9 @@ class LendingHistoryAdmin(admin.ModelAdmin):
     list_editable = ('productStatus',)
 
 
-class OpeningHourAdmin(admin.ModelAdmin):
+class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
-    list_display = ('opening_date',)
+    list_display = ('opening_day','opening_hour')
 
 
 """Register all the admin view"""
@@ -179,7 +186,7 @@ admin.site.register(Cart, CartAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Lending, LendingAdmin)
 admin.site.register(LendingHistory, LendingHistoryAdmin)
-admin.site.register(OpeningHour, OpeningHourAdmin)
+admin.site.register(OpeningDay, OpeningDayAdmin)
 
 """Set admin header and title"""
 admin.site.site_header = "Share Shed Admin"

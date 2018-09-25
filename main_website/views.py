@@ -1,6 +1,5 @@
 import datetime
-
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.contrib.auth import login, authenticate
@@ -12,7 +11,6 @@ from django.utils import timezone
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
-
 from .tokens import account_activation_token
 from .models import User, Member, Payment
 from .forms import UserCreationForm, IdentificationForm
@@ -83,11 +81,11 @@ def membership_renew(request):
 
         #TEST EMAIL HERE
         #TODO: Seems like there's a problem sending email
-        send_mail('Subject here',
-            'Here is the message.',
-            settings.EMAIL_HOST_USER,
-            ['shareshed@risyad.cloud'],
-            fail_silently=False)
+        #send_mail('Subject here',
+        #    'Here is the message.',
+        #   settings.EMAIL_HOST_USER,
+        #    ['shareshed@risyad.cloud'],
+        #    fail_silently=False)
 
         # PAYMENT
         token = request.POST['stripeToken']
@@ -169,3 +167,15 @@ def top_up_credit(request):
             user.save()
         # ENDPAYMENT
     return redirect('profile')
+
+def test_email(request):
+    success = send_mail('Test mail',
+                        'Hello',
+                        settings.EMAIL_HOST_USER,
+                        ['risyadhasbullah@gmail.com'],
+                        fail_silently=False)
+
+    if success:
+        return HttpResponse('Success')
+    else:
+        return HttpResponse('Invalid')

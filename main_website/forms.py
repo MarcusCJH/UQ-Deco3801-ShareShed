@@ -18,22 +18,22 @@ class UserCreationForm(UserCreationForm):
         label='Telephone Number',
         required=True)
 
+    address = forms.CharField(max_length=30, label='Street Address',
+        required=True)
+    city = forms.CharField(max_length=20, required=True)
+    suburb = forms.CharField(max_length=30, required=True)
     postcode = forms.CharField(
         max_length=4,
         validators=[RegexValidator('\d{4}',
         message="Please enter valid Post Code")],
         required=True)
-    address = forms.CharField(max_length=30, label='Street Address',
-        required=True)
-    city = forms.CharField(max_length=20, required=True)
-    county = forms.CharField(max_length=20, required=True)
+    state = forms.CharField(max_length=20, required=True)
     country = forms.CharField(max_length=30, required=True)
-    suburb = forms.CharField(max_length=30, required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('email', 'first_name', 'last_name', 'telephone_num',
-                  'postcode', 'address', 'city', 'county', 'country', 'suburb',
+                  'address', 'city','suburb', 'state', 'postcode', 'country',
                   'password1', 'password2')
 
 
