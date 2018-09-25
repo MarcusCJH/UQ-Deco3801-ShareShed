@@ -73,6 +73,12 @@
                   Reports
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link {% ifequal request.path '/admin/main_website/openingday/' %} active {% endifequal %}" href="/admin/main_website/openingday/">
+                  <i class="far fa-clock navicon"></i> &nbsp;
+                  Opening Day
+                </a>
+              </li>
               {% if user.is_superuser %}
               <li class="nav-item">
                 <a class="nav-link {% ifequal request.path '/admin/auth/group/' %} active {% endifequal %}" href="/admin/auth/group/">
