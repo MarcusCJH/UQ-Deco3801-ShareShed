@@ -146,6 +146,8 @@ class OpeningHourAdmin(admin.ModelAdmin):
     list_display = ('opening_date',)
 
 
+
+
 """Register all the admin view"""
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
