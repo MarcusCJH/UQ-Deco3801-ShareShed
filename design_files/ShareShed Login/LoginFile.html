@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Login </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+  #id{
+    color:white;
+    text-align: center;
+    width:100%;
+    margin: 0 auto;
+  }
+  #bgc{
+    background-color: #D7D7D7;
+    border:1px solid blue;
+    border-radius:2 px;
+  }
+  button{
+    background-color:#84C3F3;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-size: 20px;
+  }
+  input[type=text], input[type=password]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: Quicksand;
+  }
+  label{
+    font-size: 17px;
+    font-family: Quicksand;
+  }
+  .buttonHolder{
+      text-align: center;
+  }
+  .ctr{
+      text-align: center;
+      font-size: 18px;
+      color:black;
+  }
+  #wrap{
+    max-width: 80%;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<br><br>
+<body>
+  <div class = "container-fluid" id="bg">
+    <br>
+    <div class = "row" id="wrap"> 
+      <div class ="col-lg-3 col-sm-6 col-md-4 col-xs-12 col-md-offset-3">
+        <img src="login.jpg" alt="Tools" width="400" height="428">
+      </div>
+      <div class ="col-lg-4 col-sm-6 col-md-5 col-xs-12" id="bgc">
+        <form action = "" method="post">
+        <h2 style="text-align: center; font-family: 'Open Sans', sans-serif;"><b>LOGIN</b></h2>
+          <br><br>
+          <label><b>Email</b></label><br>
+          <input type="text" placeholder="Enter email" name="username"><br>
+          <label><b>Password</b></label><br>
+          <input type="password" placeholder="Enter password" name="password"><br><br>
+          <div class="buttonHolder">
+          <button type="submit" name="login" style="color:white; font-family: Quicksand;">Login</button>
+        </div><br>
+        <div class="ctr">
+        <a href="#">Forgot password?</a>
+      </div>
+          <br>
+        </form>
+      </div>
+      </div>
+      </div>   
+  </body>
