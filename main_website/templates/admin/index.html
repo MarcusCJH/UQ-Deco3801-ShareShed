@@ -24,12 +24,12 @@
                     </div>
                     <div class="col-md-8">
                        TODAY
-                        <h5 class="pt-1"> 0 </h5>
+                        <h5 class="pt-1"> {{ count_status }} </h5>
                     </div>
                 </div>
             </div>
             <div class="card-footer pt-1 pb-1">
-                <a href="/admin/main_website/lending/?productStatus__in=COLLECTTODAY%2CRETURNTODAY" class="fontb d-flex justify-content-center text-muted">View List</a>
+                <a href="{% url 'admin:index'%}main_website/lending/?productStatus__in=COLLECTLATE,RETURNLATE" class="fontb d-flex justify-content-center text-muted">View List</a>
             </div>
         </div>
         <div class="card border-success">
