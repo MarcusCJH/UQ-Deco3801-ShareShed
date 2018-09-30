@@ -12,6 +12,8 @@ urlpatterns = [
     path('topup',views.top_up_credit, name='topup'),
     path('profile', TemplateView.as_view(template_name='user/profile.html'),
           name='profile'),
+    path('profile/edit', views.update_profile, name='update_profile'),
+    path('profile/change_password', views.change_password, name='change_password'),
     path('profile/idupload', views.upload_identification, name='upload_identification'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.user_activation, name='activate'),

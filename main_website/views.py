@@ -1,8 +1,9 @@
 import datetime
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib import messages
 from django.conf import settings
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,update_session_auth_hash
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect, get_object_or_404
@@ -13,10 +14,42 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
 from .models import User, Member, Payment
-from .forms import UserCreationForm, IdentificationForm
+from .forms import UserCreationForm, IdentificationForm, UserChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change_password.html', {
+        'form': form
+    })
+
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('/profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = UserChangeForm(instance=request.user)
+    return render(request, 'registration/edit_profile.html', {
+        'form': form,
+    })
 
 def sign_up(request):
     """Method to invoke user sign up form."""

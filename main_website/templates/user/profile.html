@@ -24,7 +24,7 @@
                     E-mail  : {{ user.email }}
                 </p>
                 <p>
-                    Phone Number   : {{ user.last_name }}
+                    Phone Number   : {{ user.telephone_num }}
                 </p>
                 </p>
                 <p>
@@ -37,6 +37,8 @@
                     Balance : ${{user.balance}}
                 </p>
             </div>
+            <a href="{% url 'update_profile'%}">Update Profile</a>
+            <a href="{% url 'change_password' %}">Change Password</a>
         </div>
 
             <div class="user-information">
