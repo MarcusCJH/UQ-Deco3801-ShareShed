@@ -18,6 +18,7 @@
           {% csrf_token %}
           {{ form.as_p }}
           <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 30px; font-size: 20px;"type="submit">Login</button>
+          <a href="{% url 'password_reset' %}">Forgot your password</a>
         </form>
       </div>
     </div>
