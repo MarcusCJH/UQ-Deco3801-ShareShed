@@ -73,7 +73,8 @@ def sign_up(request):
                 settings.EMAIL_HOST_USER,
                 [to_email],
                 fail_silently=False)
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return render(request, 'user/activate.html')
+            # return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
