@@ -10,11 +10,18 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block title %}Dashboard{% endblock %}
-{% block content_title %}{% if title %}<h1>Dashboard</h1>{% endif %}{% endblock %}
+{% block content_title %}{% if title %}<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
+    <h1 class="h4">Dashboard</h1>
+    <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+        <div class="btn-group">
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
+        </div>
+    </div>
+</div>{% endif %}{% endblock %}
 
 {% block content %}
 <div id="content-main">
-
     <div class="card-deck">
         <div class="card border-warning">
             <div class="card-body pt-3 pb-1">

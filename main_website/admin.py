@@ -50,6 +50,10 @@ class UserAdmin(UserAdmin):
 
     get_member.short_description = "Member"
 
+    def get_onloan_count(self):
+        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+        return number
+
 
 class UserImageInline(admin.TabularInline):
     """Display list of images for a user admin dashboard"""
@@ -150,8 +154,8 @@ class LendingAdmin(admin.ModelAdmin):
     list_filter = ('productStatus',)
     search_fields = ('product__name', 'user__id')
 
-    def count_status(self):
-        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+    def count_status(self, obj):
+        number = len(Lending.objects.all().filter(productstatus=obj))
         return number
 
 
@@ -165,6 +169,8 @@ class LendingHistoryAdmin(admin.ModelAdmin):
 class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
     list_display = ('opening_day','opening_hour')
+
+
 
 
 """Register all the admin view"""
