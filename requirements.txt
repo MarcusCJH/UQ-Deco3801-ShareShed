@@ -7,14 +7,16 @@ dj-database-url==0.5.0
 Django==2.1
 django-annoying==0.10.4
 django-heroku==0.3.1
+django-smtp-ssl==1.0
 django-widget-tweaks==1.4.3
+docutils==0.14
 google-api-python-client==1.7.4
 google-auth==1.5.1
 google-auth-httplib2==0.0.3
 gunicorn==19.9.0
 httplib2==0.11.3
 idna==2.7
-mysqlclient==1.3.12
+mysqlclient>=1.3.11 --only-binary :all:
 oauth2client==4.1.3
 Pillow==5.2.0
 psycopg2==2.7.5

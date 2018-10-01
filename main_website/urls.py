@@ -18,5 +18,4 @@ urlpatterns = [
     path('profile/idupload', views.upload_identification, name='upload_identification'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.user_activation, name='activate'),
-    path('test_email',views.test_email, name='test_email'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
