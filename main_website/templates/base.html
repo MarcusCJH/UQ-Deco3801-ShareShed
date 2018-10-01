@@ -12,6 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base-home.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base-navbar.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base-footer.css" %}">
     <link rel="icon" href="../../../../favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -22,7 +23,7 @@
   <body>
     <main>
       {% block main-nav %}
-          <div class="navbar navbar-expand-md navbar-dark bg-dark">
+          <div class="navbar navbar-expand-md navbar-dark bg-dark pt-0 pb-0 pl-2 pr-2">
             <a class="navbar-brand" href="{% url 'home' %}">
               <img src="{% static "main_website/img/icon-shareshed.png" %}"width="45" height="45" class="d-inline-block align-top" alt="">
               </a>
@@ -54,7 +55,8 @@
                   </li>
                   {% if user.is_authenticated %}
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.first_name }}</a>
+                    <!-- I use email so that the dropdown will not went out of focus. Seems like if the name is not long enough, the drop down will go out of screen -->
+                    <a class="nav-link dropdown-toggle" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.email }}</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown05">
                       <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                       {% if user.is_staff %}
@@ -66,13 +68,15 @@
                   </li>
                   {% else %}
                   <li class="nav-item">
-                    <button class="loginBtn btn btn-link" onclick="document.getElementById('id01').style.display='block'">Login</button>
+                    <!-- <button class="loginBtn btn btn-link" onclick="document.getElementById('id01').style.display='block'">Login</button> -->
+                    <!-- Please take a look on registration/login.html and admin/login.html to see how they modify the login html.
+                    Unless you know how to connect views with the pop up -->
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
                   </li>
                   {% endif %}
                 </ul>
               </div>
           </div>
-
           <div id="id01" class="modal">
             <form class="modal-content animate" action="/action_page.php">
               <div class="imgcontainer">
@@ -85,7 +89,7 @@
                 <input class="mb-2" type="text" placeholder="Enter Username" name="uname" id="inputs" required>
                 <br>
                 <label for="psw"><b>Password</b></label>
-                <input class="mb-2" type="password" placeholder="Enter Password" name="psw" id="inputs" required>
+                <input class="mb-3" type="password" placeholder="Enter Password" name="psw" id="inputs" required>
                 <br>
                 <!-- <label>
                   <input type="checkbox" checked="checked" name="remember"> Remember me
@@ -149,7 +153,7 @@
           </div>
       </div>
   </footer>
-
+  <script src="{% static "main_website/js/base-navbar.js" %}"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
