@@ -1,12 +1,38 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningDay, UserImage
+    LendingHistory, OpeningDay, IdentificationImage
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .forms import UserCreationForm, UserChangeForm
+
+
+class UserIdentificationInline(admin.StackedInline):
+    """Display list of images for a product admin dashboard"""
+    model = IdentificationImage
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, obj):
+        """Display the actual image with 200x200 pixel size"""
+        width='200px'
+        height='200px'
+        return mark_safe(
+        '<img src="{}" width={} height={}/>'.format(obj.image.url,
+                                                    width, height))
+
+
+class MemberInline(admin.StackedInline):
+    """Display list of members for admin dashboard"""
+    model = Member
+
+    list_display = ('membership_type', 'start_time',
+                    'end_time')
+    #search_fields = ('user_id', 'get_email', 'membership_type')
+    ordering = ('user_id', 'membership_type', 'start_time',
+                'end_time')
+
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
@@ -17,8 +43,9 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'county', 'postcode', 'country',
-                                         'suburb', 'balance')}),
+                                         'suburb','state', 'postcode',
+                                         'country', 'balance')}),
+        (_('Options'), {'fields': ('has_identified', 'maillist')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')})
@@ -28,15 +55,17 @@ class UserAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'first_name',
                        'last_name', 'telephone_num', 'address', 'city',
-                       'county', 'postcode', 'country', 'suburb'),
+                       'suburb', 'state', 'postcode', 'country', 'maillist'),
         }),
     )
     list_display = ('email', 'first_name', 'last_name',
-                    'is_staff', 'get_member')
+                    'is_staff', 'get_member', 'has_identified')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
-                     'address', 'city', 'county', 'postcode', 'country',
+                     'address', 'city', 'state', 'postcode', 'country',
                      'suburb')
-    ordering = ('email',)
+    ordering = ('first_name',)
+    readonly_fields = ('date_joined', 'last_login')
+    inlines = [MemberInline, UserIdentificationInline]
 
     def get_member(self, obj):
         member = Member.objects.get(user_id=obj.id)
@@ -49,27 +78,6 @@ class UserAdmin(UserAdmin):
 
     get_member.short_description = "Member"
 
-
-class UserImageInline(admin.TabularInline):
-    """Display list of images for a user admin dashboard"""
-    model = UserImage
-    readonly_fields = ('image_tag',)
-
-    def image_tag(self,obj):
-        """Display te actual image with 200x200 pixel size"""
-        width='200px'
-        height='200px'
-        return mark_safe(
-            '<img src="{}" width={} height={}/>'.format(obj.image.url,
-                                                        width, height))
-
-class UserImageAdmin(admin.ModelAdmin):
-    """Display list of images for admin dashboard"""
-    list_display = ('user', 'alt')
-    readonly_fields = ('image_tag',)
-
-    def image_tag(self, obj):
-        return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 class MemberAdmin(admin.ModelAdmin):
     """Display list of members for admin dashboard"""
@@ -91,6 +99,7 @@ class ProductImageInline(admin.TabularInline):
     """Display list of images for a product admin dashboard"""
     model = ProductImage
     readonly_fields = ('image_tag',)
+    extra = 0
 
     def image_tag(self, obj):
         """Display the actual image with 200x200 pixel size"""
@@ -146,6 +155,13 @@ class LendingAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
                     'endDate', 'productStatus')
     list_editable = ('productStatus',)
+    list_filter = ('productStatus',)
+    search_fields = ('product__name', 'user__id')
+
+    def count_status(self):
+        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+        return number
+
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
@@ -171,7 +187,6 @@ admin.site.register(Member, MemberAdmin)
 admin.site.register(Lending, LendingAdmin)
 admin.site.register(LendingHistory, LendingHistoryAdmin)
 admin.site.register(OpeningDay, OpeningDayAdmin)
-admin.site.register(UserImage, UserImageAdmin)
 
 """Set admin header and title"""
 admin.site.site_header = "Share Shed Admin"

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Upload ID{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'main_website/css/base-form.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="loginformdiv">
+        <h2>Upload ID</h2>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 30px; font-size: 20px;"type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

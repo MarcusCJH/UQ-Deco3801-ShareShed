@@ -55,6 +55,7 @@
                   </li>
                   {% if user.is_authenticated %}
                   <li class="nav-item dropdown">
+                    <!-- I use email so that the dropdown will not went out of focus. Seems like if the name is not long enough, the drop down will go out of screen -->
                     <a class="nav-link dropdown-toggle" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.email }}</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown05">
                       <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
@@ -67,7 +68,10 @@
                   </li>
                   {% else %}
                   <li class="nav-item">
-                    <button class="loginBtn btn btn-link" onclick="document.getElementById('id01').style.display='block'">Login</button>
+                    <!-- <button class="loginBtn btn btn-link" onclick="document.getElementById('id01').style.display='block'">Login</button> -->
+                    <!-- Please take a look on registration/login.html and admin/login.html to see how they modify the login html.
+                    Unless you know how to connect views with the pop up -->
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
                   </li>
                   {% endif %}
                 </ul>
