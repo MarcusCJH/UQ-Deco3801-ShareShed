@@ -7,6 +7,39 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .forms import UserCreationForm, UserChangeForm
+from django.views.decorators.cache import never_cache
+from django.db.models import Q
+from django.template.response import TemplateResponse
+
+
+class MyAdminSite(admin.AdminSite):
+    """Override the default admin config"""
+    @never_cache
+    def index(self, request, extra_context=None):
+        """Display the main admin index page"""
+        lendings = Lending.objects.all()
+        collect_today = lendings.filter(Q(productStatus='COLLECTTODAY'))
+        return_today = lendings.filter(Q(productStatus='RETURNTODAY'))
+        today = len(collect_today) + len(return_today)
+        reserved = len(lendings.filter(Q(productStatus='RESERVED')))
+        overdue = len(lendings.filter(Q(productStatus='RETURNLATE')))
+        onloan = len(lendings.filter(Q(productStatus='ONLOAN')))
+
+        context = {
+            **self.each_context(request),
+            'title': self.index_title,
+            'collect_today': collect_today,
+            'return_today': return_today,
+            'today':today,
+            'reserved': reserved,
+            'overdue':overdue,
+            'onloan':onloan,
+            **(extra_context or {}),
+        }
+
+        request.current_app = self.name
+
+        return TemplateResponse(request, self.index_template or 'admin/index.html', context)
 
 
 class UserIdentificationInline(admin.StackedInline):
@@ -179,22 +212,22 @@ class OpeningDayAdmin(admin.ModelAdmin):
     list_display = ('opening_day','opening_hour')
 
 
-
+admin_site = MyAdminSite(name='myadmin')
 
 """Register all the admin view"""
-admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductImage, ProductImageAdmin)
-admin.site.register(ProductType, ProductTypeAdmin)
-admin.site.register(ProductTag, ProductTagAdmin)
-admin.site.register(ProductLocation, ProductLocationAdmin)
-admin.site.register(ProductCondition, ProductConditionAdmin)
-admin.site.register(Cart, CartAdmin)
-admin.site.register(Member, MemberAdmin)
-admin.site.register(Lending, LendingAdmin)
-admin.site.register(LendingHistory, LendingHistoryAdmin)
-admin.site.register(OpeningDay, OpeningDayAdmin)
+admin_site.register(Product, ProductAdmin)
+admin_site.register(ProductImage, ProductImageAdmin)
+admin_site.register(ProductType, ProductTypeAdmin)
+admin_site.register(ProductTag, ProductTagAdmin)
+admin_site.register(ProductLocation, ProductLocationAdmin)
+admin_site.register(ProductCondition, ProductConditionAdmin)
+admin_site.register(Cart, CartAdmin)
+admin_site.register(Member, MemberAdmin)
+admin_site.register(Lending, LendingAdmin)
+admin_site.register(LendingHistory, LendingHistoryAdmin)
+admin_site.register(OpeningDay, OpeningDayAdmin)
 
 """Set admin header and title"""
-admin.site.site_header = "Share Shed Admin"
-admin.site.site_title = "Share Shed admin login"
-admin.site.index_title = "Hello"
+admin_site.site_header = "Share Shed Admin"
+admin_site.site_title = "Share Shed admin login"
+admin_site.index_title = "Hello"

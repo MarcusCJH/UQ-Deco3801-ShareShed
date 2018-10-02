@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-8">
                        TODAY
-                        <h5 class="pt-1"> {{ count_status }} </h5>
+                        <h5 class="pt-1"> {{ today }} </h5>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-8">
                         ON LOAN
-                        <h5 class="pt-1"> 0 </h5>
+                        <h5 class="pt-1"> {{ onloan }} </h5>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md-8">
                         OVERDUE
-                        <h5 class="pt-1"> 0 </h5>
+                        <h5 class="pt-1"> {{ overdue }} </h5>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-md-8">
                         RESERVATIONS
-                        <h5 class="pt-1"> 0 </h5>
+                        <h5 class="pt-1"> {{ reserved }} </h5>
                     </div>
                 </div>
             </div>
@@ -141,5 +141,3 @@
 
 
 {% endblock %}
-
-

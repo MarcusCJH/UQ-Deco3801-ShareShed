@@ -12,7 +12,6 @@ urlpatterns = [
     path('topup',views.top_up_credit, name='topup'),
     path('profile', TemplateView.as_view(template_name='user/profile.html'),
           name='profile'),
-    path('mainpage', views.get_status_count, name='get_status_count'),
     path('profile/edit', views.update_profile, name='update_profile'),
     path('profile/change_password', views.change_password, name='change_password'),
     path('profile/idupload', views.upload_identification, name='upload_identification'),

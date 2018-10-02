@@ -201,22 +201,3 @@ def top_up_credit(request):
             user.save()
         # ENDPAYMENT
     return redirect('profile')
-
-def get_status_count(request):
-    onloannumber = len(Lending.objects.all().filter(productStatus='ONLOAN'))
-    stronloannumber = str(onloannumber)
-
-    reservernumber = len(Lending.objects.all().filter(productStatus='RESERVED'))
-    strreservednumber = str(reservernumber)
-
-    returntoday = len(Lending.objects.all().filter(productStatus='RETURNTODAY'))
-    collecttoday = len(Lending.objects.all().filter(productStatus='COLLECTTODAY'))
-    pendingnumber = returntoday+collecttoday
-    strpendingnumber = str(pendingnumber)
-
-    returnlate = len(Lending.objects.all().filter(productStatus='RETURNLATE'))
-    collectlate = len(Lending.object.all().filter(productStatus='COLLECTLATE'))
-    overduenumber = returnlate + collectlate
-    stroverduenumber = str(overduenumber)
-
-    return render(request, 'admin/mainpage.html', {'onloan':[stronloannumber], 'reserve': [strreservednumber], 'pending': [strpendingnumber], 'overdue': [stroverduenumber]})
