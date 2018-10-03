@@ -131,8 +131,8 @@ class Member(models.Model):
     )
     membership_type = models.CharField(choices=membership_options,
                                         max_length=1, default='g')
-    start_time = models.DateTimeField(blank=True,null=True)
-    end_time = models.DateTimeField(blank=True,null=True)
+    start_time = models.DateField(blank=True,null=True)
+    end_time = models.DateField(blank=True,null=True)
 
     def __str__(self):
         return str(self.membership_type)
