@@ -9,13 +9,16 @@ from datetime import datetime
 
 def validate_date(value):
     """Validator to be used for lending model."""
-    if value.weekday() in [1,2,3,6]:
+    days = OpeningDay.objects.values_list('opening_day')
+    opening_day = []
+    for day in days:
+        opening_day.append(day[0])
+    if value.weekday() not in opening_day:
         raise ValidationError(
             ('Share Shed is not open'),
         )
 
-
-    expirydate = '2018-09-30'
+    expirydate = '2019-09-30'
     expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
     if value >expiry:
         raise ValidationError(
