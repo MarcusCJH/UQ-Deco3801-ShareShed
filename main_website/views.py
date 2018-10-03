@@ -4,6 +4,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth import login, authenticate,update_session_auth_hash
+from django.db.models import Count
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect, get_object_or_404
@@ -21,7 +22,8 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def catalogue(request):
-    catagories = ProductType.objects.values('type_name').distinct()
+    #catagories = ProductType.objects.values('type_name').distinct()
+    catagories = ProductType.objects.all().annotate(num_count=Count('product'))
     context ={
         'catagories': catagories
     }

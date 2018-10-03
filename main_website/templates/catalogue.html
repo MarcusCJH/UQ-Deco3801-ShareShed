@@ -33,7 +33,7 @@
             		<div class="filter-content">
             			<div class="list-group list-group-flush">
                             {% for type in catagories %}
-                                <a href="#" class="list-group-item pall">{{ type.type_name }}<span class="float-right badge badge-light round">142</span> </a>
+                                <a href="#" class="list-group-item pall">{{ type.type_name }}<span class="float-right badge badge-light round">{{ type.num_count }}</span> </a>
                             {% endfor %}
 
                   </div>
