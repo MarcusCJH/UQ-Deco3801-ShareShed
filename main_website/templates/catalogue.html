@@ -32,16 +32,10 @@
             		<header class="card-header pt-3 pb-2 pl-3"><h6 class="title">Categories</h6></header>
             		<div class="filter-content">
             			<div class="list-group list-group-flush">
-            			  <a href="#" class="list-group-item pall">Art, Hobbies and Music <span class="float-right badge badge-light round">142</span> </a>
-            			  <a href="#" class="list-group-item pall">Board Games<span class="float-right badge badge-light round">3</span>  </a>
-            			  <a href="#" class="list-group-item pall">Camping Equipment<span class="float-right badge badge-light round">32</span>  </a>
-            			  <a href="#" class="list-group-item pall">Gardening<span class="float-right badge badge-light round">12</span>  </a>
-                    <a href="#" class="list-group-item pall">Kitchen and Catering<span class="float-right badge badge-light round">12</span>  </a>
-                    <a href="#" class="list-group-item pall">Household Appliances<span class="float-right badge badge-light round">12</span>  </a>
-                    <a href="#" class="list-group-item pall">Mobility Aids<span class="float-right badge badge-light round">12</span>  </a>
-                    <a href="#" class="list-group-item pall">Sport and Leisure<span class="float-right badge badge-light round">12</span>  </a>
-                    <a href="#" class="list-group-item pall">Tools<span class="float-right badge badge-light round">12</span>  </a>
-
+                            {% for type in catagories %}
+                                <a href="#" class="list-group-item pall">{{ type.type_name }}<span class="float-right badge badge-light round">142</span> </a>
+                            {% endfor %}
+            			  
                   </div>
             		</div>
             	</article>
