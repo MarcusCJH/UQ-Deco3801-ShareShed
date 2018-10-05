@@ -37,7 +37,13 @@ def catalogue(request, type_id=0):
 
     return render(request, 'catalogue/catalogue.html', {'catagories': catagories, 'products' : products})
 
+def item_details(request):
+    product = Product.objects.all()
+    context={
+        'product': product
+    }
 
+    return render(request,'catalogue/itemDetails.html',context)
 
 
 def change_password(request):
