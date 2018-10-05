@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningDay, IdentificationImage, OrderNotes
+    LendingHistory, OpeningDay, IdentificationImage, OrderNote
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -18,6 +18,7 @@ class MyAdminSite(admin.AdminSite):
     def index(self, request, extra_context=None):
         """Display the main admin index page"""
         lendings = Lending.objects.all()
+        order_notes = OrderNote.objects.all().order_by('added_on')[::-1][:6]
         collect_today = lendings.filter(Q(productStatus='COLLECTTODAY'))
         return_today = lendings.filter(Q(productStatus='RETURNTODAY'))
         today = len(collect_today) + len(return_today)
@@ -34,6 +35,7 @@ class MyAdminSite(admin.AdminSite):
             'reserved': reserved,
             'overdue':overdue,
             'onloan':onloan,
+            'notes':order_notes,
             **(extra_context or {}),
         }
 
@@ -224,7 +226,7 @@ admin_site.register(ProductType, ProductTypeAdmin)
 admin_site.register(ProductTag, ProductTagAdmin)
 admin_site.register(ProductLocation, ProductLocationAdmin)
 admin_site.register(ProductCondition, ProductConditionAdmin)
-admin_site.register(OrderNotes, OrderNotesAdmin)
+admin_site.register(OrderNote, OrderNotesAdmin)
 admin_site.register(Cart, CartAdmin)
 admin_site.register(Member, MemberAdmin)
 admin_site.register(Lending, LendingAdmin)

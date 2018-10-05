@@ -21,7 +21,6 @@ from main_website.admin import admin_site
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin_site.urls),
-    path('admin/', admin.site.urls),
     re_path(r'^', include('main_website.urls')),
     re_path(r'^', include('django.contrib.auth.urls')),
 ]

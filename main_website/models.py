@@ -141,7 +141,7 @@ class Member(models.Model):
     def __str__(self):
         return str(self.membership_type)
 
-class OrderNotes(models.Model):
+class OrderNote(models.Model):
     user = models.ForeignKey(User, related_name='notes', on_delete=models.CASCADE)
     message = models.TextField()
     added_on = models.DateTimeField(default=timezone.now)

@@ -14,7 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
 from .models import User, Member, Payment
-from .forms import UserCreationForm, IdentificationForm, UserChangeForm
+from .forms import UserCreationForm, IdentificationForm, UserChangeForm, OrderNoteForm
 from django.contrib.auth.forms import PasswordChangeForm
 import stripe
 
@@ -92,6 +92,20 @@ def user_activation(request, uidb64, token):
         return redirect('home')
     else:
         return HttpResponse('Activation link is invalid!')
+
+def new_order_note(request):
+    current_user = request.user;
+    if request.method == "POST":
+        form = OrderNoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user_id = current_user.id
+            note.added_on = timezone.now()
+            note.save()
+            return redirect('/admin')
+    else:
+        form = OrderNoteForm()
+    return render(request, 'admin/add_order_note.html', {'form': form})
 
 def upload_identification(request):
     current_user = request.user;
