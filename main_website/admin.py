@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningDay, IdentificationImage
+    LendingHistory, OpeningDay, IdentificationImage, OrderNotes
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -211,6 +211,9 @@ class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
     list_display = ('opening_day','opening_hour')
 
+class OrderNotesAdmin(admin.ModelAdmin):
+    list_display = ('user','message', 'added_on')
+
 
 admin_site = MyAdminSite(name='myadmin')
 
@@ -221,6 +224,7 @@ admin_site.register(ProductType, ProductTypeAdmin)
 admin_site.register(ProductTag, ProductTagAdmin)
 admin_site.register(ProductLocation, ProductLocationAdmin)
 admin_site.register(ProductCondition, ProductConditionAdmin)
+admin_site.register(OrderNotes, OrderNotesAdmin)
 admin_site.register(Cart, CartAdmin)
 admin_site.register(Member, MemberAdmin)
 admin_site.register(Lending, LendingAdmin)
