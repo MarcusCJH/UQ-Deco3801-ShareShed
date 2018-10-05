@@ -14,20 +14,24 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
-from .models import User, Member, Payment, ProductType
+from .models import User, Member, Payment, ProductType, Product
 from .forms import UserCreationForm, IdentificationForm, UserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def catalogue(request):
+def catalogue(request, type_id):
     #catagories = ProductType.objects.values('type_name').distinct()
     catagories = ProductType.objects.all().annotate(num_count=Count('product'))
     context ={
         'catagories': catagories
     }
-    return render(request, 'catalogue.html',context)
+    products = Product.objects.filter(type=type_id)
+    context1 = {
+        'products' : products
+    }
+    return render(request, 'catalogue.html',{'catagories': catagories, 'products' : products})
 
 
 def change_password(request):

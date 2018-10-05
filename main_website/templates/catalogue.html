@@ -33,7 +33,7 @@
             		<div class="filter-content">
             			<div class="list-group list-group-flush">
                             {% for type in catagories %}
-                                <a href="#" class="list-group-item pall">{{ type.type_name }}<span class="float-right badge badge-light round">{{ type.num_count }}</span> </a>
+                                <a href={{ type.id }} class="list-group-item pall">{{ type.type_name }}<span class="float-right badge badge-light round">{{ type.num_count }}</span> </a>
                             {% endfor %}
 
                   </div>
@@ -91,15 +91,20 @@
 
           <div class="col-lg-9">
             <div class="row pr-4">
+
+              {% for product in products %}
               <div class="col-lg-3 mt-1">
                 <div class="card">
-                  <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
+                  <img class="card-img-top" src="{% static 'main_website/img/item-default.png' %}" alt="Card image cap">
                   <div class="card-body">
-                    <p><span class="greendot"></span> &nbsp;Item name</p>
+                    <p><span class="greendot"></span> &nbsp;{{ product.name }}</p>
                     <p><span class="badge badge-secondary badge-success">Available</span></p>
                     </div>
                 </div>
               </div>
+              {% endfor %}
+
+
               <div class="col-lg-3 mt-1">
                 <div class="card">
                   <img class="card-img-top" src="{% static "main_website/img/item-default.png" %}" alt="Card image cap">
