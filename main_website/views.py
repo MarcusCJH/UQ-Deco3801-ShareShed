@@ -22,7 +22,6 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def catalogue(request, type_id=0):
-    #catagories = ProductType.objects.values('type_name').distinct()
     catagories = ProductType.objects.all().annotate(num_count=Count('product'))
     context ={
         'catagories': catagories
@@ -36,7 +35,9 @@ def catalogue(request, type_id=0):
         products = Product.objects.filter(type=type_id)
         context['products'] = products
 
-    return render(request, 'catalogue.html',{'catagories': catagories, 'products' : products})
+    return render(request, 'catalogue/catalogue.html', {'catagories': catagories, 'products' : products})
+
+
 
 
 def change_password(request):
