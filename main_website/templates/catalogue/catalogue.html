@@ -95,11 +95,13 @@
               {% for product in products %}
               <div class="col-lg-3 mt-1">
                 <div class="card">
-                  <img class="card-img-top" src="{% static 'main_website/img/item-default.png' %}" alt="Card image cap">
+                    <a href="#">
+                        <img class="card-img-top" src="{% static 'main_website/img/item-default.png' %}" alt="Card image cap">
                   <div class="card-body">
                     <p><span class="greendot"></span> &nbsp;{{ product.name }}</p>
                     <p><span class="badge badge-secondary badge-success">Available</span></p>
                     </div>
+                    </a>
                 </div>
               </div>
               {% endfor %}
