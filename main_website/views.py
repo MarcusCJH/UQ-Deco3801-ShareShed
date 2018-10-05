@@ -21,16 +21,21 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def catalogue(request, type_id):
+def catalogue(request, type_id=0):
     #catagories = ProductType.objects.values('type_name').distinct()
     catagories = ProductType.objects.all().annotate(num_count=Count('product'))
     context ={
         'catagories': catagories
     }
-    products = Product.objects.filter(type=type_id)
-    context1 = {
-        'products' : products
-    }
+
+    if type_id == 0 :
+        products = Product.objects.all()
+        context['products'] = products
+
+    else:
+        products = Product.objects.filter(type=type_id)
+        context['products'] = products
+
     return render(request, 'catalogue.html',{'catagories': catagories, 'products' : products})
 
 
