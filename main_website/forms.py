@@ -27,7 +27,15 @@ class UserCreationForm(UserCreationForm):
         validators=[RegexValidator('\d{4}',
         message="Please enter valid Post Code")],
         required=True)
-    state = forms.CharField(max_length=20, required=True)
+    state_options = (
+        ('NSW', 'New South Wales'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('TAS', 'Tasmania'),
+        ('VIC', 'Victoria'),
+        ('WA', 'Western Australia'),
+    )
+    state = forms.ChoiceField(widget=forms.Select(), choices=state_options, initial='QLD', required=True)
     country = forms.CharField(max_length=30, required=True)
 
     class Meta(UserCreationForm.Meta):

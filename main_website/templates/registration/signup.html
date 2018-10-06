@@ -11,26 +11,34 @@
 {% block content %}
 <div class="signupform">
   <h3 class="signuptitle mb-4"> Share Shed Membership Application </h3>
-  <form class="formBorder">
+  <form class="formBorder" method="post">
+    {% csrf_token %}
+
+  {{ form.non_field_errors }}
     <label>Name* </label>
     <div class="form-row mb-3">
       <div class="form-group col-md-6">
-        <input type="text" class="form-control" id="fname" placeholder="First Name" required>
+        {% render_field form.first_name class="form-control" placeholder="First Name" %}
+        {% render_field form.first_name.errors %}
       </div>
       <div class="form-group col-md-6">
-        <input type="text" class="form-control" id="lname" placeholder="Last Name" required>
+          {% render_field form.last_name class="form-control" placeholder="Last Name" %}
+          {% render_field form.last_name.errors %}
       </div>
     </div>
     <div class="form-group">
       <label>Email & Password*</label>
-      <input type="text" class="form-control" id="email" placeholder="your@email.com" required>
+      {% render_field form.email class="form-control" placeholder="your@email.com" %}
+      {% render_field form.email.errors %}
     </div>
     <div class="form-row">
       <div class="form-group col-md-6 mb-0">
-        <input type="password" class="form-control" id="password" placeholder="Password" required>
+        {% render_field form.password1 class="form-control" placeholder="Password" %}
+        {% render_field form.password1.errors %}
       </div>
       <div class="form-group col-md-6 mb-0">
-        <input type="password" class="form-control" id="rpassword" placeholder="Repeat Password" required>
+        {% render_field form.password2 class="form-control" placeholder="Repeat Password" %}
+        {% render_field form.password2.errors %}
       </div>
       <small id="passwordHelpBlock" class="form-text text-muted ml-2 mb-3">
         Your password must be at least 6 characters long
@@ -39,27 +47,34 @@
     </div>
     <div class="form-group mb-4">
       <label>Phone Number*</label>
-      <input type="tel" class="form-control" id="phone" placeholder="04xx xxx xxx" required>
+      {% render_field form.telephone_num class="form-control" placeholder="04xx xxx xxx" %}
+      {% render_field form.telephone_num.errors %}
     </div>
     <label>Address</label>
     <div class="form-group">
-      <input type="text" class="form-control" id="inputAddress" placeholder="Street Address">
+      {% render_field form.address class="form-control" placeholder="Street Address" %}
+      {% render_field form.address.errors %}
     </div>
     <div class="form-row">
-      <div class="form-group col-md-6">
-        <input type="text" class="form-control"placeholder="City">
+      <div class="form-group col-md-4">
+        {% render_field form.city class="form-control" placeholder="City" %}
+        {% render_field form.city.errors %}
       </div>
-      <div class="form-group col-md-6">
-        <select id="inputState" class="form-control">
-          <option selected>State</option>
-          <option>...</option>
-        </select>
+      <div class="form-group col-md-4">
+        {% render_field form.suburb class="form-control" placeholder="Suburb" %}
+        {% render_field form.suburb.errors %}
+      </div>
+      <div class="form-group col-md-4">
+        {% render_field form.state class="form-control" placeholder="State" %}
+        {% render_field form.state.errors %}
       </div>
       <div class="form-group col-md-6 mb-4">
-        <input type="text" class="form-control" id="inputZip" placeholder="Postcode">
+        {% render_field form.postcode class="form-control" placeholder="Postcode" %}
+        {% render_field form.postcode.errors %}
       </div>
       <div class="form-group col-md-6 mb-4">
-        <input type="text" class="form-control" id="inputCountry" placeholder="Country">
+        {% render_field form.country class="form-control" placeholder="Country" %}
+        {% render_field form.country.errors %}
       </div>
       <div class="form-group">
 			&nbsp;<label class="checkbox-inline"><input type="checkbox" required="required"> I have read and accepted the <a href="#">Terms and Conditions</a> &amp; <a href="#"> Liability Waiver</a>*</label>
@@ -72,8 +87,7 @@
 <br><br>
 </div>
 
-<!--Previous signupform
-
+<!-- Old Form
 <div class="pageColor">
 <div class="container-fluid" id="">
   <div class="row">
@@ -98,5 +112,7 @@
     </div>
   </div>
 </div>
-</div> -->
+</div>
+
+-->
 {% endblock %}

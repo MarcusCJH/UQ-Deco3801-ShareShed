@@ -73,11 +73,33 @@ def sign_up(request):
                 settings.EMAIL_HOST_USER,
                 [to_email],
                 fail_silently=False)
-            return render(request, 'user/activate.html')
+            return render(request, 'user/activate.html', {'recipient': to_email})
             # return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def resend_email_activation(request):
+    if request.method == 'POST':
+        recipient = request.POST.get("recipient","")
+        user = User.objects.get(email = recipient)
+        current_site = get_current_site(request)
+        mail_subject = 'Share Shed Email Activation'
+        message = render_to_string('registration/email_activation.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+            'token':account_activation_token.make_token(user),
+        })
+        to_email = recipient
+        send_mail(mail_subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [to_email],
+            fail_silently=False)
+
+        return render(request, 'user/activate.html', {'recipient': to_email})
+    return render(request, 'user/activate.html', {'recipient': recipient})
 
 def user_activation(request, uidb64, token):
     try:

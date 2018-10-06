@@ -85,11 +85,20 @@ class User(AbstractUser):
     address = models.TextField(max_length=30)
     suburb = models.CharField(max_length=30)
     postcode = models.CharField(max_length=4)
-    state = models.CharField(max_length=30)
     city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
     has_identified = models.BooleanField(default=False)
+    state_options = (
+        ('NSW', 'New South Wales'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('TAS', 'Tasmania'),
+        ('VIC', 'Victoria'),
+        ('WA', 'Western Australia'),
+    )
+    state = models.CharField(choices=state_options,
+                                        max_length=3, default='QLD')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
