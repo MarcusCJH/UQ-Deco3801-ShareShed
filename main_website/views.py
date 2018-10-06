@@ -182,8 +182,18 @@ def membership_renew(request):
 
         member.save()
 
-
-
+        current_site = get_current_site(request)
+        mail_subject = 'Membership Purchase'
+        message = render_to_string('registration/email_activation.html', {
+            'user': current_user,
+            'membership_end': member.end_time
+        })
+        to_email = current_user.email
+        send_mail(mail_subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [to_email],
+            fail_silently=False)
     return redirect('profile')
 
 @csrf_exempt
