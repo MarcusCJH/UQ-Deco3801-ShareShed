@@ -18,12 +18,12 @@ class MyAdminSite(admin.AdminSite):
     def index(self, request, extra_context=None):
         """Display the main admin index page"""
         lendings = Lending.objects.all()
-        collect_today = lendings.filter(Q(productStatus='COLLECTTODAY'))
-        return_today = lendings.filter(Q(productStatus='RETURNTODAY'))
+        collect_today = lendings.filter(Q(product_status='COLLECTTODAY'))
+        return_today = lendings.filter(Q(product_status='RETURNTODAY'))
         today = len(collect_today) + len(return_today)
-        reserved = len(lendings.filter(Q(productStatus='RESERVED')))
-        overdue = len(lendings.filter(Q(productStatus='RETURNLATE')))
-        onloan = len(lendings.filter(Q(productStatus='ONLOAN')))
+        reserved = len(lendings.filter(Q(product_status='RESERVED')))
+        overdue = len(lendings.filter(Q(product_status='RETURNLATE')))
+        onloan = len(lendings.filter(Q(product_status='ONLOAN')))
 
         context = {
             **self.each_context(request),

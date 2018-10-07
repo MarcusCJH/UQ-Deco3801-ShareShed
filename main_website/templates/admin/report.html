@@ -1,0 +1,77 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'admin/css/mainpage.css' %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content_title %}{% if title %}<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
+    <h1 class="h4">Dashboard</h1>
+    <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+        <div class="btn-group">
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
+            <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
+        </div>
+    </div>
+</div>{% endif %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+
+    <div class="card-deck mt-4">
+        <div class="card pb-0">
+            <div class="card-body pb-2">
+                <h5 class="card-title text-muted">New Members</h5>
+                <canvas id="newMembers" height="120"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card pb-0">
+            <div class="card-body pb-2">
+                <h5 class="card-title text-muted">Total Memberships</h5>
+                <canvas id="memberships" height="120"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card pb-0">
+            <div class="card-body pb-2">
+                <h5 class="card-title text-muted">Loans per Month</h5>
+                <canvas id="loans" height="120"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-deck mt-4">
+        <div class="card pb-0">
+            <div class="card-body pb-2">
+                <h5 class="card-title text-muted">New Items</h5>
+                <canvas id="newItems" height="120"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card pb-0">
+            <div class="card-body pb-2">
+                <h5 class="card-title text-muted">Total Number of Items</h5>
+                <canvas id="totalItems" height="120"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card pb-0">
+            <div class="card-body pb-2">
+                <h5 class="card-title text-muted">Fees charged, AUD</h5>
+                <canvas id="canvas" height="120"></canvas>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
