@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage, ProductType, ProductTag, \
+from .models import Product, ProductImage, ProductCategory, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
     LendingHistory, OpeningDay, IdentificationImage
 from django.utils.html import mark_safe
@@ -162,9 +162,9 @@ class ProductImageAdmin(admin.ModelAdmin):
         return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 
-class ProductTypeAdmin(admin.ModelAdmin):
+class ProductCategoryAdmin(admin.ModelAdmin):
     """Display list of product type for admin dashboard"""
-    list_display = ('type_name',)
+    list_display = ('category_name',)
 
 
 class ProductTagAdmin(admin.ModelAdmin):
@@ -189,11 +189,11 @@ class CartAdmin(admin.ModelAdmin):
 
 class LendingAdmin(admin.ModelAdmin):
     """Display list of lendings for admin dashboard"""
-    list_display = ('productId', 'userId', 'startDate',
-                    'endDate', 'productStatus')
-    list_editable = ('productStatus',)
-    list_filter = ('productStatus',)
-    search_fields = ('product__name', 'user__id')
+    # list_display = ('product_id', 'user_id', 'start_date',
+    #                 'end_date', 'product_status')
+    # list_editable = ('product_status',)
+    # list_filter = ('product_status',)
+    # search_fields = ('product__name', 'user__id')
 
     def count_status(self, obj):
         number = len(Lending.objects.all().filter(productstatus=obj))
@@ -202,9 +202,9 @@ class LendingAdmin(admin.ModelAdmin):
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
-    list_display = ('productId', 'userId', 'startDate',
-                    'endDate', 'productStatus')
-    list_editable = ('productStatus',)
+    # list_display = ('product_id', 'user_id', 'start_date',
+    #                 'end_date', 'product_status')
+    # list_editable = ('product_status',)
 
 
 class OpeningDayAdmin(admin.ModelAdmin):
@@ -217,7 +217,7 @@ admin_site = MyAdminSite(name='myadmin')
 """Register all the admin view"""
 admin_site.register(Product, ProductAdmin)
 admin_site.register(ProductImage, ProductImageAdmin)
-admin_site.register(ProductType, ProductTypeAdmin)
+admin_site.register(ProductCategory, ProductCategoryAdmin)
 admin_site.register(ProductTag, ProductTagAdmin)
 admin_site.register(ProductLocation, ProductLocationAdmin)
 admin_site.register(ProductCondition, ProductConditionAdmin)

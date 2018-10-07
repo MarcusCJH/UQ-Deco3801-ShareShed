@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
 from datetime import datetime
 
-def validate_date(value):
+def validate_opening_day(value):
     """Validator to be used for lending model."""
     days = OpeningDay.objects.values_list('opening_day')
     opening_day = []
@@ -16,13 +16,6 @@ def validate_date(value):
     if value.weekday() not in opening_day:
         raise ValidationError(
             ('Share Shed is not open'),
-        )
-
-    expirydate = '2019-09-30'
-    expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
-    if value >expiry:
-        raise ValidationError(
-            ('Please borrow within membership period'),
         )
 
 def user_directory_path(instance, filename):
@@ -120,6 +113,7 @@ class UserImage(models.Model):
     def __str__(self):
         return str(self.alt)
 
+
 class Member(models.Model):
     """Further extends the user model. Add membership model."""
     user = AutoOneToOneField(
@@ -158,7 +152,7 @@ class Product(models.Model):
     components = models.TextField()
     care_information = models.TextField()
     keywords = models.CharField(max_length=128)
-    type = models.ForeignKey('ProductType',
+    category = models.ForeignKey('ProductCategory',
         null=True, on_delete=models.SET_NULL)
     tags = models.ForeignKey('ProductTag',
         null=True, on_delete=models.SET_NULL)
@@ -182,12 +176,12 @@ class ProductImage(models.Model):
         return str(self.alt)
 
 
-class ProductType(models.Model):
+class ProductCategory(models.Model):
     """Product type model to extend the product model."""
-    type_name = models.CharField(max_length=32)
+    category_name = models.CharField(max_length=32)
 
     def __str__(self):
-        return str(self.type_name)
+        return str(self.category_name)
 
 
 class ProductTag(models.Model):
@@ -236,12 +230,12 @@ class Payment(models.Model):
 
 
 class Lending(models.Model):
-    productId = models.ForeignKey('Product', null=False,
+    product_id = models.ForeignKey('Product', null=False,
         on_delete=models.PROTECT)
-    userId = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
         null=False, on_delete=models.CASCADE)
-    startDate = models.DateField(validators=[validate_date])
-    endDate = models.DateField(validators=[validate_date])
+    start_date = models.DateField()
+    end_date = models.DateField()
 
     productStatusChoices = (
         ('ONLOAN', 'ON LOAN'),
@@ -268,15 +262,59 @@ class Lending(models.Model):
     def __str__(self):
         return str(self.productId.name)
 
+    def clean(self):
+        '''Validate the calendar system'''
+
+        '''Check membership duration'''
+        membership_start = self.user_id.membership.start_time
+        if membership_start == None:
+            raise ValidationError(
+                ('You are not a member, please pay for membership first.')
+            )
+
+        if self.start_date < membership_start:
+            raise ValidationError({
+                'start_date': ValidationError(_(
+                    'Please borrow within your membership period or '
+                    + 'extend your membership'),
+                    code='invalid'),
+            })
+
+        membership_expiry = self.user_id.membership.end_time
+        if self.end_date > membership_expiry:
+            raise ValidationError({
+                'end_date': ValidationError(_(
+                    'Please borrow within your membership period or '
+                    + 'extend your membership'),
+                    code='invalid'),
+            })
+
+        '''Check opening day'''
+        days = OpeningDay.objects.values_list('opening_day')
+        opening_day = []
+        for day in days:
+            opening_day.append(day[0])
+        if self.start_date.weekday() not in opening_day:
+            raise ValidationError({
+                'start_date': ValidationError(_('Share shed is not open'),
+                    code='invalid'),
+            })
+
+        if self.end_date.weekday() not in opening_day:
+            raise ValidationError({
+                'end_date': ValidationError(_('Share shed is not open'),
+                    code='invalid'),
+            })
+
 
 class LendingHistory(models.Model):
     """Lending history model to store history of lendings"""
-    productId = models.ForeignKey('Product', null=False,
+    product_id = models.ForeignKey('Product', null=False,
         on_delete=models.PROTECT)
-    userId = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
         null=False, on_delete=models.CASCADE)
-    startDate = models.DateField(validators=[validate_date])
-    endDate = models.DateField(validators=[validate_date])
+    start_date = models.DateField()
+    end_date = models.DateField()
 
     productStatusChoices = (
         ('ONLOAN', 'ON LOAN'),
