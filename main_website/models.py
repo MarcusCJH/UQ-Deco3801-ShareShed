@@ -148,7 +148,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=32)
     price_paid = models.DecimalField(max_digits=8, decimal_places=2)
     value = models.DecimalField(max_digits=8, decimal_places=2)
-    loan_period = models.IntegerField()
+    loan_period = models.IntegerField(default=7)
     components = models.TextField()
     care_information = models.TextField()
     keywords = models.CharField(max_length=128)
@@ -237,7 +237,7 @@ class Lending(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
-    productStatusChoices = (
+    product_status_choices = (
         ('ONLOAN', 'ON LOAN'),
         ('RETURNTODAY','RETURN TODAY'),
         ('RETURNLATE', 'RETURN LATE'),
@@ -246,24 +246,37 @@ class Lending(models.Model):
         ('COLLECTLATE','COLLECT LATE'),
     )
 
-    productStatus = models.CharField(
+    product_status = models.CharField(
         max_length=12,
-        choices=productStatusChoices,
+        choices=product_status_choices,
         null=False,
+        default='RESERVED',
     )
 
     class Meta:
         verbose_name = 'Loan'
 
     def duration(self):
-        duration = self.startDate - self.endDate
+        duration = self.start_date - self.end_date
         return str(duration)
 
     def __str__(self):
-        return str(self.productId.name)
+        return str(self.product_id.name)
 
     def clean(self):
         '''Validate the calendar system'''
+
+        '''Check borrowing time is not in the past'''
+        if self.start_date < date.today():
+            raise ValidationError(
+                ('You cannot borrow for past days.')
+            )
+
+        '''Check start and end date is the correct order'''
+        if self.start_date > self.end_date:
+            raise ValidationError(
+                ('End date should be after the start date.')
+            )
 
         '''Check membership duration'''
         membership_start = self.user_id.membership.start_time
@@ -276,8 +289,7 @@ class Lending(models.Model):
             raise ValidationError({
                 'start_date': ValidationError(_(
                     'Please borrow within your membership period or '
-                    + 'extend your membership'),
-                    code='invalid'),
+                    + 'extend your membership')),
             })
 
         membership_expiry = self.user_id.membership.end_time
@@ -285,8 +297,7 @@ class Lending(models.Model):
             raise ValidationError({
                 'end_date': ValidationError(_(
                     'Please borrow within your membership period or '
-                    + 'extend your membership'),
-                    code='invalid'),
+                    + 'extend your membership')),
             })
 
         '''Check opening day'''
@@ -296,14 +307,12 @@ class Lending(models.Model):
             opening_day.append(day[0])
         if self.start_date.weekday() not in opening_day:
             raise ValidationError({
-                'start_date': ValidationError(_('Share shed is not open'),
-                    code='invalid'),
+                'start_date': ValidationError(_('Share shed is not open')),
             })
 
         if self.end_date.weekday() not in opening_day:
             raise ValidationError({
-                'end_date': ValidationError(_('Share shed is not open'),
-                    code='invalid'),
+                'end_date': ValidationError(_('Share shed is not open')),
             })
 
 
@@ -316,7 +325,7 @@ class LendingHistory(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
-    productStatusChoices = (
+    product_status_choices = (
         ('ONLOAN', 'ON LOAN'),
         ('RETURNTODAY','RETURN TODAY'),
         ('RETURNLATE', 'RETURN LATE'),
@@ -325,9 +334,9 @@ class LendingHistory(models.Model):
         ('COLLECTLATE','COLLECT LATE'),
     )
 
-    productStatus = models.CharField(
+    product_status = models.CharField(
         max_length=12,
-        choices=productStatusChoices,
+        choices=product_status_choices,
         null=False,
     )
 
