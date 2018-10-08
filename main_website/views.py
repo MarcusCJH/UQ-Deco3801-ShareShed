@@ -38,8 +38,8 @@ def catalogue(request, type_id=0):
     return render(request, 'catalogue/catalogue.html', {'catagories': catagories, 'products' : products})
 
 
-def item_details(request, product_code):
-        products = Product.objects.filter(code=product_code)
+def item_details(request, product_id):
+        products = Product.objects.filter(code=product_id)
         context ={ 'product': products }
         return render(request,'catalogue\itemDetails.html',context)
 

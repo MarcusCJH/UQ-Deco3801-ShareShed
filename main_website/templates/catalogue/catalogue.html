@@ -95,7 +95,7 @@
               {% for product in products %}
               <div class="col-lg-3 mt-1">
                 <div class="card">
-                    <a href="/itemDetails/{{ product.code }}">
+                    <a href="/itemDetails/{{ product.id }}">
                         <img class="card-img-top" src="{% static 'main_website/img/item-default.png' %}" alt="Card image cap">
                   <div class="card-body">
                     <p><span class="greendot"></span> &nbsp;{{ product.name }}</p>
