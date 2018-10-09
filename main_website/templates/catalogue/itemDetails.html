@@ -68,19 +68,12 @@
             <br>
             <h5>Description</h5>
             <hr>
-            <p align="justify">Camping is an outdoor activity involving overnight stays away from home
-               in a shelther, such as a tent. Denerally participants leave developed
-               areas to spend time outdoors in more natural ones in pursuit of activities
-               providing them enjoyment.</p>
+            <p align="justify">{{ products.long_description }}</p>
             <br>
-            <h5> Item Contains </h5>
+            <h5> Other Description </h5>
             <hr>
             <ul>
-              <li>1 tent</li>
-              <li>1 sleeping bag</li>
-              <li>1 lamp</li>
-              <li>1 chair</li>
-              <li>1 bbq</li>
+              <p>{{ products.short_description }}</p>
             </ul>
             <br>
             <h5> Duration </h5>
@@ -110,7 +103,7 @@
                     </div>
                 </div>
               </div>
-              <p><b>No. of days:</b> 10 </p>
+              <p><b>No. of days:</b> {{ products.loan_period }} </p>
               <button type="button" class="btn btn-primary btn-block"> Borrow </button>
             </div>
           </div>
