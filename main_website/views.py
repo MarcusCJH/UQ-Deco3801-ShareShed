@@ -39,9 +39,11 @@ def catalogue(request, type_id=0):
 
 
 def item_details(request, product_id):
-        products = Product.objects.filter(code=product_id)
-        context ={ 'product': products }
-        return render(request,'catalogue\itemDetails.html',context)
+        products = Product.objects.get(id=product_id)
+        context = {
+            "products": products,
+        }
+        return render(request, 'catalogue/itemDetails.html', context)
 
 
 def change_password(request):
