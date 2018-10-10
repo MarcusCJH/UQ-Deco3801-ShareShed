@@ -187,6 +187,95 @@
               </div>
             </section>
 
+            <section id="stats" class="bg-dark">
+              <div class="container">
+                  <div class="intro-text text-center">
+                      <img src="icons/svg/investment.png" class="shareshedimg mb-3">
+                      <div class="intro-lead-in white">View the summary statistics of Share Shed</div>
+                      <button class="btn btn-lg btn-outline-light"> View here </button>
+                  <div>
+              </div>
+            </section>
+
+
+
+            <section id="join">
+              <div class="container">
+              <div class="row join">
+                <div class="col-md-6 col-lg-7 text-center">
+                  <h2 class="section-heading text-uppercase"><b>Join Us</b></h2>
+                  <h3 class="section-subheading text-muted mb-4"  style="text-align:center">You'll be borrowing in no time.</h3>
+                  <form class="needs-validation" novalidate>
+                    <div class="form-row">
+                      <div class="col-lg-6 mb-3">
+                        <input type="text" class="form-control" placeholder="Full Name*" required>
+                        <div class="invalid-feedback">
+                          Please enter your full name.
+                        </div>
+                      </div>
+                      <div class="col-lg-6 mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address*" required>
+                        <div class="invalid-feedback">
+                          Please enter a correct email address.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group mb-3">
+                      <textarea class="form-control" placeholder="Message" rows="5"></textarea>
+                    </div>
+                    <button class="btn btn-primary btn-block mb-5" type="submit">Join</button>
+                  </form>
+                </div>
+                <div class="col-md-6 col-lg-5 text-center">
+                  <h2 class="section-heading text-uppercase"><b>Links</b></h2>
+                  <h3 class="section-subheading text-muted mb-3"  style="text-align:center">Our Social Media</h3>
+                  <ul class="list-inline social-buttons mb-4">
+                    <li class="list-inline-item">
+                      <a href="#">
+                        <i class="fab fa-twitter"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#">
+                        <i class="fab fa-facebook-f"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#">
+                        <i class="fab fa-instagram"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <h3 class="section-subheading text-muted mb-3"  style="text-align:center">Share Share Shed with friends and family!</h3>
+                  <div class="boxWithText"><button type="button" class="btn socialbtn" disabled> <i class="fab fa-twitter"></i></button><a href="#" class="link pl-2 text-muted">Click here to tweet us on Twitter!</a></div>
+                  <div class="boxWithText"><button type="button" class="btn socialbtn pl-3 pr-3" disabled> <i class="fab fa-facebook-f"></i></button><a href="#" class="link pl-2 text-muted">Click here to share us on Facebook!</a></div>
+                  <div class="boxWithText"><button type="button" class="btn socialbtn" disabled> <i class="fab fa-instagram"></i></button><a href="#" class="link pl-2 text-muted">Click here to share us on Instagram!</a></div>
+                </div>
+              </div>
+            </div>
+            </section>
+
+            <script>
+              // Example starter JavaScript for disabling form submissions if there are invalid fields
+              (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                  var forms = document.getElementsByClassName('needs-validation');
+                  // Loop over them and prevent submission
+                  var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                      if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }
+                      form.classList.add('was-validated');
+                    }, false);
+                  });
+                }, false);
+              })();
+              </script>
+
             
 
     <!-- Optional JavaScript -->
