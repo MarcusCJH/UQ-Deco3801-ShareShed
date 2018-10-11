@@ -17,7 +17,8 @@
   }
   $query = "INSERT INTO contact_form (name, email, message) VALUES ('". $name."','". $email. "','". $message. "')";
   if (mysqli_query($con, $query)){
-      $msg = "success";
+    header("Location: https://deco3801-sunshine.uqcloud.net/");
+    die();
   } else {
     $msg = "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 }
