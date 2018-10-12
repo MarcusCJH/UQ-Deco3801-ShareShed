@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, IdentificationImage
+from .models import User, IdentificationImage, OrderNote
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
@@ -80,3 +80,8 @@ class IdentificationForm(forms.ModelForm):
     class Meta:
         model = IdentificationImage
         fields = ('image',)
+
+class OrderNoteForm(forms.ModelForm):
+    class Meta:
+        model = OrderNote
+        fields = ('message',)

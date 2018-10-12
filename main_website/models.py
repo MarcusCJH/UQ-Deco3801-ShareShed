@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
 from datetime import datetime
@@ -148,6 +149,11 @@ class Member(models.Model):
 
     def __str__(self):
         return str(self.membership_type)
+
+class OrderNote(models.Model):
+    user = models.ForeignKey(User, related_name='notes', on_delete=models.CASCADE)
+    message = models.TextField()
+    added_on = models.DateTimeField(default=timezone.now)
 
 
 class Product(models.Model):
