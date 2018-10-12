@@ -31,17 +31,19 @@ class MyAdminSite(admin.AdminSite):
             'title': self.index_title,
             'collect_today': collect_today,
             'return_today': return_today,
-            'today':today,
+            'today': today,
             'reserved': reserved,
-            'overdue':overdue,
-            'onloan':onloan,
-            'notes':order_notes,
+            'overdue': overdue,
+            'onloan': onloan,
+            'notes': order_notes,
             **(extra_context or {}),
         }
 
         request.current_app = self.name
 
-        return TemplateResponse(request, self.index_template or 'admin/index.html', context)
+        return TemplateResponse(request,
+                                self.index_template or 'admin/index.html',
+                                context)
 
 
 class UserIdentificationInline(admin.StackedInline):
@@ -51,11 +53,10 @@ class UserIdentificationInline(admin.StackedInline):
 
     def image_tag(self, obj):
         """Display the actual image with 200x200 pixel size"""
-        width='200px'
-        height='200px'
-        return mark_safe(
-        '<img src="{}" width={} height={}/>'.format(obj.image.url,
-                                                    width, height))
+        width = '200px'
+        height = '200px'
+        return mark_safe('<img src="{}" width={} height={}/>'
+                         .format(obj.image.url, width, height))
 
 
 class MemberInline(admin.StackedInline):
@@ -64,7 +65,7 @@ class MemberInline(admin.StackedInline):
 
     list_display = ('membership_type', 'start_time',
                     'end_time')
-    #search_fields = ('user_id', 'get_email', 'membership_type')
+    search_fields = ('user_id', 'get_email', 'membership_type')
     ordering = ('user_id', 'membership_type', 'start_time',
                 'end_time')
 
@@ -78,8 +79,9 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'suburb','state', 'postcode',
+                                         'suburb', 'state', 'postcode',
                                          'country', 'balance')}),
+
         (_('Options'), {'fields': ('has_identified', 'maillist')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
@@ -124,11 +126,11 @@ class MemberAdmin(admin.ModelAdmin):
 
     list_display = ('get_email', 'membership_type', 'start_time',
                     'end_time')
-    #search_fields = ('user_id', 'get_email', 'membership_type')
+    search_fields = ('user_id', 'get_email', 'membership_type')
     ordering = ('user_id', 'membership_type', 'start_time',
                 'end_time')
 
-    def get_email(self,obj):
+    def get_email(self, obj):
         return obj.user.email
     get_email.short_description = "Email"
     get_email.admin_order_field = 'user__email'
@@ -142,11 +144,10 @@ class ProductImageInline(admin.TabularInline):
 
     def image_tag(self, obj):
         """Display the actual image with 200x200 pixel size"""
-        width='200px'
-        height='200px'
-        return mark_safe(
-        '<img src="{}" width={} height={}/>'.format(obj.image.url,
-                                                    width, height))
+        width = '200px'
+        height = '200px'
+        return mark_safe('<img src="{}" width={} height={}/>'
+                         .format(obj.image.url, width, height))
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -211,10 +212,11 @@ class LendingHistoryAdmin(admin.ModelAdmin):
 
 class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
-    list_display = ('opening_day','opening_hour')
+    list_display = ('opening_day', 'opening_hour')
+
 
 class OrderNotesAdmin(admin.ModelAdmin):
-    list_display = ('user','message', 'added_on')
+    list_display = ('user', 'message', 'added_on')
 
 
 admin_site = MyAdminSite(name='myadmin')

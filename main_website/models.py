@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
 from datetime import datetime
 
+
 def validate_opening_day(value):
     """Validator to be used for lending model."""
     days = OpeningDay.objects.values_list('opening_day')
@@ -18,6 +19,7 @@ def validate_opening_day(value):
         raise ValidationError(
             ('Share Shed is not open'),
         )
+
 
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
@@ -65,7 +67,7 @@ class Maintenance(models.Model):
     )
     maintenance_id = models.AutoField(primary_key=True)
     maintenance_status = models.CharField(choices=MAINTENANCE_OPTIONS,
-        max_length=1)
+                                          max_length=1)
     maintenance_location = models.CharField(max_length=255)
     maintenance_notes = models.TextField(blank=True, null=True)
 
@@ -92,7 +94,7 @@ class User(AbstractUser):
         ('WA', 'Western Australia'),
     )
     state = models.CharField(choices=state_options,
-                                        max_length=3, default='QLD')
+                             max_length=3, default='QLD')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -102,6 +104,7 @@ class User(AbstractUser):
     def __str__(self):
         """Returns the user email as the default print statement."""
         return str(self.email)
+
 
 class IdentificationImage(models.Model):
     """Image model to extend the product model."""
@@ -138,12 +141,13 @@ class Member(models.Model):
         ('m', 'Member'),
     )
     membership_type = models.CharField(choices=membership_options,
-                                        max_length=1, default='g')
-    start_time = models.DateField(blank=True,null=True)
-    end_time = models.DateField(blank=True,null=True)
+                                       max_length=1, default='g')
+    start_time = models.DateField(blank=True, null=True)
+    end_time = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return str(self.membership_type)
+
 
 class OrderNote(models.Model):
     user = models.ForeignKey(User, related_name='notes',
@@ -170,13 +174,13 @@ class Product(models.Model):
     care_information = models.TextField()
     keywords = models.CharField(max_length=128)
     category = models.ForeignKey('ProductCategory',
-        null=True, on_delete=models.SET_NULL)
+                                 null=True, on_delete=models.SET_NULL)
     tags = models.ForeignKey('ProductTag',
-        null=True, on_delete=models.SET_NULL)
+                             null=True, on_delete=models.SET_NULL)
     location = models.ForeignKey('ProductLocation',
-        null=True, on_delete=models.SET_NULL)
+                                 null=True, on_delete=models.SET_NULL)
     condition = models.ForeignKey('ProductCondition',
-        null=True, on_delete=models.SET_NULL)
+                                  null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return str(self.name)
@@ -185,7 +189,7 @@ class Product(models.Model):
 class ProductImage(models.Model):
     """Image model to extend the product model."""
     product = models.ForeignKey(Product, related_name='images',
-        on_delete=models.CASCADE)
+                                on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products', blank=False)
     alt = models.CharField(max_length=128, blank=True)
 
@@ -228,9 +232,9 @@ class ProductLocation(models.Model):
 class Cart(models.Model):
     """Cart model to allow users add items to cart."""
     item = models.ForeignKey('Product',
-        null=False, on_delete=models.CASCADE)
+                             null=False, on_delete=models.CASCADE)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
-        null=False, on_delete=models.CASCADE)
+                                null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.item)
@@ -240,7 +244,7 @@ class Payment(models.Model):
     """Payment model to store all payment history"""
     id = models.IntegerField
     user = models.ForeignKey('User', blank=True, null=True,
-        on_delete=models.CASCADE)
+                             on_delete=models.CASCADE)
     stripe_payment_id = models.CharField(max_length=27, blank=True, null=True)
     stripe_payment_date = models.DateTimeField(blank=True, null=True)
     amount = models.FloatField(blank=True, null=True)
@@ -248,19 +252,19 @@ class Payment(models.Model):
 
 class Lending(models.Model):
     product_id = models.ForeignKey('Product', null=False,
-        on_delete=models.PROTECT)
+                                   on_delete=models.PROTECT)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
-        null=False, on_delete=models.CASCADE)
+                                null=False, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
 
     product_status_choices = (
         ('ONLOAN', 'ON LOAN'),
-        ('RETURNTODAY','RETURN TODAY'),
+        ('RETURNTODAY', 'RETURN TODAY'),
         ('RETURNLATE', 'RETURN LATE'),
-        ('RESERVED','RESERVED'),
-        ('COLLECTTODAY','COLLECT TODAY'),
-        ('COLLECTLATE','COLLECT LATE'),
+        ('RESERVED', 'RESERVED'),
+        ('COLLECTTODAY', 'COLLECT TODAY'),
+        ('COLLECTLATE', 'COLLECT LATE'),
     )
 
     product_status = models.CharField(
@@ -297,7 +301,7 @@ class Lending(models.Model):
 
         '''Check membership duration'''
         membership_start = self.user_id.membership.start_time
-        if membership_start == None:
+        if membership_start is None:
             raise ValidationError(
                 ('You are not a member, please pay for membership first.')
             )
@@ -336,19 +340,19 @@ class Lending(models.Model):
 class LendingHistory(models.Model):
     """Lending history model to store history of lendings"""
     product_id = models.ForeignKey('Product', null=False,
-        on_delete=models.PROTECT)
+                                   on_delete=models.PROTECT)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
-        null=False, on_delete=models.CASCADE)
+                                null=False, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
 
     product_status_choices = (
         ('ONLOAN', 'ON LOAN'),
-        ('RETURNTODAY','RETURN TODAY'),
+        ('RETURNTODAY', 'RETURN TODAY'),
         ('RETURNLATE', 'RETURN LATE'),
-        ('RESERVED','RESERVED'),
-        ('COLLECTTODAY','COLLECT TODAY'),
-        ('COLLECTLATE','COLLECT LATE'),
+        ('RESERVED', 'RESERVED'),
+        ('COLLECTTODAY', 'COLLECT TODAY'),
+        ('COLLECTLATE', 'COLLECT LATE'),
     )
 
     product_status = models.CharField(
@@ -360,7 +364,6 @@ class LendingHistory(models.Model):
     class Meta:
         verbose_name = 'Loan history'
         verbose_name_plural = 'Loan histories'
-
 
     def duration(self):
         """Return the duration of lending."""
@@ -374,12 +377,12 @@ class LendingHistory(models.Model):
 class OpeningDay(models.Model):
     days = (
         (0, 'Monday'),
-        (1,'Tuesday'),
+        (1, 'Tuesday'),
         (2, 'Wednesday'),
-        (3,'Thursday'),
-        (4,'Friday'),
-        (5,'Saturday'),
-        (6,'Sunday'),
+        (3, 'Thursday'),
+        (4, 'Friday'),
+        (5, 'Saturday'),
+        (6, 'Sunday'),
     )
     opening_day = models.IntegerField(choices=days,
                                       null=False,)

@@ -1,4 +1,3 @@
-import datetime
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
@@ -19,6 +18,7 @@ from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
     OrderNoteForm
 from django.contrib.auth.forms import PasswordChangeForm
 import stripe
+import datetime
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
