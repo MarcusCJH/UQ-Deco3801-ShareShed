@@ -1,0 +1,9 @@
+diff a/main_website/templates/registration/signup.html b/main_website/templates/registration/signup.html	(rejected hunks)
+@@ -10,7 +10,6 @@
+ 
+ {% block content %}
+ <div class="pageColor">
+-<div class="container-fluid" id="">ASDASDASDSA
+ <div class="container-fluid" id="">
+   <div class="row">
+     <div class = "formdiv">
