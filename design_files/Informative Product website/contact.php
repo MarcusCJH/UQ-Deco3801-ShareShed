@@ -31,6 +31,5 @@
  </head>
 <body>
   <?php echo $msg ?>
-  TEest
 </body>
 </html>

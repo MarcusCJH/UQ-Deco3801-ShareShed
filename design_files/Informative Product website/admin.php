@@ -48,33 +48,24 @@
   $graph_data = mysqli_query($con, $query_graph);
  ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="author" content="Louis Christopher" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0;" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title><?php echo $_SESSION["programName"];?></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
-<?php
-// CDN hosted (local fallback for css and js)
-// The // at the beginning of each URL cause the files to be fetched over the same protocol as the current page (http: or https:)
-?>
-    <link rel="stylesheet" href="css/themes/myApp.min.css" />
-    <link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
-    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" href="landingpage.css">
+    <title>Share Shed | by Team Sunshine</title>
 
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <script type="text/javascript">
-      if (typeof jQuery == 'undefined') {
-        document.write(unescape("%3Clink rel='stylesheet' href='css/jquery.mobile.structure-1.4.5.min.css' /%3E"));
-        document.write(unescape("%3Cscript src='js/jquery-1.11.1.min.js' type='text/javascript'%3E%3C/script%3E"));
-        document.write(unescape("%3Cscript src='js/jquery.mobile-1.4.5.min.js' type='text/javascript'%3E%3C/script%3E"));
-      }
-    </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -85,7 +76,7 @@
           ['Date', 'User'],
          <?php
          while($row = mysqli_fetch_array($graph_data)){
-         echo "['".$row['date']."',".$row['total']."],";
+           echo "['".$row['date']."',".$row['total']."],";
          }
          ?>
         ]);
@@ -102,52 +93,146 @@
     </script>
 
   </head>
-  <body>
-    <div data-role="page" data-theme="c">
-
-      <div data-role="header" data-position="fixed" data-theme="c">
-        <h1><?php echo $_SESSION["programName"];?></h1>
-      </div>
-
-      <div>
-        <h1>Your Name: <?php echo $UQ['name'];?></h1>
-      </div>
-
-      <div data-role="content" data-theme="c">
-        <div id="curve_chart" style="width: 900px; height: 500px"></div>
-        <div>
-          <h1>Table</h1>
-          <table>
-            <tr>
-              <td>Name</td>
-              <td>E-mail</td>
-              <td>Message</td>
-              <td>Joined at</td>
-            </tr>
-            <?php
-              while($row = mysqli_fetch_array($data)){
-                echo "<tr>";
-                echo "<td>". $row['name'] . "</td>";
-                echo "<td>". $row['email'] . "</td>";
-                echo "<td>". $row['message'] . "</td>";
-                echo "<td>". date('d-m-Y', strtotime($row['signed_on'])) . "</td>";
-                echo "</tr>";
-              }
-            ?>
-          </table>
-          <?php
-            while($row_graph = mysqli_fetch_array($graph_data)){
-              echo "<p>" . $row['date'] . "</p>";
-              echo "<p>" . $row['total'] . "</p>";
-            }
-           ?>
+  <body id="page-top">
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="index.html">Team Sunshine</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#graphs">Graphs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#info">Customer Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="index.html">Back to Home</a>
+            </li>
+          </ul>
         </div>
       </div>
+    </nav>
 
-      <div data-role="footer" data-position="fixed" data-theme="c">
-        <h1>Sending emails</h1>
+
+    <header class="masthead bg-dark" id="masthead">
+      <div class="container">
+        <div class="intro-text2">
+          <div class="intro-lead-in mt-2 text-left"><b>Welcome,</b> <?php echo $UQ['name'];?></div>
+          <div class="topheading pb-2 text-left"><h4>View the summary statistics of <b>Share Shed</b> below.</h4></div>
+        </div>
       </div>
+    </header>
 
-    </div>
+    <section id="graphs" class="section">
+      <div class="container">
+      <br><br>
+        <?php
+          if (mysqli_num_rows($graph_data)==0) {
+            echo "No Data yet";
+          } else {
+            echo "<div id='curve_chart' style='height:600px'></div>";
+          }
+         ?>
+      </div>
+    </section>
+
+
+    <section id="info" class="section">
+      <div class="container">
+        <h3 class="caption mb-3">Customers' Information </h3>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <caption>Showing 1 to 4 of 4 entries</caption>
+            <thead>
+              <tr>
+                <th style="width: 5%">#</th>
+                <th style="width: 15%">Date & Time</th>
+                <th style="width: 18%">Name</th>
+                <th style="width: 18%">Email Address</th>
+                <th style="width: 44%">Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                while($row = mysqli_fetch_array($data)){
+                  echo "<tr>";
+                  echo "<th scope='row'>". $row['id'] . "</td>";
+                  echo "<td>". date('d-m-Y', strtotime($row['signed_on'])) . "</td>";
+                  echo "<td>". $row['name'] . "</td>";
+                  echo "<td>". $row['email'] . "</td>";
+                  echo "<td>". $row['message'] . "</td>";
+                  echo "</tr>";
+                }
+              ?>
+            </tbody>
+          </table>
+
+          </div>
+      </div>
+    </section>
+
+    <footer class="footer-bs">
+      <div class="container white">
+        <div class="row">
+          <div class="col-md-4 col-sm-12 mb-3 footersection">
+            <span class="copyright">&copy; Share Shed Inc</span><br>
+            <span class="copyright mb-0">Icons made by <a class="white" href="http://www.freepik.com" title="Freepik">Freepik</a> from <a class="white"style="color=:white"href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a class="white"href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></span>
+            <br><br>
+          </div>
+          <div class="col-md-4 footer-social col-sm-6 mb-3 footersection">
+            <h4>Follow Us —</h4>
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="https://twitter.com/teamsunshine4">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.facebook.com/Team-Sunshine-927693290753400/" target="_blank">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.instagram.com/teamsunshine.3801/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </li>
+            </ul>
+            <br>
+          </div>
+          <div class="col-md-4 col-sm-6 footer-nav footersection">
+              <h4>Menu —</h4>
+              <p><a href="#about"><a href="#graphs">Graphs</a> - <a href="#info">Customer Info</a> - <a href="index.html">Back to Home</a></p>
+              <p><a href="#page-top"> Back to top &nbsp;<i class="fas fa-arrow-up"></i></p>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="additional/vendor/jquery/jquery.min.js"></script>
+    <script src="additional/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="additional/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="additional/js/jqBootstrapValidation.js"></script>
+    <script src="additional/js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="additional/js/agency.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
   </body>
 </html>
