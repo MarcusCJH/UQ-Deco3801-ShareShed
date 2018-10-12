@@ -43,9 +43,17 @@
   $query_graph = "SELECT DATE(signed_on) AS date,
                         COUNT(*) AS total
                   FROM contact_form
+                  WHERE signed_on BETWEEN (NOW() - INTERVAL 5 Day) AND NOW()
+                  GROUP BY DATE(signed_on)
+                  ORDER BY DATE(signed_on)";
+
+  $query_cumulative = "SELECT DATE(signed_on) AS date,
+                        COUNT(*) AS total
+                  FROM contact_form
                   GROUP BY DATE(signed_on)
                   ORDER BY DATE(signed_on)";
   $graph_data = mysqli_query($con, $query_graph);
+  $graph_cumulative = mysqli_query($con, $query_cumulative);
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,25 +78,48 @@
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawChart2);
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Date', 'User'],
+          ['Date', 'Total User'],
          <?php
-         while($row = mysqli_fetch_array($graph_data)){
-           echo "['".$row['date']."',".$row['total']."],";
+         $cumulative = 0;
+         while($row = mysqli_fetch_array($graph_cumulative)){
+           $cumulative += $row['total'];
+           echo "['".$row['date']."',".$cumulative."],";
          }
          ?>
         ]);
 
         var options = {
-          title: 'User Join Chart',
+          title: 'Cumulative User Chart',
           legend: { position: 'bottom' }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var chart = new google.visualization.LineChart(document.getElementById('cumulative_chart'));
 
         chart.draw(data, options);
+      }
+
+      function drawChart2() {
+        var data2 = google.visualization.arrayToDataTable([
+          ['Date', 'User'],
+         <?php
+         while($row = mysqli_fetch_array($graph_data)){
+         echo "['".$row['date']."',".$row['total']."],";
+         }
+         ?>
+        ]);
+
+        var options2 = {
+          title: 'Daily User Chart',
+          legend: { position: 'bottom' }
+        };
+
+        var chart2 = new google.visualization.LineChart(document.getElementById('day_chart'));
+
+        chart2.draw(data2, options2);
       }
     </script>
 
@@ -133,9 +164,17 @@
           if (mysqli_num_rows($graph_data)==0) {
             echo "No Data yet";
           } else {
-            echo "<div id='curve_chart' style='height:600px'></div>";
+            echo "<div class='row'>
+                    <div class='col-md-6'>
+                      <div id='cumulative_chart'></div>
+                    </div>
+                    <div class='col-md-6'>
+                      <div id='day_chart'></div>
+                    </div>
+                  </div>";
           }
          ?>
+
       </div>
     </section>
 
