@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
 from datetime import datetime
@@ -78,11 +79,20 @@ class User(AbstractUser):
     address = models.TextField(max_length=30)
     suburb = models.CharField(max_length=30)
     postcode = models.CharField(max_length=4)
-    state = models.CharField(max_length=30)
     city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
     has_identified = models.BooleanField(default=False)
+    state_options = (
+        ('NSW', 'New South Wales'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('TAS', 'Tasmania'),
+        ('VIC', 'Victoria'),
+        ('WA', 'Western Australia'),
+    )
+    state = models.CharField(choices=state_options,
+                                        max_length=3, default='QLD')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -105,7 +115,8 @@ class IdentificationImage(models.Model):
 
 
 class UserImage(models.Model):
-    user = models.ForeignKey(User, related_name='images', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='images',
+                             on_delete=models.CASCADE)
     image = models.ImageField(upload_to='users', blank=False)
     verified = models.BooleanField(default=False)
     alt = models.CharField(max_length=128, blank=True)
@@ -133,6 +144,12 @@ class Member(models.Model):
 
     def __str__(self):
         return str(self.membership_type)
+
+class OrderNote(models.Model):
+    user = models.ForeignKey(User, related_name='notes',
+                             on_delete=models.CASCADE)
+    message = models.TextField()
+    added_on = models.DateTimeField(default=timezone.now)
 
 
 class Product(models.Model):

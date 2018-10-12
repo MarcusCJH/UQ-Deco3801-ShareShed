@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, IdentificationImage
+from .models import User, IdentificationImage, OrderNote
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
@@ -27,7 +27,15 @@ class UserCreationForm(UserCreationForm):
         validators=[RegexValidator('\d{4}',
         message="Please enter valid Post Code")],
         required=True)
-    state = forms.CharField(max_length=20, required=True)
+    state_options = (
+        ('NSW', 'New South Wales'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('TAS', 'Tasmania'),
+        ('VIC', 'Victoria'),
+        ('WA', 'Western Australia'),
+    )
+    state = forms.ChoiceField(widget=forms.Select(), choices=state_options, initial='QLD', required=True)
     country = forms.CharField(max_length=30, required=True)
 
     class Meta(UserCreationForm.Meta):
@@ -72,3 +80,8 @@ class IdentificationForm(forms.ModelForm):
     class Meta:
         model = IdentificationImage
         fields = ('image',)
+
+class OrderNoteForm(forms.ModelForm):
+    class Meta:
+        model = OrderNote
+        fields = ('message',)

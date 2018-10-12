@@ -22,6 +22,30 @@
 
 {% block content %}
 <div id="content-main">
+  {% if notes|length > 0 %}
+  <table>
+    <tr>
+      <td> User </td>
+      <td> Message </td>
+      <td> Created On </td>
+    </tr>
+
+    {% for items in notes %}
+    <tr>
+      <td> {{ items.user }} </td>
+      <td> {{ items.message }} </td>
+      <td> {{ items.added_on }} </td>
+    </tr>
+
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>
+      There is no Order Note
+    </p>
+  {% endif %}
+  <a class="btn btn-default" href="{% url 'add_note' %}">Add comment</a>
+  <a class="btn btn-default" href="/admin/main_website/ordernote/">View All</a>
     <div class="card-deck">
         <div class="card border-warning">
             <div class="card-body pt-3 pb-1">

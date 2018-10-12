@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductCategory, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningDay, IdentificationImage
+    LendingHistory, OpeningDay, IdentificationImage, OrderNote
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -20,6 +20,7 @@ class MyAdminSite(admin.AdminSite):
         lendings = Lending.objects.all()
         collect_today = lendings.filter(Q(product_status='COLLECTTODAY'))
         return_today = lendings.filter(Q(product_status='RETURNTODAY'))
+        order_notes = OrderNote.objects.all().order_by('added_on')[::-1][:6]
         today = len(collect_today) + len(return_today)
         reserved = len(lendings.filter(Q(product_status='RESERVED')))
         overdue = len(lendings.filter(Q(product_status='RETURNLATE')))
@@ -34,6 +35,7 @@ class MyAdminSite(admin.AdminSite):
             'reserved': reserved,
             'overdue':overdue,
             'onloan':onloan,
+            'notes':order_notes,
             **(extra_context or {}),
         }
 
@@ -211,6 +213,9 @@ class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
     list_display = ('opening_day','opening_hour')
 
+class OrderNotesAdmin(admin.ModelAdmin):
+    list_display = ('user','message', 'added_on')
+
 
 admin_site = MyAdminSite(name='myadmin')
 
@@ -221,6 +226,7 @@ admin_site.register(ProductCategory, ProductCategoryAdmin)
 admin_site.register(ProductTag, ProductTagAdmin)
 admin_site.register(ProductLocation, ProductLocationAdmin)
 admin_site.register(ProductCondition, ProductConditionAdmin)
+admin_site.register(OrderNote, OrderNotesAdmin)
 admin_site.register(Cart, CartAdmin)
 admin_site.register(Member, MemberAdmin)
 admin_site.register(Lending, LendingAdmin)
