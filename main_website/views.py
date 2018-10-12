@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
 from .models import User, Member, Payment, ProductType, Product
-from .forms import UserCreationForm, IdentificationForm, UserChangeForm, 
+from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
     OrderNoteForm
 from django.contrib.auth.forms import PasswordChangeForm
 import stripe
