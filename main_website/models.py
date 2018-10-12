@@ -3,24 +3,31 @@ from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
 from datetime import datetime
 
 def validate_date(value):
     """Validator to be used for lending model."""
-    if value.weekday() in [1,2,3,6]:
+    days = OpeningDay.objects.values_list('opening_day')
+    opening_day = []
+    for day in days:
+        opening_day.append(day[0])
+    if value.weekday() not in opening_day:
         raise ValidationError(
             ('Share Shed is not open'),
         )
 
-
-    expirydate = '2018-09-30'
+    expirydate = '2019-09-30'
     expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
     if value >expiry:
         raise ValidationError(
             ('Please borrow within membership period'),
         )
+
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 
 class UserManager(BaseUserManager):
@@ -77,12 +84,22 @@ class User(AbstractUser):
     maillist = models.BooleanField(default=True)
     telephone_num = models.CharField(_('Telephone Number'), max_length=15)
     address = models.TextField(max_length=30)
-    city = models.CharField(max_length=20)
-    county = models.CharField(max_length=30)
+    suburb = models.CharField(max_length=30)
     postcode = models.CharField(max_length=4)
+    city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
-    suburb = models.CharField(max_length=30)
+    has_identified = models.BooleanField(default=False)
+    state_options = (
+        ('NSW', 'New South Wales'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('TAS', 'Tasmania'),
+        ('VIC', 'Victoria'),
+        ('WA', 'Western Australia'),
+    )
+    state = models.CharField(choices=state_options,
+                                        max_length=3, default='QLD')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -92,6 +109,16 @@ class User(AbstractUser):
     def __str__(self):
         """Returns the user email as the default print statement."""
         return str(self.email)
+
+class IdentificationImage(models.Model):
+    """Image model to extend the product model."""
+    user = AutoOneToOneField(
+        User,
+        related_name='identification',
+        primary_key=True,
+        on_delete=models.CASCADE,
+    )
+    image = models.FileField(upload_to=user_directory_path, blank=False)
 
 
 class UserImage(models.Model):
@@ -117,11 +144,16 @@ class Member(models.Model):
     )
     membership_type = models.CharField(choices=membership_options,
                                         max_length=1, default='g')
-    start_time = models.DateTimeField(blank=True,null=True)
-    end_time = models.DateTimeField(blank=True,null=True)
+    start_time = models.DateField(blank=True,null=True)
+    end_time = models.DateField(blank=True,null=True)
 
+    def __str__(self):
+        return str(self.membership_type)
 
-
+class OrderNote(models.Model):
+    user = models.ForeignKey(User, related_name='notes', on_delete=models.CASCADE)
+    message = models.TextField()
+    added_on = models.DateTimeField(default=timezone.now)
 
 
 class Product(models.Model):
@@ -152,7 +184,6 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.name)
-
 
 
 class ProductImage(models.Model):
@@ -250,8 +281,7 @@ class Lending(models.Model):
         return str(duration)
 
     def __str__(self):
-        name = self.productId.name
-        return str(name)
+        return str(self.productId.name)
 
 
 class LendingHistory(models.Model):
@@ -289,9 +319,24 @@ class LendingHistory(models.Model):
         return str(duration)
 
     def __str__(self):
-        name = self.productId.name
-        return str(name)
+        return str(self.productId.name)
 
 
-class OpeningHour(models.Model):
-    opening_date = models.DateTimeField()
+class OpeningDay(models.Model):
+    days = (
+        (0, 'Monday'),
+        (1,'Tuesday'),
+        (2, 'Wednesday'),
+        (3,'Thursday'),
+        (4,'Friday'),
+        (5,'Saturday'),
+        (6,'Sunday'),
+    )
+    opening_day = models.IntegerField(choices=days,
+                                      null=False,)
+    opening_hour = models.TimeField()
+
+    def __str__(self):
+        hour = str(self.opening_hour)
+        day = str(self.opening_day)
+        return '{} {}'.format(day, hour)

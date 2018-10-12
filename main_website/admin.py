@@ -1,12 +1,73 @@
 from django.contrib import admin
 from .models import Product, ProductImage, ProductType, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningHour, UserImage
+    LendingHistory, OpeningDay, IdentificationImage, OrderNote
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .forms import UserCreationForm, UserChangeForm
+from django.views.decorators.cache import never_cache
+from django.db.models import Q
+from django.template.response import TemplateResponse
+
+
+class MyAdminSite(admin.AdminSite):
+    """Override the default admin config"""
+    @never_cache
+    def index(self, request, extra_context=None):
+        """Display the main admin index page"""
+        lendings = Lending.objects.all()
+        order_notes = OrderNote.objects.all().order_by('added_on')[::-1][:6]
+        collect_today = lendings.filter(Q(productStatus='COLLECTTODAY'))
+        return_today = lendings.filter(Q(productStatus='RETURNTODAY'))
+        today = len(collect_today) + len(return_today)
+        reserved = len(lendings.filter(Q(productStatus='RESERVED')))
+        overdue = len(lendings.filter(Q(productStatus='RETURNLATE')))
+        onloan = len(lendings.filter(Q(productStatus='ONLOAN')))
+
+        context = {
+            **self.each_context(request),
+            'title': self.index_title,
+            'collect_today': collect_today,
+            'return_today': return_today,
+            'today':today,
+            'reserved': reserved,
+            'overdue':overdue,
+            'onloan':onloan,
+            'notes':order_notes,
+            **(extra_context or {}),
+        }
+
+        request.current_app = self.name
+
+        return TemplateResponse(request, self.index_template or 'admin/index.html', context)
+
+
+class UserIdentificationInline(admin.StackedInline):
+    """Display list of images for a product admin dashboard"""
+    model = IdentificationImage
+    readonly_fields = ('image_tag',)
+
+    def image_tag(self, obj):
+        """Display the actual image with 200x200 pixel size"""
+        width='200px'
+        height='200px'
+        return mark_safe(
+        '<img src="{}" width={} height={}/>'.format(obj.image.url,
+                                                    width, height))
+
+
+class MemberInline(admin.StackedInline):
+    """Display list of members for admin dashboard"""
+    model = Member
+
+    list_display = ('membership_type', 'start_time',
+                    'end_time')
+    #search_fields = ('user_id', 'get_email', 'membership_type')
+    ordering = ('user_id', 'membership_type', 'start_time',
+                'end_time')
+
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
@@ -17,8 +78,9 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'county', 'postcode', 'country',
-                                         'suburb', 'balance')}),
+                                         'suburb','state', 'postcode',
+                                         'country', 'balance')}),
+        (_('Options'), {'fields': ('has_identified', 'maillist')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')})
@@ -28,15 +90,17 @@ class UserAdmin(UserAdmin):
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'first_name',
                        'last_name', 'telephone_num', 'address', 'city',
-                       'county', 'postcode', 'country', 'suburb'),
+                       'suburb', 'state', 'postcode', 'country', 'maillist'),
         }),
     )
     list_display = ('email', 'first_name', 'last_name',
-                    'is_staff', 'get_member')
+                    'is_staff', 'get_member', 'has_identified')
     search_fields = ('email', 'first_name', 'last_name', 'telephone_num',
-                     'address', 'city', 'county', 'postcode', 'country',
+                     'address', 'city', 'state', 'postcode', 'country',
                      'suburb')
-    ordering = ('email',)
+    ordering = ('first_name',)
+    readonly_fields = ('date_joined', 'last_login')
+    inlines = [MemberInline, UserIdentificationInline]
 
     def get_member(self, obj):
         member = Member.objects.get(user_id=obj.id)
@@ -49,27 +113,10 @@ class UserAdmin(UserAdmin):
 
     get_member.short_description = "Member"
 
+    def get_onloan_count(self):
+        number = len(Lending.objects.all().filter(productstatus="ONLOAN"))
+        return number
 
-class UserImageInline(admin.TabularInline):
-    """Display list of images for a user admin dashboard"""
-    model = UserImage
-    readonly_fields = ('image_tag',)
-
-    def image_tag(self,obj):
-        """Display te actual image with 200x200 pixel size"""
-        width='200px'
-        height='200px'
-        return mark_safe(
-            '<img src="{}" width={} height={}/>'.format(obj.image.url,
-                                                        width, height))
-
-class UserImageAdmin(admin.ModelAdmin):
-    """Display list of images for admin dashboard"""
-    list_display = ('user', 'alt')
-    readonly_fields = ('image_tag',)
-
-    def image_tag(self, obj):
-        return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 class MemberAdmin(admin.ModelAdmin):
     """Display list of members for admin dashboard"""
@@ -91,6 +138,7 @@ class ProductImageInline(admin.TabularInline):
     """Display list of images for a product admin dashboard"""
     model = ProductImage
     readonly_fields = ('image_tag',)
+    extra = 0
 
     def image_tag(self, obj):
         """Display the actual image with 200x200 pixel size"""
@@ -146,6 +194,13 @@ class LendingAdmin(admin.ModelAdmin):
     list_display = ('productId', 'userId', 'startDate',
                     'endDate', 'productStatus')
     list_editable = ('productStatus',)
+    list_filter = ('productStatus',)
+    search_fields = ('product__name', 'user__id')
+
+    def count_status(self, obj):
+        number = len(Lending.objects.all().filter(productstatus=obj))
+        return number
+
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
@@ -154,26 +209,31 @@ class LendingHistoryAdmin(admin.ModelAdmin):
     list_editable = ('productStatus',)
 
 
-class OpeningHourAdmin(admin.ModelAdmin):
+class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
-    list_display = ('opening_date',)
+    list_display = ('opening_day','opening_hour')
 
+class OrderNotesAdmin(admin.ModelAdmin):
+    list_display = ('user','message', 'added_on')
+
+
+admin_site = MyAdminSite(name='myadmin')
 
 """Register all the admin view"""
-admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductImage, ProductImageAdmin)
-admin.site.register(ProductType, ProductTypeAdmin)
-admin.site.register(ProductTag, ProductTagAdmin)
-admin.site.register(ProductLocation, ProductLocationAdmin)
-admin.site.register(ProductCondition, ProductConditionAdmin)
-admin.site.register(Cart, CartAdmin)
-admin.site.register(Member, MemberAdmin)
-admin.site.register(Lending, LendingAdmin)
-admin.site.register(LendingHistory, LendingHistoryAdmin)
-admin.site.register(OpeningHour, OpeningHourAdmin)
-admin.site.register(UserImage, UserImageAdmin)
+admin_site.register(Product, ProductAdmin)
+admin_site.register(ProductImage, ProductImageAdmin)
+admin_site.register(ProductType, ProductTypeAdmin)
+admin_site.register(ProductTag, ProductTagAdmin)
+admin_site.register(ProductLocation, ProductLocationAdmin)
+admin_site.register(ProductCondition, ProductConditionAdmin)
+admin_site.register(OrderNote, OrderNotesAdmin)
+admin_site.register(Cart, CartAdmin)
+admin_site.register(Member, MemberAdmin)
+admin_site.register(Lending, LendingAdmin)
+admin_site.register(LendingHistory, LendingHistoryAdmin)
+admin_site.register(OpeningDay, OpeningDayAdmin)
 
 """Set admin header and title"""
-admin.site.site_header = "Share Shed Admin"
-admin.site.site_title = "Share Shed admin login"
-admin.site.index_title = "Hello"
+admin_site.site_header = "Share Shed Admin"
+admin_site.site_title = "Share Shed admin login"
+admin_site.index_title = "Hello"
