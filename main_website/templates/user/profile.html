@@ -24,7 +24,7 @@
                     E-mail  : {{ user.email }}
                 </p>
                 <p>
-                    Phone Number   : {{ user.last_name }}
+                    Phone Number   : {{ user.telephone_num }}
                 </p>
                 </p>
                 <p>
@@ -37,7 +37,10 @@
                     Balance : ${{user.balance}}
                 </p>
             </div>
+            <a href="{% url 'update_profile'%}">Update Profile</a>
+            <a href="{% url 'change_password' %}">Change Password</a>
         </div>
+
             <div class="user-information">
                 <div class="information-header">
                     <h3>Top Up Credit</h3>
@@ -103,6 +106,13 @@
                 </div>
             </div>
         {% endif %}
+        {% if not user.has_identified %}
+        <p>
+            You ID card has to be identified in order to become a member.
+            Click <a href="{% url 'upload_identification' %}"> Here </a>To
+            Upload your ID Card
+        </p>
+        {% else %}
         <form action="{% url 'membership' %}" method="post">
           {% csrf_token %}
         <script
@@ -121,6 +131,7 @@
         </script>
           <!--<input type="submit" value="Add Membership" /> -->
         </form>
+        {% endif %}
 
     </div>
     <p>

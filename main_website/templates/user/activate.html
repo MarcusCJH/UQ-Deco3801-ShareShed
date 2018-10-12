@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Activate account{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'main_website/css/activate_account.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class = "container-fluid">
+  <div class = "row">
+    <div class = "col-md-6 ml-5 mt-5" id = "centre">
+      <h2>Thank you for creating an account with us!</h2>
+      <h5>Your account is ready to be activated. Please check your email inbox for the account activation link. </h5>
+      <form method="post" action={% url 'resend_email_activation' %}>
+          {% csrf_token %}
+          <input type="hidden" name="recipient" value={{ recipient }} />
+          <input type="submit" value="Re-send Email" />
+      </form>
+  </div>
+  </div>
+</div>
+{% endblock %}
