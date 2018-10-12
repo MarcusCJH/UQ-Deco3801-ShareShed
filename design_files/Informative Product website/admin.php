@@ -38,7 +38,7 @@
   if ($con->connect_error) {
     die("Connection failed: ".$con->connect_error);
   }
-  $query = "SELECT * FROM contact_form";
+  $query = "SELECT * FROM contact_form ORDER BY signed_on DESC";
   $data = mysqli_query($con, $query);
   $query_graph = "SELECT DATE(signed_on) AS date,
                         COUNT(*) AS total
@@ -160,7 +160,7 @@
                 while($row = mysqli_fetch_array($data)){
                   echo "<tr>";
                   echo "<th scope='row'>". $row['id'] . "</td>";
-                  echo "<td>". date('d-m-Y', strtotime($row['signed_on'])) . "</td>";
+                  echo "<td>". $row['signed_on'] . "</td>";
                   echo "<td>". $row['name'] . "</td>";
                   echo "<td>". $row['email'] . "</td>";
                   echo "<td>". $row['message'] . "</td>";
