@@ -3,19 +3,23 @@ from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
 from datetime import datetime
 
 def validate_date(value):
     """Validator to be used for lending model."""
-    if value.weekday() in [1,2,3,6]:
+    days = OpeningDay.objects.values_list('opening_day')
+    opening_day = []
+    for day in days:
+        opening_day.append(day[0])
+    if value.weekday() not in opening_day:
         raise ValidationError(
             ('Share Shed is not open'),
         )
 
-
-    expirydate = '2018-09-30'
+    expirydate = '2019-09-30'
     expiry = datetime.strptime(expirydate, '%Y-%m-%d').date()
     if value >expiry:
         raise ValidationError(
@@ -82,11 +86,20 @@ class User(AbstractUser):
     address = models.TextField(max_length=30)
     suburb = models.CharField(max_length=30)
     postcode = models.CharField(max_length=4)
-    state = models.CharField(max_length=30)
     city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
     has_identified = models.BooleanField(default=False)
+    state_options = (
+        ('NSW', 'New South Wales'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('TAS', 'Tasmania'),
+        ('VIC', 'Victoria'),
+        ('WA', 'Western Australia'),
+    )
+    state = models.CharField(choices=state_options,
+                                        max_length=3, default='QLD')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -131,11 +144,16 @@ class Member(models.Model):
     )
     membership_type = models.CharField(choices=membership_options,
                                         max_length=1, default='g')
-    start_time = models.DateTimeField(blank=True,null=True)
-    end_time = models.DateTimeField(blank=True,null=True)
+    start_time = models.DateField(blank=True,null=True)
+    end_time = models.DateField(blank=True,null=True)
 
     def __str__(self):
         return str(self.membership_type)
+
+class OrderNote(models.Model):
+    user = models.ForeignKey(User, related_name='notes', on_delete=models.CASCADE)
+    message = models.TextField()
+    added_on = models.DateTimeField(default=timezone.now)
 
 
 class Product(models.Model):

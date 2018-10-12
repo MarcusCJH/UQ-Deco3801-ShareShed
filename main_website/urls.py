@@ -11,7 +11,9 @@ urlpatterns = [
     path('catalogue/<type_id>/', views.catalogue, name='catalogue'),
     path('itemDetails/<product_id>', views.item_details, name='item_details'),
     path('itemDetails/', TemplateView.as_view(template_name='catalogue/itemDetails.html')),
+    path('admin/ordernote/new', views.new_order_note, name='add_note'),
     path('signup/', views.sign_up , name='signup'),
+    path('signup/resend_email_activation/', views.resend_email_activation, name='resend_email_activation'),
     path('membership',views.membership_renew, name='membership'),
     path('topup',views.top_up_credit, name='topup'),
     path('profile', TemplateView.as_view(template_name='user/profile.html'),
@@ -21,6 +23,4 @@ urlpatterns = [
     path('profile/idupload', views.upload_identification, name='upload_identification'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.user_activation, name='activate'),
-    path('test_email',views.test_email, name='test_email'),
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

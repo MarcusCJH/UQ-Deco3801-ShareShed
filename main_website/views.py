@@ -15,7 +15,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
 from .models import User, Member, Payment, ProductType, Product
-from .forms import UserCreationForm, IdentificationForm, UserChangeForm
+from .forms import UserCreationForm, IdentificationForm, UserChangeForm, 
+    OrderNoteForm
 from django.contrib.auth.forms import PasswordChangeForm
 import stripe
 
@@ -99,11 +100,33 @@ def sign_up(request):
                 settings.EMAIL_HOST_USER,
                 [to_email],
                 fail_silently=False)
-            return render(request, 'user/activate.html')
+            return render(request, 'user/activate.html', {'recipient': to_email})
             # return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def resend_email_activation(request):
+    if request.method == 'POST':
+        recipient = request.POST.get("recipient","")
+        user = User.objects.get(email = recipient)
+        current_site = get_current_site(request)
+        mail_subject = 'Share Shed Email Activation'
+        message = render_to_string('registration/email_activation.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+            'token':account_activation_token.make_token(user),
+        })
+        to_email = recipient
+        send_mail(mail_subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [to_email],
+            fail_silently=False)
+
+        return render(request, 'user/activate.html', {'recipient': to_email})
+    return render(request, 'user/activate.html', {'recipient': recipient})
 
 def user_activation(request, uidb64, token):
     try:
@@ -118,6 +141,20 @@ def user_activation(request, uidb64, token):
         return redirect('home')
     else:
         return HttpResponse('Activation link is invalid!')
+
+def new_order_note(request):
+    current_user = request.user;
+    if request.method == "POST":
+        form = OrderNoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user_id = current_user.id
+            note.added_on = timezone.now()
+            note.save()
+            return redirect('/admin')
+    else:
+        form = OrderNoteForm()
+    return render(request, 'admin/add_order_note.html', {'form': form})
 
 def upload_identification(request):
     current_user = request.user;
@@ -186,8 +223,18 @@ def membership_renew(request):
 
         member.save()
 
-
-
+        current_site = get_current_site(request)
+        mail_subject = 'Membership Purchase'
+        message = render_to_string('registration/email_activation.html', {
+            'user': current_user,
+            'membership_end': member.end_time
+        })
+        to_email = current_user.email
+        send_mail(mail_subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [to_email],
+            fail_silently=False)
     return redirect('profile')
 
 @csrf_exempt
@@ -227,15 +274,3 @@ def top_up_credit(request):
             user.save()
         # ENDPAYMENT
     return redirect('profile')
-
-def test_email(request):
-    success = send_mail('Test mail',
-                        'Hello',
-                        settings.EMAIL_HOST_USER,
-                        ['risyadhasbullah@gmail.com'],
-                        fail_silently=False)
-
-    if success:
-        return HttpResponse('Success')
-    else:
-        return HttpResponse('Invalid')
