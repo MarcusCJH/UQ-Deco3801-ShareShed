@@ -50,19 +50,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/lending/' %} active {% endifequal %}" href="/admin/main_website/lending/">
+                <a class="nav-link {% if '/admin/main_website/lending/' in request.path %} active {% endif %}" href="/admin/main_website/lending/">
                   <i class="fas fa-shopping-basket navicon"></i> &nbsp;
                   Loans
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/product/' %} active {% endifequal %}" href="/admin/main_website/product/">
+                <a class="nav-link {% if '/admin/main_website/lendinghistory/' in request.path %} active {% endif %}" href="/admin/main_website/lendinghistory/">
+                  <i class="fas fa-history"></i> &nbsp;
+                  Loan Histories
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if '/admin/main_website/product/' in request.path %} active {% endif %}" href="/admin/main_website/product/">
                   <i class="fas fa-box-open navicon"></i> &nbsp;
                   Items
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/user/' %} active {% endifequal %}" href="/admin/main_website/user/">
+                <a class="nav-link {% if '/admin/main_website/user/' in request.path %} active {% endif %}" href="/admin/main_website/user/">
                   <i class="fas fa-users navicon"></i> &nbsp;
                   Contacts/Members
                 </a>
@@ -74,14 +80,14 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/openingday/' %} active {% endifequal %}" href="/admin/main_website/openingday/">
+                <a class="nav-link {% if '/admin/main_website/openingday/' in request.path %} active {% endif %}" href="/admin/main_website/openingday/">
                   <i class="far fa-clock navicon"></i> &nbsp;
                   Opening Day
                 </a>
               </li>
               {% if user.is_superuser %}
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/auth/group/' %} active {% endifequal %}" href="/admin/auth/group/">
+                <a class="nav-link {% if '/admin/auth/group/' in request.path %} active {% endif %}" href="/admin/auth/group/">
                   <i class="fas fa-address-card navicon"></i> &nbsp;
                   Permissions
                 </a>

@@ -102,8 +102,8 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        """Returns the user email as the default print statement."""
-        return str(self.email)
+        """Returns the user full name as the default print statement."""
+        return self.get_full_name()
 
 
 class IdentificationImage(models.Model):
