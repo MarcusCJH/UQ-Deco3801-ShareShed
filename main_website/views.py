@@ -23,19 +23,19 @@ import datetime
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def catalogue(request, type_id=0):
+def catalogue(request, category_id=0):
     catagories = ProductCategory.objects.all().annotate(
         num_count=Count('product'))
     context = {
         'catagories': catagories
     }
 
-    if type_id == 0:
+    if category_id == 0:
         products = Product.objects.all()
         context['products'] = products
 
     else:
-        products = Product.objects.filter(type=type_id)
+        products = Product.objects.filter(category=category_id)
         context['products'] = products
 
     return render(request, 'catalogue/catalogue.html',

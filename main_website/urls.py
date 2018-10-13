@@ -9,7 +9,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('catalogue/', views.catalogue, name='catalogue'),
-    path('catalogue/<type_id>/', views.catalogue, name='catalogue'),
+    path('catalogue/<category_id>/', views.catalogue, name='catalogue'),
     path('itemDetails/<product_id>', views.item_details, name='item_details'),
     path('itemDetails/',
          TemplateView.as_view(template_name='catalogue/itemDetails.html')),

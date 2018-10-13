@@ -32,8 +32,8 @@
             		<header class="card-header pt-3 pb-2 pl-3"><h6 class="title">Categories</h6></header>
             		<div class="filter-content">
             			<div class="list-group list-group-flush">
-                            {% for type in catagories %}
-                                <a href="/catalogue/{{ type.id }}" class="list-group-item pall">{{ type.type_name }}<span class="float-right badge badge-light round">{{ type.num_count }}</span> </a>
+                            {% for category in catagories %}
+                                <a href="/catalogue/{{ type.id }}" class="list-group-item pall">{{ category.category_name }}<span class="float-right badge badge-light round">{{ type.num_count }}</span> </a>
                             {% endfor %}
 
                   </div>
@@ -107,7 +107,7 @@
               {% endfor %}
 
 
-         
+
 
 
             </div>

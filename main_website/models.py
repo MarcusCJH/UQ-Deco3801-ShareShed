@@ -9,18 +9,6 @@ from annoying.fields import AutoOneToOneField
 import datetime
 
 
-def validate_opening_day(value):
-    """Validator to be used for lending model."""
-    days = OpeningDay.objects.values_list('opening_day')
-    opening_day = []
-    for day in days:
-        opening_day.append(day[0])
-    if value.weekday() not in opening_day:
-        raise ValidationError(
-            ('Share Shed is not open'),
-        )
-
-
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
@@ -287,6 +275,8 @@ class Lending(models.Model):
     def clean(self):
         '''Validate the calendar system'''
 
+        error_list = {}
+
         '''Check borrowing time is not in the past'''
         if self.start_date < datetime.date.today():
             raise ValidationError(
@@ -307,19 +297,15 @@ class Lending(models.Model):
             )
 
         if self.start_date < membership_start:
-            raise ValidationError({
-                'start_date': ValidationError(_(
+            error_list['start_date'] = ValidationError(_(
                     'Please borrow within your membership period or '
-                    + 'extend your membership')),
-            })
+                    + 'extend your membership'))
 
         membership_expiry = self.user_id.membership.end_time
         if self.end_date > membership_expiry:
-            raise ValidationError({
-                'end_date': ValidationError(_(
+            error_list['end_date'] = ValidationError(_(
                     'Please borrow within your membership period or '
-                    + 'extend your membership')),
-            })
+                    + 'extend your membership'))
 
         '''Check opening day'''
         days = OpeningDay.objects.values_list('opening_day')
@@ -327,14 +313,15 @@ class Lending(models.Model):
         for day in days:
             opening_day.append(day[0])
         if self.start_date.weekday() not in opening_day:
-            raise ValidationError({
-                'start_date': ValidationError(_('Share shed is not open')),
-            })
+            error_list['start_date'] = ValidationError(_(
+                'Share shed is not open'))
 
         if self.end_date.weekday() not in opening_day:
-            raise ValidationError({
-                'end_date': ValidationError(_('Share shed is not open')),
-            })
+            error_list['end_date'] = ValidationError(_(
+                'Share shed is not open'))
+
+        if error_list:
+            raise ValidationError(error_list)
 
 
 class LendingHistory(models.Model):
