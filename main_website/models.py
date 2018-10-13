@@ -221,7 +221,7 @@ class Cart(models.Model):
     """Cart model to allow users add items to cart."""
     item = models.ForeignKey('Product',
                              null=False, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 null=False, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -239,10 +239,10 @@ class Payment(models.Model):
 
 
 class Lending(models.Model):
-    product_id = models.ForeignKey('Product', null=False,
+    product = models.ForeignKey(Product, related_name='product',
                                    on_delete=models.PROTECT)
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                null=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='user',
+                                on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
 
@@ -270,7 +270,7 @@ class Lending(models.Model):
         return str(duration)
 
     def __str__(self):
-        return str(self.product_id.name)
+        return str(self.product.name)
 
     def clean(self):
         '''Validate the calendar system'''
@@ -290,7 +290,7 @@ class Lending(models.Model):
             )
 
         '''Check membership duration'''
-        membership_start = self.user_id.membership.start_time
+        membership_start = self.user.membership.start_time
         if membership_start is None:
             raise ValidationError(
                 ('You are not a member, please pay for membership first.')
@@ -301,7 +301,7 @@ class Lending(models.Model):
                     'Please borrow within your membership period or '
                     + 'extend your membership'))
 
-        membership_expiry = self.user_id.membership.end_time
+        membership_expiry = self.user.membership.end_time
         if self.end_date > membership_expiry:
             error_list['end_date'] = ValidationError(_(
                     'Please borrow within your membership period or '
@@ -325,10 +325,9 @@ class Lending(models.Model):
 
 
 class LendingHistory(models.Model):
-    """Lending history model to store history of lendings"""
-    product_id = models.ForeignKey('Product', null=False,
+    product = models.ForeignKey(Product, null=False, related_name='history_product',
                                    on_delete=models.PROTECT)
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(User, related_name='history_user',
                                 null=False, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()

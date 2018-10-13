@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, IdentificationImage, OrderNote
+from .models import User, IdentificationImage, OrderNote, Lending
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
@@ -89,3 +89,10 @@ class OrderNoteForm(forms.ModelForm):
     class Meta:
         model = OrderNote
         fields = ('message',)
+
+class ItemLendForm(forms.ModelForm):
+    start_date = forms.DateField()
+    end_date = forms.DateField()
+    class Meta:
+        model = Lending
+        fields = ('start_date', 'end_date',)
