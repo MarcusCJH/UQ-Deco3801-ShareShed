@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from annoying.fields import AutoOneToOneField
-from datetime import datetime
+import datetime
 
 
 def validate_opening_day(value):
@@ -288,7 +288,7 @@ class Lending(models.Model):
         '''Validate the calendar system'''
 
         '''Check borrowing time is not in the past'''
-        if self.start_date < date.today():
+        if self.start_date < datetime.date.today():
             raise ValidationError(
                 ('You cannot borrow for past days.')
             )
