@@ -153,7 +153,7 @@ class OrderNote(models.Model):
     user = models.ForeignKey(User, related_name='notes',
                              on_delete=models.CASCADE)
     message = models.TextField()
-    added_on = models.DateTimeField(default=timezone.now)
+    added_on = models.DateTimeField(auto_now_add=True)
 
 
 class Product(models.Model):

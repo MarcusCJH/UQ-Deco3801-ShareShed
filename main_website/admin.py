@@ -215,7 +215,7 @@ class OpeningDayAdmin(admin.ModelAdmin):
     list_display = ('opening_day', 'opening_hour')
 
 
-class OrderNotesAdmin(admin.ModelAdmin):
+class OrderNoteAdmin(admin.ModelAdmin):
     list_display = ('user', 'message', 'added_on')
 
 
@@ -228,7 +228,7 @@ admin_site.register(ProductCategory, ProductCategoryAdmin)
 admin_site.register(ProductTag, ProductTagAdmin)
 admin_site.register(ProductLocation, ProductLocationAdmin)
 admin_site.register(ProductCondition, ProductConditionAdmin)
-admin_site.register(OrderNote, OrderNotesAdmin)
+admin_site.register(OrderNote, OrderNoteAdmin)
 admin_site.register(Cart, CartAdmin)
 admin_site.register(Member, MemberAdmin)
 admin_site.register(Lending, LendingAdmin)
