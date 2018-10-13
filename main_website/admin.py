@@ -195,9 +195,10 @@ class LendingAdmin(admin.ModelAdmin):
     list_display = ('product_id', 'user_id', 'start_date',
                     'end_date', 'product_status')
     list_editable = ('product_status',)
-    list_filter = ('product_status', 'start_date', 'end_date')
+    list_filter = ('product_status', )
     search_fields = ('product_id__name', 'user_id__first_name',
-                     'user_id__last_name', 'start_date', 'end_date')
+                     'user_id__last_name',)
+    date_hierarchy = 'start_date'
 
     def count_status(self, obj):
         number = len(Lending.objects.all().filter(productstatus=obj))
@@ -208,7 +209,10 @@ class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
     list_display = ('product_id', 'user_id', 'start_date',
                     'end_date', 'product_status')
-    list_editable = ('product_status',)
+    list_filter = ('product_status', )
+    search_fields = ('product_id__name', 'user_id__first_name',
+                     'user_id__last_name',)
+    date_hierarchy = 'start_date'
 
 
 class OpeningDayAdmin(admin.ModelAdmin):
