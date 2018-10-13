@@ -17,6 +17,7 @@ from .models import User, Member, Payment, ProductCategory, Product
 from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
     OrderNoteForm
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
 import stripe
 import datetime
 
@@ -50,6 +51,7 @@ def item_details(request, product_id):
         return render(request, 'catalogue/itemDetails.html', context)
 
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -67,7 +69,10 @@ def change_password(request):
     })
 
 
+@login_required
 def update_profile(request):
+    if not request.user.is_authenticated:
+        return redirect()
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -150,21 +155,7 @@ def user_activation(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 
 
-def new_order_note(request):
-    current_user = request.user
-    if request.method == "POST":
-        form = OrderNoteForm(request.POST)
-        if form.is_valid():
-            note = form.save(commit=False)
-            note.user_id = current_user.id
-            note.added_on = timezone.now()
-            note.save()
-            return redirect('/admin')
-    else:
-        form = OrderNoteForm()
-    return render(request, 'admin/add_order_note.html', {'form': form})
-
-
+@login_required
 def upload_identification(request):
     current_user = request.user
     if request.method == 'POST':
@@ -180,6 +171,7 @@ def upload_identification(request):
     return render(request, 'user/idupload.html', {'form': form})
 
 
+@login_required
 def membership_renew(request):
     """Method to renew membership"""
     current_user = request.user
@@ -275,3 +267,8 @@ def top_up_credit(request):
             user.save()
         # ENDPAYMENT
     return redirect('profile')
+
+
+@login_required
+def profile(request):
+    return render(request, 'user/profile.html')
