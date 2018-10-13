@@ -12,12 +12,12 @@
 {% block title %}Dashboard{% endblock %}
 {% block content_title %}{% if title %}<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
     <h1 class="h1">Dashboard</h1>
-    <div class="btn-toolbar pb-0 mb-0 mb-md-0">
+    <!-- <div class="btn-toolbar pb-0 mb-0 mb-md-0">
         <div class="btn-group">
             <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Share</button>
             <button class="btn btn-sm btn-outline-secondary pt-1 pb-1">Export</button>
         </div>
-    </div>
+    </div> -->
 </div>{% endif %}{% endblock %}
 
 {% block content %}
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-8">
                        TODAY
-                        <h5 class="pt-1"> {{ today }} </h5>
+                        <h2 class="pt-1"> {{ today }} </h2>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-md-8">
                         ON LOAN
-                        <h5 class="pt-1"> {{ onloan }} </h5>
+                        <h2 class="pt-1"> {{ onloan }} </h2>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-md-8">
                         OVERDUE
-                        <h5 class="pt-1"> {{ overdue }} </h5>
+                        <h2 class="pt-1"> {{ overdue }} </h2>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-md-8">
                         RESERVATIONS
-                        <h5 class="pt-1"> {{ reserved }} </h5>
+                        <h2 class="pt-1"> {{ reserved }} </h2>
                     </div>
                 </div>
             </div>

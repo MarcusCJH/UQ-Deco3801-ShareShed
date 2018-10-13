@@ -34,3 +34,31 @@ html, body{
   margin-left: auto;
   margin-right: auto;
 }
+
+.formdiv{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  width: 19em;
+}
+
+.submit-button{
+  background-color:#84C3F3;
+  border-radius: 1em;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  color: white;
+}
+
+.form-title{
+  font-family: 'Open Sans', sans-serif;"
+}
+
+.help-text{
+  color: grey;
+}
+
+.error-text{
+  color: red;
+}

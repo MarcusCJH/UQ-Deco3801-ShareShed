@@ -8,16 +8,16 @@
 
     <title>{% block title %} | ShareShed{% endblock %}</title>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base-home.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base-navbar.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base-footer.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "main_website/css/catalogue.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "main_website/css/base.css" %}">
     <link rel="stylesheet" href="{% static "main_website/css/itemDetails.css" %}">
     <link rel="shortcut icon" href="{% static "main_website/img/favicon.png" %}" type="image/x-icon" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
     {% block head %}
     {% endblock %}
 
@@ -34,10 +34,10 @@
               </button>
 
               <div class="collapse navbar-collapse" id="navbarsExample04">
-                <form class="form-inline my-2 my-md-0">
+                <!-- <form class="form-inline my-2 my-md-0">
                   <input class="form-control" type="text" placeholder="Search items, info..."> &nbsp;
                   <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                </form> -->
                 <ul class="navbar-nav ml-auto mr-3">
                   <li class="nav-item active">
                     <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
@@ -113,7 +113,7 @@
         <div class="col-md-5 footer-brand">
           <div class="row">
             <div class="col-lg-3">
-              <img src="{% static "main_website/img/icon-shareshed.png" %}" width="95" height="95" class="d-inline-block align-top" alt="">
+              <img src="{% static "main_website/img/icon-shareshed.png" %}" width="95" height="95" class="d-inline-block align-top footer-logo" alt="">
             </div>
             <div class="col-lg-9">
                 <p>Share Shed runs on an annual membership basis. You can join online for $80 a year.
@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <div class="col-md-2 footer-nav animated fadeInUp">
+        <div class="col-md-3 footer-nav animated fadeInUp">
             <h4>Menu —</h4>
                   <ul class="list">
                       <li><a href="#">Home</a></li>
@@ -133,12 +133,12 @@
                       <li><a href="#">Contact Us</a></li>
                   </ul>
           </div>
-        <div class="col-md-2 footer-social animated fadeInDown">
+        <div class="col-md-4 footer-social animated fadeInDown">
             <h4>Follow Us</h4>
             <a href="#"><i class="fab fa-facebook-square fa-2x"></i></a> &nbsp;&nbsp;<a href="#"><i class="fab fa-twitter-square fa-2x"></i></a>
              &nbsp;&nbsp;<a href="#"><i class="fab fa-instagram fa-2x"></i></a>
           </div>
-        <div class="col-md-3 footer-ns animated fadeInRight">
+        <!-- <div class="col-md-3 footer-ns animated fadeInRight">
             <h4>Subscribe to our newsletter</h4>
               <p>Never miss an update!</p>
               <p>
@@ -149,7 +149,7 @@
                   </div>
                 </div>
                </p>
-          </div>
+          </div> -->
       </div>
   </footer>
   <script src="{% static "main_website/js/base-navbar.js" %}"></script>

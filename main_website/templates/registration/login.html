@@ -15,21 +15,22 @@
         <h2>Login</h2>
         <br>
         <form method="post">
+          <h2 class="form-title">Login</h2>
           {% csrf_token %}
           {% for field in form %}
             <p>
               {{ field.label_tag }}<br>
               {{ field | add_class:'form-control'}}
               {% if field.help_text %}
-                <small style="color: grey">{{ field.help_text }}</small>
+                <small class="help-text">{{ field.help_text }}</small>
               {% endif %}
               {% for error in field.errors %}
-                <p style="color: red">{{ error }}</p>
+                <p class="error-text">{{ error }}</p>
               {% endfor %}
             </p>
           {% endfor %}
-          <button style="background-color:#84C3F3; border-radius: 10px; padding: 12px 30px; font-size: 20px;"type="submit">Login</button>
-          <a href="{% url 'password_reset' %}">Forgot your password</a>
+          <button class="submit-button" type="submit">Login</button>
+          <a href="{% url 'password_reset' %}">Forgot password</a>
         </form>
       </div>
     </div>
