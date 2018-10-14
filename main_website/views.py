@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
 from .models import User, Member, Payment, ProductCategory, Product
 from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
-    OrderNoteForm
+    OrderNoteForm, ItemLendForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 import stripe
@@ -45,8 +45,25 @@ def catalogue(request, category_id=0):
 
 def item_details(request, product_id):
         products = Product.objects.get(id=product_id)
+        current_user = request.user
+
+        if request.method == 'POST':
+            form = ItemLendForm(request.POST)
+            form.product = products
+            form.user = current_user
+            lending = form.save(commit=False)
+            lending.product_status = "RESERVED"
+            if lending.is_valid():
+                if lending.save():
+                    return redirect('/')
+                else:
+                    message.error(request, 'Please correct the error below')
+        else:
+            form = ItemLendForm()
         context = {
             "products": products,
+            'form': form
+
         }
         return render(request, 'catalogue/itemDetails.html', context)
 

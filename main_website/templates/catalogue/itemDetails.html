@@ -1,12 +1,25 @@
 
 {% extends 'base.html' %}
-
+{% load widget_tweaks %}
 {% load static %}
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+{% endblock %}
+
 {% block script %}
 <script type="text/javascript" src="{% static "main_website/js/itemDetails.js" %}"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+  $( "#startdate" ).datepicker();
+  $( "#enddate" ).datepicker();
+} );
+</script>
 {% endblock %}
 
 {% block content %}
@@ -76,34 +89,41 @@
             <br>
             <h5> Duration </h5>
             <hr>
-            <div class="container">
-              <div class="row">
-                <div class='col-lg-6'>
-                    <div class="form-group">
-                      <label for="From"><b>From:</b></label>
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-append">
-                                <i class="far fa-calendar-alt"></i>
-                            </span>
-                        </div>
-                    </div>
+
+
+            <form method="POST" class="post-form" autocomplete="off">
+              {% csrf_token %}
+              {{ form.non_field_errors }}
+              <div class="container">
+                <div class="row">
+                  <div class='col-lg-6'>
+                      <div class="form-group">
+                        <label for="From"><b>From:</b></label>
+                          <div class='input-group date' id='datetimepicker1'>
+                              {% render_field form.start_date class="form-control" id="startdate" %}
+                              {% render_field form.start_date.errors %}
+                              <span class="input-group-append">
+                                  <i class="far fa-calendar-alt"></i>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class='col-lg-6'>
+                      <div class="form-group">
+                        <label for="To"><b>To:</b></label>
+                          <div class='input-group date' id='datetimepicker2'>
+                              {% render_field form.end_date class="form-control" id="enddate" %}
+                              {% render_field form.end_date.errors %}
+                              <span class="input-group-append">
+                                  <i class="far fa-calendar-alt"></i>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
                 </div>
-                <div class='col-lg-6'>
-                    <div class="form-group">
-                      <label for="To"><b>To:</b></label>
-                        <div class='input-group date' id='datetimepicker2'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-append">
-                                <i class="far fa-calendar-alt"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <p><b>No. of days:</b> {{ products.loan_period }} </p>
+                <button type="submit" class="btn btn-primary btn-block"> Borrow </button>
               </div>
-              <p><b>No. of days:</b> {{ products.loan_period }} </p>
-              <button type="button" class="btn btn-primary btn-block"> Borrow </button>
-            </div>
           </div>
         </div>
     </div>
