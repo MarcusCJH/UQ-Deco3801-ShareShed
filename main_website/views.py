@@ -69,7 +69,11 @@ def item_details(request, product_id):
 
 
 def summary(request):
-    return render(request, 'catalogue/cart.html')
+    products = Product.objects.get(id=1)
+    context = {
+        "products": products,
+    }
+    return render(request, 'catalogue/summary.html', context)
 
 
 @login_required
