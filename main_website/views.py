@@ -65,7 +65,11 @@ def item_details(request, product_id):
             'form': form
 
         }
-        return render(request, 'catalogue/itemDetails.html', context)
+        return render(request, 'catalogue/item-details.html', context)
+
+
+def summary(request):
+    return render(request, 'catalogue/cart.html')
 
 
 @login_required
