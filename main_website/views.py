@@ -48,17 +48,14 @@ def item_details(request, product_id):
         current_user = request.user
 
         if request.method == 'POST':
-            return redirect('/summary')
             form = ItemLendForm(request.POST)
-            form.product = products
-            form.user = current_user
-            lending = form.save(commit=False)
-            lending.product_status = "RESERVED"
-            if lending.is_valid():
-                if lending.save():
-                    return redirect('/')
-                else:
-                    message.error(request, 'Please correct the error below')
+            form.instance.product = products
+            form.instance.user = current_user
+            if form.is_valid():
+                lending = form.save(commit=False)
+                lending.product_status = 'RESERVED'
+                lending.save()
+                return redirect('/summary')
         else:
             form = ItemLendForm()
         context = {
