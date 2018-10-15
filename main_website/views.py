@@ -48,6 +48,7 @@ def item_details(request, product_id):
         current_user = request.user
 
         if request.method == 'POST':
+            return redirect('/summary')
             form = ItemLendForm(request.POST)
             form.product = products
             form.user = current_user

@@ -192,12 +192,12 @@ class CartAdmin(admin.ModelAdmin):
 
 class LendingAdmin(admin.ModelAdmin):
     """Display list of lendings for admin dashboard"""
-    list_display = ('product_id', 'user_id', 'start_date',
+    list_display = ('product', 'user', 'start_date',
                     'end_date', 'product_status')
     list_editable = ('product_status',)
     list_filter = ('product_status', )
-    search_fields = ('product_id__name', 'user_id__first_name',
-                     'user_id__last_name',)
+    search_fields = ('product__name', 'user__first_name',
+                     'user__last_name',)
     date_hierarchy = 'start_date'
 
     def count_status(self, obj):
@@ -207,11 +207,11 @@ class LendingAdmin(admin.ModelAdmin):
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
-    list_display = ('product_id', 'user_id', 'start_date',
+    list_display = ('product', 'user', 'start_date',
                     'end_date', 'product_status')
     list_filter = ('product_status', )
-    search_fields = ('product_id__name', 'user_id__first_name',
-                     'user_id__last_name',)
+    search_fields = ('product__name', 'user__first_name',
+                     'user__last_name',)
     date_hierarchy = 'start_date'
 
 
