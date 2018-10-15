@@ -210,6 +210,7 @@ def membership_renew(request):
                 description="The product charged to the user",
                 receipt_email=request.POST['stripeEmail'],
             )
+            print(charge)
         except stripe.error.CardError as ce:
             return False, ce
         else:
@@ -224,6 +225,7 @@ def membership_renew(request):
                               .fromtimestamp(charge.created)
                               .strftime('%Y-%m-%d %H:%M:%S'),
                               amount=(charge.amount/100))
+            print(payment)
             payment.save()
 
         # ENDPAYMENT

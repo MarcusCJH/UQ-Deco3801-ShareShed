@@ -36,6 +36,22 @@
                 <p>
                     Balance : ${{user.balance}}
                 </p>
+                <form action="{% url 'membership' %}" method="post">
+                    {% csrf_token %}
+                    <script
+                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
+                      data-amount="8000"
+                      data-name="Share Shed"
+                      data-description="Membership Subscription"
+                      data-image="{% static "main_website/img/icon-shareshed.png" %}"
+                      data-locale="auto"
+                      data-label="Buy Membership"
+                      data-currency="aud"
+                      data-allow-remember-me="false">
+                    </script>
+                    {{ user.membership.membership_type }}
+                </form>
             </div>
             <a href="{% url 'update_profile'%}">Update Profile</a>
             <a href="{% url 'change_password' %}">Change Password</a>
@@ -92,18 +108,7 @@
 {% endblock %}
 
 {% block script %}
-<script
-  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-  data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
-  data-amount="8000"
-  data-name="Share Shed"
-  data-description="Membership Subscription"
-  data-image="{% static "main_website/img/icon-shareshed.png" %}"
-  data-locale="auto"
-  data-label="Buy Membership"
-  data-currency="aud"
-  data-allow-remember-me="false">
-</script>
+
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
     var handler = StripeCheckout.configure({
