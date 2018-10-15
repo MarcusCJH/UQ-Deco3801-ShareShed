@@ -210,7 +210,6 @@ def membership_renew(request):
                 description="The product charged to the user",
                 receipt_email=request.POST['stripeEmail'],
             )
-            print(charge)
         except stripe.error.CardError as ce:
             return False, ce
         else:
