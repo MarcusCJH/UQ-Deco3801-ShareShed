@@ -3,15 +3,16 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
-{% block extrastyle %}{% endblock %}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
 <link rel="stylesheet" type="text/css" href="{% block stylesheet_admin_page %}{% static "admin/css/admin.css" %}{% endblock %}">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+{% block extrastyle %}{% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+
 {% block extrahead %}{% endblock %}
 {% block responsive %}
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -50,19 +51,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/lending/' %} active {% endifequal %}" href="/admin/main_website/lending/">
+                <a class="nav-link {% if '/admin/main_website/lending/' in request.path %} active {% endif %}" href="/admin/main_website/lending/">
                   <i class="fas fa-shopping-basket navicon"></i> &nbsp;
                   Loans
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/product/' %} active {% endifequal %}" href="/admin/main_website/product/">
+                <a class="nav-link {% if '/admin/main_website/lendinghistory/' in request.path %} active {% endif %}" href="/admin/main_website/lendinghistory/">
+                  <i class="fas fa-history"></i> &nbsp;
+                  Loan Histories
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if '/admin/main_website/product/' in request.path %} active {% endif %}" href="/admin/main_website/product/">
                   <i class="fas fa-box-open navicon"></i> &nbsp;
                   Items
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/user/' %} active {% endifequal %}" href="/admin/main_website/user/">
+                <a class="nav-link {% if '/admin/main_website/user/' in request.path %} active {% endif %}" href="/admin/main_website/user/">
                   <i class="fas fa-users navicon"></i> &nbsp;
                   Contacts/Members
                 </a>
@@ -74,14 +81,14 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/main_website/openingday/' %} active {% endifequal %}" href="/admin/main_website/openingday/">
+                <a class="nav-link {% if '/admin/main_website/openingday/' in request.path %} active {% endif %}" href="/admin/main_website/openingday/">
                   <i class="far fa-clock navicon"></i> &nbsp;
                   Opening Day
                 </a>
               </li>
               {% if user.is_superuser %}
               <li class="nav-item">
-                <a class="nav-link {% ifequal request.path '/admin/auth/group/' %} active {% endifequal %}" href="/admin/auth/group/">
+                <a class="nav-link {% if '/admin/auth/group/' in request.path %} active {% endif %}" href="/admin/auth/group/">
                   <i class="fas fa-address-card navicon"></i> &nbsp;
                   Permissions
                 </a>
@@ -103,7 +110,7 @@
 
       <div class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow fixed-top" id="header">
         <div id="branding" class="navbar-brand col-sm-3 col-md-2 mr-0">
-              <a  href="#">Share Shed Admin</a>
+              <a  href="/admin/">Share Shed Admin</a>
         </div>
         {% block usertools %}
         {% if has_permission %}
@@ -158,5 +165,8 @@
 </div>
 <!-- END Container -->
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+{% block extrascript %}{% endblock %}
 </body>
 </html>
