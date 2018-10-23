@@ -206,6 +206,96 @@ span.psw {
 
 /*Catalogue stuff */
 
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800|Open+Sans:300,400,600,700,800");
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #383838;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h5 {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+h6 {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+a, button {
+  color: inherit;
+  display: inline-block;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a, button, img, input, span {
+  transition: all 0.1s ease 0s;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+a:focus {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #1293CA;
+}
+
+button, input[type="submit"] {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+}
+
 header.masthead {
   text-align: center;
   /* background-image: url("background.jpg");
@@ -265,4 +355,68 @@ header.masthead .intro-text .intro-lead-in {
 .navigation{
   border: none;
   border-width: 0px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .sidebar-wrap {
+    margin-top: 80px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .sidebar-wrap {
+    margin-top: 70px;
+  }
+}
+@media only screen and (max-width: 479px) {
+  .sidebar-wrap {
+    margin-top: 60px;
+  }
+}
+
+.shop-sidebar h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  text-transform: uppercase;
+}
+.shop-sidebar h4::before {
+  position: absolute;
+  content: "";
+  background: #1293CA;
+  width: 50px;
+  height: 2px;
+  left: 0;
+  bottom: -1px;
+}
+.shop-sidebar ul > li {
+  display: block;
+  margin-bottom: 10px;
+}
+.shop-sidebar ul > li:last-child {
+  margin-bottom: 0px;
+}
+.shop-sidebar ul > li > a {
+  font-size: 15px;
+  display: block;
+  font-weight: 500;
+}
+.shop-sidebar ul > li > a span {
+  float: right;
+}
+.tags > a {
+  border: 1px solid #000000;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 10px 10px 0  0;
+  padding: 4px 15px;
+}
+.tags > a:hover {
+  background: #e97730;
+  color: #ffffff;
+  border: 1px solid #e97730;
 }
