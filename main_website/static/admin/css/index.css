@@ -65,7 +65,7 @@ body {
 }
 
 .dashboard #content {
-    width: 100%;
+    width: 100%!important;
 }
 
 /*
@@ -134,4 +134,17 @@ body {
 }
 .pt-6-5{
   padding-top: 3.7rem!important
+}
+
+.section-divider{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6{
+  font-family: 'Roboto', sans-serif;
+}
+
+h2{
+  margin: 0;
 }

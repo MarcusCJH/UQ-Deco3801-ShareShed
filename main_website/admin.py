@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Product, ProductImage, ProductType, ProductTag, \
+from .models import Product, ProductImage, ProductCategory, ProductTag, \
     ProductLocation, ProductCondition, Cart, User, Member, Lending, \
-    LendingHistory, OpeningDay, IdentificationImage
+    LendingHistory, OpeningDay, IdentificationImage, OrderNote
 from django.utils.html import mark_safe
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
@@ -18,28 +18,32 @@ class MyAdminSite(admin.AdminSite):
     def index(self, request, extra_context=None):
         """Display the main admin index page"""
         lendings = Lending.objects.all()
-        collect_today = lendings.filter(Q(productStatus='COLLECTTODAY'))
-        return_today = lendings.filter(Q(productStatus='RETURNTODAY'))
+        collect_today = lendings.filter(Q(product_status='COLLECTTODAY'))
+        return_today = lendings.filter(Q(product_status='RETURNTODAY'))
+        order_notes = OrderNote.objects.all().order_by('added_on')[::-1][:6]
         today = len(collect_today) + len(return_today)
-        reserved = len(lendings.filter(Q(productStatus='RESERVED')))
-        overdue = len(lendings.filter(Q(productStatus='RETURNLATE')))
-        onloan = len(lendings.filter(Q(productStatus='ONLOAN')))
+        reserved = len(lendings.filter(Q(product_status='RESERVED')))
+        overdue = len(lendings.filter(Q(product_status='RETURNLATE')))
+        onloan = len(lendings.filter(Q(product_status='ONLOAN')))
 
         context = {
             **self.each_context(request),
             'title': self.index_title,
             'collect_today': collect_today,
             'return_today': return_today,
-            'today':today,
+            'today': today,
             'reserved': reserved,
-            'overdue':overdue,
-            'onloan':onloan,
+            'overdue': overdue,
+            'onloan': onloan,
+            'notes': order_notes,
             **(extra_context or {}),
         }
 
         request.current_app = self.name
 
-        return TemplateResponse(request, self.index_template or 'admin/index.html', context)
+        return TemplateResponse(request,
+                                self.index_template or 'admin/index.html',
+                                context)
 
 
 class UserIdentificationInline(admin.StackedInline):
@@ -49,11 +53,10 @@ class UserIdentificationInline(admin.StackedInline):
 
     def image_tag(self, obj):
         """Display the actual image with 200x200 pixel size"""
-        width='200px'
-        height='200px'
-        return mark_safe(
-        '<img src="{}" width={} height={}/>'.format(obj.image.url,
-                                                    width, height))
+        width = '200px'
+        height = '200px'
+        return mark_safe('<img src="{}" width={} height={}/>'
+                         .format(obj.image.url, width, height))
 
 
 class MemberInline(admin.StackedInline):
@@ -62,7 +65,7 @@ class MemberInline(admin.StackedInline):
 
     list_display = ('membership_type', 'start_time',
                     'end_time')
-    #search_fields = ('user_id', 'get_email', 'membership_type')
+    search_fields = ('user_id', 'get_email', 'membership_type')
     ordering = ('user_id', 'membership_type', 'start_time',
                 'end_time')
 
@@ -76,8 +79,9 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name',
                                          'telephone_num', 'address', 'city',
-                                         'suburb','state', 'postcode',
+                                         'suburb', 'state', 'postcode',
                                          'country', 'balance')}),
+
         (_('Options'), {'fields': ('has_identified', 'maillist')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
@@ -122,11 +126,11 @@ class MemberAdmin(admin.ModelAdmin):
 
     list_display = ('get_email', 'membership_type', 'start_time',
                     'end_time')
-    #search_fields = ('user_id', 'get_email', 'membership_type')
+    search_fields = ('user_id', 'get_email', 'membership_type')
     ordering = ('user_id', 'membership_type', 'start_time',
                 'end_time')
 
-    def get_email(self,obj):
+    def get_email(self, obj):
         return obj.user.email
     get_email.short_description = "Email"
     get_email.admin_order_field = 'user__email'
@@ -140,11 +144,10 @@ class ProductImageInline(admin.TabularInline):
 
     def image_tag(self, obj):
         """Display the actual image with 200x200 pixel size"""
-        width='200px'
-        height='200px'
-        return mark_safe(
-        '<img src="{}" width={} height={}/>'.format(obj.image.url,
-                                                    width, height))
+        width = '200px'
+        height = '200px'
+        return mark_safe('<img src="{}" width={} height={}/>'
+                         .format(obj.image.url, width, height))
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -162,9 +165,9 @@ class ProductImageAdmin(admin.ModelAdmin):
         return mark_safe('<img src="{}" />'.format(obj.image.url))
 
 
-class ProductTypeAdmin(admin.ModelAdmin):
+class ProductCategoryAdmin(admin.ModelAdmin):
     """Display list of product type for admin dashboard"""
-    list_display = ('type_name',)
+    list_display = ('category_name',)
 
 
 class ProductTagAdmin(admin.ModelAdmin):
@@ -189,11 +192,13 @@ class CartAdmin(admin.ModelAdmin):
 
 class LendingAdmin(admin.ModelAdmin):
     """Display list of lendings for admin dashboard"""
-    list_display = ('productId', 'userId', 'startDate',
-                    'endDate', 'productStatus')
-    list_editable = ('productStatus',)
-    list_filter = ('productStatus',)
-    search_fields = ('product__name', 'user__id')
+    list_display = ('product', 'user', 'start_date',
+                    'end_date', 'product_status')
+    list_editable = ('product_status',)
+    list_filter = ('product_status', )
+    search_fields = ('product__name', 'user__first_name',
+                     'user__last_name',)
+    date_hierarchy = 'start_date'
 
     def count_status(self, obj):
         number = len(Lending.objects.all().filter(productstatus=obj))
@@ -202,14 +207,21 @@ class LendingAdmin(admin.ModelAdmin):
 
 class LendingHistoryAdmin(admin.ModelAdmin):
     """Display list of lending histories for admin dashboard"""
-    list_display = ('productId', 'userId', 'startDate',
-                    'endDate', 'productStatus')
-    list_editable = ('productStatus',)
+    list_display = ('product', 'user', 'start_date',
+                    'end_date', 'product_status')
+    list_filter = ('product_status', )
+    search_fields = ('product__name', 'user__first_name',
+                     'user__last_name',)
+    date_hierarchy = 'start_date'
 
 
 class OpeningDayAdmin(admin.ModelAdmin):
     """Display list of product tag for admin dashboard"""
-    list_display = ('opening_day','opening_hour')
+    list_display = ('opening_day', 'opening_hour')
+
+
+class OrderNoteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'message', 'added_on')
 
 
 admin_site = MyAdminSite(name='myadmin')
@@ -217,10 +229,11 @@ admin_site = MyAdminSite(name='myadmin')
 """Register all the admin view"""
 admin_site.register(Product, ProductAdmin)
 admin_site.register(ProductImage, ProductImageAdmin)
-admin_site.register(ProductType, ProductTypeAdmin)
+admin_site.register(ProductCategory, ProductCategoryAdmin)
 admin_site.register(ProductTag, ProductTagAdmin)
 admin_site.register(ProductLocation, ProductLocationAdmin)
 admin_site.register(ProductCondition, ProductConditionAdmin)
+admin_site.register(OrderNote, OrderNoteAdmin)
 admin_site.register(Cart, CartAdmin)
 admin_site.register(Member, MemberAdmin)
 admin_site.register(Lending, LendingAdmin)

@@ -28,7 +28,7 @@
                 </p>
                 </p>
                 <p>
-                    Address  : {{ user.address }}, {{ user.suburb }}, {{ user.county }}, {{ user.country }}
+                    Address  : {{ user.address }}, {{ user.suburb }}, {{ user.suburb }}, {{ user.country }}
                 </p>
                 <p>
                     Post Code   : {{ user.postcode }}
@@ -36,6 +36,21 @@
                 <p>
                     Balance : ${{user.balance}}
                 </p>
+                <form action="{% url 'membership' %}" method="post">
+                    {% csrf_token %}
+                    <script
+                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
+                      data-amount="8000"
+                      data-name="Share Shed"
+                      data-description="Membership Subscription"
+                      data-image="{% static "main_website/img/icon-shareshed.png" %}"
+                      data-locale="auto"
+                      data-label="Buy Membership"
+                      data-currency="aud"
+                      data-allow-remember-me="false">
+                    </script>
+                </form>
             </div>
             <a href="{% url 'update_profile'%}">Update Profile</a>
             <a href="{% url 'change_password' %}">Change Password</a>
@@ -54,41 +69,7 @@
                               <input type="hidden" id="stripeEmail" name="stripeEmail" />
                               <input type="hidden" id="amountInCents" name="amountInCents" />
                         </form>
-
                         <input type="button" id="customButton" value="Top Up Credit">
-                        <script src="https://checkout.stripe.com/checkout.js">
-
-                        </script>
-                    <script>
-                        var handler = StripeCheckout.configure({
-                          key: 'pk_test_juvZMCiyaZxZjw2nulcmFC02',
-                          image: '{% static "main_website/img/icon-shareshed.png" %}',
-                          token: function(token) {
-                            $("#stripeToken").val(token.id);
-                            $("#stripeEmail").val(token.email);
-                            $("#amountInCents").val(Math.floor($("#amountInDollars").val() * 100));
-                            $("#myForm").submit();
-                          }
-                        });
-
-                        $('#customButton').on('click', function(e) {
-                          var amountInCents = Math.floor($("#amountInDollars").val() * 100);
-                          var displayAmount = parseFloat(Math.floor($("#amountInDollars").val() * 100) / 100).toFixed(2);
-                          // Open Checkout with further options
-                          handler.open({
-                            name: 'Share Shed',
-                            description: 'To Up amount ($' + displayAmount + ')',
-                            amount: amountInCents,
-                              allowRememberMe: false,
-                          });
-                          e.preventDefault();
-                        });
-
-                        // Close Checkout on page navigation
-                        $(window).on('popstate', function() {
-                          handler.close();
-                        });
-                    </script>
                     </p>
                 </div>
             </div>
@@ -115,21 +96,6 @@
         {% else %}
         <form action="{% url 'membership' %}" method="post">
           {% csrf_token %}
-        <script
-          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key= 'pk_test_juvZMCiyaZxZjw2nulcmFC02'
-          data-amount="8000"
-          data-name="Share Shed"
-          data-description="Membership Subscription"
-          data-image="{% static "main_website/img/icon-shareshed.png" %}"
-          data-locale="auto"
-          data-label="Buy Membership"
-          data-currency="aud"
-          data-allow-remember-me="false">
-
-
-        </script>
-          <!--<input type="submit" value="Add Membership" /> -->
         </form>
         {% endif %}
 
@@ -138,5 +104,39 @@
     </p>
     {% endif %}
 
+{% endblock %}
 
+{% block script %}
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_juvZMCiyaZxZjw2nulcmFC02',
+      image: '{% static "main_website/img/icon-shareshed.png" %}',
+      token: function(token) {
+        $("#stripeToken").val(token.id);
+        $("#stripeEmail").val(token.email);
+        $("#amountInCents").val(Math.floor($("#amountInDollars").val() * 100));
+        $("#myForm").submit();
+      }
+    });
+
+    $('#customButton').on('click', function(e) {
+      var amountInCents = Math.floor($("#amountInDollars").val() * 100);
+      var displayAmount = parseFloat(Math.floor($("#amountInDollars").val() * 100) / 100).toFixed(2);
+      // Open Checkout with further options
+      handler.open({
+        name: 'Share Shed',
+        description: 'To Up amount ($' + displayAmount + ')',
+        amount: amountInCents,
+          allowRememberMe: false,
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+      handler.close();
+    });
+</script>
 {% endblock %}
