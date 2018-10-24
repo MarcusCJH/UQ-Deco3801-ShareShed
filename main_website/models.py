@@ -64,7 +64,8 @@ class User(AbstractUser):
     """Define the user model."""
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    maillist = models.BooleanField(default=True)
+    maillist = models.BooleanField(default=True,
+                            help_text="Member subscribed to mail list")
     telephone_num = models.CharField(_('Telephone Number'), max_length=15)
     address = models.TextField(max_length=30)
     suburb = models.CharField(max_length=30)
@@ -72,7 +73,10 @@ class User(AbstractUser):
     city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
     balance = models.FloatField(default=0)
-    has_identified = models.BooleanField(default=False)
+    has_identified = models.BooleanField(default=False,
+                            help_text="Member uploaded identification ID is correct")
+    has_verified = models.BooleanField(default=False,
+                            help_text="Member has been verified at the shed")
     state_options = (
         ('NSW', 'New South Wales'),
         ('QLD', 'Queensland'),

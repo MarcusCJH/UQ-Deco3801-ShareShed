@@ -82,7 +82,7 @@ class UserAdmin(UserAdmin):
                                          'suburb', 'state', 'postcode',
                                          'country', 'balance')}),
 
-        (_('Options'), {'fields': ('has_identified', 'maillist')}),
+        (_('Options'), {'fields': ('has_identified', 'has_verified', 'maillist')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')})
