@@ -72,7 +72,7 @@ class User(AbstractUser):
     postcode = models.CharField(max_length=4)
     city = models.CharField(max_length=20)
     country = models.CharField(max_length=30)
-    balance = models.FloatField(default=0)
+    balance = models.DecimalField(max_digits=8, decimal_places=2)
     has_identified = models.BooleanField(default=False,
                             help_text="Member uploaded identification ID is correct")
     has_verified = models.BooleanField(default=False,

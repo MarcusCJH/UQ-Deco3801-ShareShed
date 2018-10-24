@@ -75,44 +75,54 @@
               <p>{{ products.short_description }}</p>
             </ul>
             <br>
-            <h5> Duration </h5>
-            <hr>
+            {% if user.membership.membership_type == 'm' %}
+              <div>
+                <h5> Duration </h5>
+                <hr>
 
-
-            <form method="POST" class="post-form" autocomplete="off">
-              {% csrf_token %}
-              {{ form.non_field_errors }}
-              <div class="container">
-                <div class="row">
-                  <div class='col-lg-6'>
-                      <div class="form-group">
-                        <label for="From"><b>From:</b></label>
-                          <div class='input-group date' id='datetimepicker1'>
-                              {% render_field form.start_date class="form-control" id="startdate" %}
-                              {% render_field form.start_date.errors %}
-                              <span class="input-group-append">
-                                  <i class="far fa-calendar-alt"></i>
-                              </span>
+                <p style="color:red;">
+                  {{ message }}
+                </p>
+                <form method="POST" class="post-form" autocomplete="off">
+                  {% csrf_token %}
+                  {{ form.non_field_errors }}
+                  <div class="container">
+                    <div class="row">
+                      <div class='col-lg-6'>
+                          <div class="form-group">
+                            <label for="From"><b>From:</b></label>
+                              <div class='input-group date' id='datetimepicker1'>
+                                  {% render_field form.start_date class="form-control" id="startdate" %}
+                                  {% render_field form.start_date.errors %}
+                                  <span class="input-group-append">
+                                      <i class="far fa-calendar-alt"></i>
+                                  </span>
+                              </div>
                           </div>
                       </div>
-                  </div>
-                  <div class='col-lg-6'>
-                      <div class="form-group">
-                        <label for="To"><b>To:</b></label>
-                          <div class='input-group date' id='datetimepicker2'>
-                              {% render_field form.end_date class="form-control" id="enddate" %}
-                              {% render_field form.end_date.errors %}
-                              <span class="input-group-append">
-                                  <i class="far fa-calendar-alt"></i>
-                              </span>
+                      <div class='col-lg-6'>
+                          <div class="form-group">
+                            <label for="To"><b>To:</b></label>
+                              <div class='input-group date' id='datetimepicker2'>
+                                  {% render_field form.end_date class="form-control" id="enddate" %}
+                                  {% render_field form.end_date.errors %}
+                                  <span class="input-group-append">
+                                      <i class="far fa-calendar-alt"></i>
+                                  </span>
+                              </div>
                           </div>
                       </div>
+                    </div>
+                    <p><b>No. of days:</b> {{ products.loan_period }} </p>
+                    <button type="submit" class="btn btn-primary btn-block"> Borrow </button>
                   </div>
-                </div>
-                <p><b>No. of days:</b> {{ products.loan_period }} </p>
-                <button type="submit" class="btn btn-primary btn-block"> Borrow </button>
+                </form>
               </div>
-            </form>
+          {% else %}
+            <p>
+              You need to become a member in order to borrow items
+            </p>
+          {% endif %}
           </div>
         </div>
     </div>
