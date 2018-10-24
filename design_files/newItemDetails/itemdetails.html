@@ -1,0 +1,193 @@
+<!doctype html>
+<html id="html" lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="itemdetails.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+    <title>Catalogue</title>
+  </head>
+  <body>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark pt-0 pb-0 pl-2">
+        <a class="navbar-brand" href="#">
+          <img src="icon-shareShed.png" width="45" height="45" class="d-inline-block align-top" alt="">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarsExample04">
+            <form class="form-inline my-2 my-md-0">
+              <input class="form-control" type="text" placeholder="Search items, info..."> &nbsp;
+              <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav ml-auto mr-3">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Categories</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cart</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" href="#">View Cart</a>
+                  <a class="dropdown-item" href="#">Check out items</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <button class="loginBtn btn btn-link" onclick="document.getElementById('id01').style.display='block'">Login</button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div id="id01" class="modal">
+          <form class="modal-content animate" action="/action_page.php">
+            <div class="imgcontainer">
+              <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+              <img src="icon-shareshed.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+              <label for="uname"><b>Username</b></label>
+              <input class="mb-2" type="text" placeholder="Enter Username" name="uname" id="inputs" required>
+              <br>
+              <label for="psw"><b>Password</b></label>
+              <input class="mb-2" type="password" placeholder="Enter Password" name="psw" id="inputs" required>
+              <br>
+              <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+              </label>
+              <br>
+              <button class="btn btn-secondary btn-lg btn-block blueBtn"type="submit">Login</button>
+              <p class="textcenter mb-3 mt-2"> Don't have an account? <a href="#">Sign Up</a></p>
+            </div>
+          </form>
+        </div>
+<br>
+
+        <header class="masthead mb-3" id="masthead">
+          <div class="container">
+            <div class="intro-text">
+              <nav aria-label="breadcrumb" class="navBreadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item"><a href="#">Product Catalogue</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Table</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </header>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="gallery">
+                  <div class="previews"> <a href="#" class="selected" data-full="table.jpg"><img src="table.jpg" /></a></div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <h2 class="pb-3 itemTitle">Table</h2>
+                    <h5 class="pb-3"><b>Fee:</b>&nbsp;$0.00 for 8 days</h5>
+                    <p><span class="badge badge-secondary badge-success">Available</span></p>
+                    <h5><div class="row">
+                      <div class="col-sm-2">
+                        <ul>
+                          <li>Condition:</li>
+                          <li>Brand: </li>
+                          <li>Code:</li>
+                        </ul>
+                      </div>
+                      <div class="col-sm-6">
+                        <ul>
+                          <li>B - Fair</li>
+                          <li>IKEA</li>
+                          <li>MASS0086</li>
+                        </ul>
+                      </div>
+                    </div></h5>
+                    <p><span class="badge badge-secondary">Household Needs</span>&nbsp;<span class="badge badge-secondary">Party & Event Supplies</span></p>
+                    <h5 class="pb-2">It's been out in the elements before but would love to play host to your bush or beach breakfast and listen to you shoot the breeze.
+Fold up for portability, with extending legs.</h5>
+                  <button class="blueBtn btn btn-sm" onclick="document.getElementById('id01').style.display='block'"> Log in to borrow or reserve </button>
+                </div>
+            </div>
+            <br><br>
+            <div class="container">
+            </div>
+          </div>
+
+
+
+
+
+
+
+        <footer class="footer-bs">
+          <div class="row">
+            <div class="col-md-5 footer-brand">
+              <div class="row">
+                <div class="col-lg-3">
+                  <img src="icon-shareShed.png" width="95" height="95" class="d-inline-block align-top" alt="">
+                </div>
+                <div class="col-lg-9">
+                    <p>Share Shed runs on an annual membership basis. You can join online for $80 a year.
+      You can also purchase a gift membership for someone else! We are not-for-profit so all membership fees go towards running Share Shed, fixing items or acquiring new ones.</p>
+                    <a href="#"><p>Sign up now!</p></a>
+                    <p>© Share Shed Inc</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-2 footer-nav animated fadeInUp">
+                <h4>Menu —</h4>
+                      <ul class="list">
+                          <li><a href="#">Home</a></li>
+                          <li><a href="#">Catalogue</a></li>
+                          <li><a href="#">About Us</a></li>
+                          <li><a href="#">Contact Us</a></li>
+                      </ul>
+              </div>
+            <div class="col-md-2 footer-social animated fadeInDown">
+                <h4>Follow Us</h4>
+                <a href="#"><i class="fab fa-facebook-square fa-2x"></i></a> &nbsp;&nbsp;<a href="#"><i class="fab fa-twitter-square fa-2x"></i></a>
+                 &nbsp;&nbsp;<a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+              </div>
+            <div class="col-md-3 footer-ns animated fadeInRight">
+                <h4>Subscribe to our newsletter</h4>
+                  <p>Never miss an update!</p>
+                  <p>
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Your email..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2"><i class="far fa-envelope"></i></span>
+                      </div>
+                    </div>
+                   </p>
+              </div>
+          </div>
+      </footer>
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      </body>
+      </html>

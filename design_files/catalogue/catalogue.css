@@ -1,0 +1,422 @@
+/** Navbar stuff **/
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.footer-bs {
+    background-color: #3c3d41;
+	padding: 20px 20px;
+	color: rgba(255,255,255,1.00);
+}
+.footer-bs .footer-brand, .footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { padding:10px 25px; }
+.footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { border-color: transparent; }
+.footer-bs .footer-brand h2 { margin:0px 0px 10px; }
+.footer-bs .footer-brand p { font-size:12px; color:rgba(255,255,255,0.70); }
+.footer-bs .footer-brand p a{ font-size:12px; color:rgba(255,255,255,0.70); }
+.footer-bs .footer-brand a { font-size:12px; color:rgba(255,255,255,0.70); }
+.footer-bs .footer-brand a:hover { font-size:12px; color:rgba(255,255,255,0.80); }
+
+
+.footer-bs .footer-nav ul.pages { list-style:none; padding:0px; }
+.footer-bs .footer-nav ul.pages li { padding:5px 0px;}
+.footer-bs .footer-nav ul.pages a { color:rgba(255,255,255,1.00); font-weight:bold; text-transform:uppercase; }
+.footer-bs .footer-nav ul.pages a:hover { color:rgba(255,255,255,0.80); text-decoration:none; }
+.footer-bs .footer-nav h4 {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-bottom:10px;
+}
+
+.footer-bs .footer-nav ul.list { list-style:none; padding:0px; }
+.footer-bs .footer-nav ul.list li { padding:5px 0px;}
+.footer-bs .footer-nav ul.list a { color:rgba(255,255,255,0.80); }
+.footer-bs .footer-nav ul.list a:hover { color:rgba(255,255,255,0.60); text-decoration:none; }
+
+.footer-bs .footer-social ul { list-style:none; padding:0px; }
+.footer-bs .footer-social h4 {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+}
+.footer-bs .footer-social li { padding:5px 4px;}
+.footer-bs .footer-social a { color:rgba(255,255,255,1.00);}
+.footer-bs .footer-social a:hover { color:rgba(255,255,255,0.80); text-decoration:none; }
+
+.footer-bs .footer-ns h4 {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-bottom:10px;
+}
+.footer-bs .footer-ns p { font-size:12px; color:rgba(255,255,255,0.70); }
+
+@media (min-width: 768px) {
+	.footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { border-left:solid 1px rgba(255,255,255,0.10); }
+}
+
+
+
+
+
+/* css for pop up */
+
+.loginBtn{
+   width:auto;
+   text-decoration:none;
+   color:grey;
+}
+
+.loginBtn:hover{
+  width:auto;
+  text-decoration:none;
+  color: white;
+}
+
+.loginBtn:active{
+  width:auto;
+  text-decoration:none;
+  color: white;
+}
+
+#inputs {
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 3px;
+    margin: 3px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+img.avatar {
+    width: 30%;
+    border-radius: 30%;
+}
+
+span.uname {
+    float: right;
+    padding-top: 16px;
+}
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+.blueBtn{
+  background-color:#1293CA;
+}
+.blueBtn:hover{
+  background-color:#1293CA;
+  opacity: 0.7;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+    overflow-y: hidden;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 1% auto 15% auto; /* 1% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 40%;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)}
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+
+.textcenter{
+  text-align: center;
+}
+
+
+
+
+
+
+/*Catalogue stuff */
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800|Open+Sans:300,400,600,700,800");
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #383838;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h5 {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+h6 {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+}
+
+a, button {
+  color: inherit;
+  display: inline-block;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a, button, img, input, span {
+  transition: all 0.1s ease 0s;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+a:focus {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #1293CA;
+}
+
+button, input[type="submit"] {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+}
+
+header.masthead {
+  text-align: center;
+  /* background-image: url("background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover; */
+}
+
+header.masthead .intro-text .intro-lead-in {
+  font-size: 22px;
+  font-style: italic;
+  line-height: 22px;
+  margin-bottom: 25px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.breadcrumb{
+  background: none;
+}
+
+.navBreadcrumb{
+  margin: 0;
+  display: inline-block;
+}
+
+#textRight{
+  float: right;
+}
+
+.cards{
+  border:none;
+  text-align: center;
+}
+
+.yellowdot{
+  height: 18px;
+  width: 18px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+}
+.reddot{
+  height: 18px;
+  width: 18px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+.greendot{
+  height: 18px;
+  width: 18px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+.navigation{
+  border: none;
+  border-width: 0px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .sidebar-wrap {
+    margin-top: 80px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .sidebar-wrap {
+    margin-top: 70px;
+  }
+}
+@media only screen and (max-width: 479px) {
+  .sidebar-wrap {
+    margin-top: 60px;
+  }
+}
+
+.shop-sidebar h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  text-transform: uppercase;
+}
+.shop-sidebar h4::before {
+  position: absolute;
+  content: "";
+  background: #1293CA;
+  width: 50px;
+  height: 2px;
+  left: 0;
+  bottom: -1px;
+}
+.shop-sidebar ul > li {
+  display: block;
+  margin-bottom: 10px;
+}
+.shop-sidebar ul > li:last-child {
+  margin-bottom: 0px;
+}
+.shop-sidebar ul > li > a {
+  font-size: 15px;
+  display: block;
+  font-weight: 500;
+}
+.shop-sidebar ul > li > a span {
+  float: right;
+}
+.tags > a {
+  border: 1px solid #000000;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 10px 10px 0  0;
+  padding: 4px 15px;
+}
+.tags > a:hover {
+  background:#1293CA;
+  color: #ffffff;
+  border: 1px solid #1293CA;
+}

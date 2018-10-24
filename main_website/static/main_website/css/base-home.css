@@ -33,3 +33,45 @@ body, html {
 .center-align{
   text-align: center;
 }
+.yellowDot{
+  height: 70px;
+  width: 70px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+  margin: auto;
+  display:block;
+}
+.greenDot{
+  height: 70px;
+  width: 70px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  margin: auto;
+  display:block;
+}
+.redDot{
+  height: 70px;
+  width: 70px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin: auto;
+  display:block;
+}
+#red{
+  color: red;
+}
+
+#green{
+  color:green;
+}
+
+#yellow{
+  color:yellow;
+}
+#riskMatrix{
+  margin-left: 10rem !important;
+  margin-right: 10rem !important;
+}

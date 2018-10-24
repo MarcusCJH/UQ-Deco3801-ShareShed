@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}OPENING HOURS{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'main_website/css/opening_hours.css' %}">
+{% endblock %}
+
+{% block content %}
+ <div class="container">
+   <p><b> OPENING HOURS </b></p>
+ </div>
+ <div class="content">
+  <p><b> 9am to 5pm </b></p>
+</div>
+{% endblock %}
