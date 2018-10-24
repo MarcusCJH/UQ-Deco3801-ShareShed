@@ -192,13 +192,29 @@ class CartAdmin(admin.ModelAdmin):
 
 class LendingAdmin(admin.ModelAdmin):
     """Display list of lendings for admin dashboard"""
-    list_display = ('id', 'product', 'user', 'start_date',
+    list_display = ('id', 'product', 'user', 'get_phone', 'get_email', 'get_address', 'start_date',
                     'end_date', 'product_status')
     list_editable = ('product_status',)
     list_filter = ('product_status', )
     search_fields = ('id', 'product__name', 'user__first_name',
                      'user__last_name',)
     date_hierarchy = 'start_date'
+
+
+    def get_phone(self, obj):
+        user = User.objects.get(id=obj.user.id)
+        return user.telephone_num
+    get_phone.short_description = "Phone Number"
+
+    def get_email(self, obj):
+        user = User.objects.get(id=obj.user.id)
+        return user.email
+    get_email.short_description = "User Email"
+
+    def get_address(self, obj):
+        user = User.objects.get(id=obj.user.id)
+        return user.address
+    get_address.short_description = "Address"
 
     def count_status(self, obj):
         number = len(Lending.objects.all().filter(productstatus=obj))
