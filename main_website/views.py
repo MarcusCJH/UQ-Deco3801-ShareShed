@@ -68,8 +68,7 @@ def item_details(request, product_id):
                             start_day = 6
                         start_hours = OpeningDay.objects.get(opening_day=start_day).opening_hour
                         start_hours = (datetime.datetime.combine(datetime.date(1,1,1),start_hours) + datetime.timedelta(hours=1)).time()
-                        current_site = get_current_site(request)
-                        mail_subject = 'Share Shed Email Activation'
+                        mail_subject = 'Share Shed Borrowing Summary'
                         message = render_to_string('catalogue/email_summary.html', {
                             'user': current_user,
                             'products': products,

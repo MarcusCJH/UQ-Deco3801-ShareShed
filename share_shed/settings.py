@@ -134,7 +134,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Australia/Brisbane'
 
-DATETIME_FORMAT = '%d-%m-%Y'
+DATETIME_FORMAT = 'd-m-Y'
 
 USE_I18N = True
 
