@@ -82,7 +82,7 @@
                 </div>
                 <div class="information-content">
                     <p>
-                        Your membership will end at : {{ user.membership.end_time }}
+                        Your membership will end at : {{ user.membership.end_time|date:"d-M-Y"}}
                     </p>
                 </div>
             </div>
