@@ -192,11 +192,11 @@ class CartAdmin(admin.ModelAdmin):
 
 class LendingAdmin(admin.ModelAdmin):
     """Display list of lendings for admin dashboard"""
-    list_display = ('product', 'user', 'start_date',
+    list_display = ('id', 'product', 'user', 'start_date',
                     'end_date', 'product_status')
     list_editable = ('product_status',)
     list_filter = ('product_status', )
-    search_fields = ('product__name', 'user__first_name',
+    search_fields = ('id', 'product__name', 'user__first_name',
                      'user__last_name',)
     date_hierarchy = 'start_date'
 

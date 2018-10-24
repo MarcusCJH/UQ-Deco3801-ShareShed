@@ -61,6 +61,29 @@ def item_details(request, product_id):
                         current_user.balance -= products.fee
                         lending.save()
                         current_user.save()
+                        request.session['action'] = "UNCONFIRMED"
+
+                        start_day = int(form.instance.start_date.strftime('%w')) - 1
+                        if start_day < 0:
+                            start_day = 6
+                        start_hours = OpeningDay.objects.get(opening_day=start_day).opening_hour
+                        start_hours = (datetime.datetime.combine(datetime.date(1,1,1),start_hours) + datetime.timedelta(hours=1)).time()
+                        current_site = get_current_site(request)
+                        mail_subject = 'Share Shed Email Activation'
+                        message = render_to_string('catalogue/email_summary.html', {
+                            'user': current_user,
+                            'products': products,
+                            'start_date': form.instance.start_date,
+                            'start_hours': start_hours,
+                            'lending': lending,
+                        })
+                        to_email = current_user.email
+                        send_mail(mail_subject,
+                                  message,
+                                  settings.EMAIL_HOST_USER,
+                                  [to_email],
+                                  fail_silently=False)
+
                         return redirect('/loan_success')
                     else:
                         request.session['action'] = "CONFIRMED"
