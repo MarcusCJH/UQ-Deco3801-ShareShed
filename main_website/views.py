@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
-from .models import User, Member, Payment, ProductCategory, Product
+from .models import User, Member, Payment, ProductCategory, Product, ProductImage
 from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
     OrderNoteForm, ItemLendForm
 from django.contrib.auth.forms import PasswordChangeForm
@@ -24,27 +24,42 @@ import datetime
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def catalogue(request, category_id=0):
-    catagories = ProductCategory.objects.all().annotate(
+def catalogue(request, category_id='0', availability_id='0'):
+    categories = ProductCategory.objects.all().annotate(
         num_count=Count('product'))
     context = {
-        'catagories': catagories
+        'categories': categories
     }
 
-    if category_id == 0:
-        products = Product.objects.all()
-        context['products'] = products
+    if category_id == '0':
+        if availability_id == '0':
+            products = Product.objects.all()
+        elif availability_id == '1':
+            products = Product.objects.filter(shown=True)
+        available_products = Product.objects.filter(shown=True)
+        whole_products = Product.objects.all()
 
     else:
-        products = Product.objects.filter(category=category_id)
-        context['products'] = products
+        if availability_id == '0':
+            products = Product.objects.filter(category=category_id)
+        elif availability_id == '1':
+            products = Product.objects.filter(category=category_id, shown=True)
+        available_products = Product.objects.filter(shown=True, category=category_id)
+        whole_products = Product.objects.filter(category=category_id)
+
+    products_images = ProductImage.objects.all()
 
     return render(request, 'catalogue/catalogue.html',
-                  {'catagories': catagories, 'products': products})
+                  {'categories': categories, 'products': products,
+                  'available_products': available_products,
+                  'whole_products': whole_products,
+                  'category_id': category_id,
+                  'products_images': products_images})
 
 
 def item_details(request, product_id):
         products = Product.objects.get(id=product_id)
+        images = ProductImage.objects.filter(product_id=product_id)
         current_user = request.user
 
         if request.method == 'POST':
@@ -60,8 +75,8 @@ def item_details(request, product_id):
             form = ItemLendForm()
         context = {
             "products": products,
-            'form': form
-
+            'form': form,
+            'images': images
         }
         return render(request, 'catalogue/item-details.html', context)
 

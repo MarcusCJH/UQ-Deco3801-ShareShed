@@ -160,6 +160,7 @@ class Product(models.Model):
     loan_period = models.IntegerField(default=7)
     components = models.TextField()
     care_information = models.TextField()
+    main_image = models.ImageField(upload_to='products', null=True)
     keywords = models.CharField(max_length=128)
     category = models.ForeignKey('ProductCategory',
                                  null=True, on_delete=models.SET_NULL)

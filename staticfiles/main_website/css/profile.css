@@ -1,0 +1,15 @@
+.user-information {
+    border-style: solid;
+    border-width: 1px;
+    margin: 25px;
+    border-radius: 5px;
+}
+
+.information-header{
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.information-content{
+    padding-left: 20px;
+}

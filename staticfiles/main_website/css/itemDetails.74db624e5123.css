@@ -1,0 +1,24 @@
+.dot{
+  height: 20px;
+  width: 20px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#myCarousel .list-inline {
+    white-space:nowrap;
+    overflow-x:auto;
+}
+
+#red{
+  color: red;
+}
+
+#green{
+  color:green;
+}
+
+#bold{
+  font-weight: bold;
+}
