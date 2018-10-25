@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{ user.email }},
+You received this email because you forgot to return an item to Share Shed.
+Booking ID : #{{ lending.id }}
+
+Item Name : {{ products.name }}
+Item Brand : {{ products.name }}
+Item Code : {{ products.code }}
+Condition : {{ products.brand }}
+
+Please return the item immediately to Share Shed
+
+Sincerely,
+Share Shed
+{% endautoescape %}

@@ -1,0 +1,14 @@
+{% autoescape off %}
+Hi {{ user.email }},
+You have just booked an item on Share Shed. Your booking number is #{{ lending.id }}
+Item Name : {{ products.name }}
+Item Brand : {{ products.brand }}
+Item Code : {{ products.code }}
+Condition : {{ products.condition }}
+Fee : {{ products.fee }}
+
+You can pick the item up on {{ start_date|date:"l d M Y" }}, {{ start_hours }}
+
+Sincerely,
+Share Shed
+{% endautoescape %}
