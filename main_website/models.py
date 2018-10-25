@@ -314,6 +314,18 @@ class Lending(models.Model):
         '''Check opening day'''
         days = OpeningDay.objects.values_list('opening_day')
         opening_day = []
+
+        '''Check item is available'''
+        lendings = Lending.objects.filter(product=self.product)
+        for lending in lendings:
+            if lending.start_date <= self.start_date:
+                if lending.end_date > self.start_date:
+                    raise ValidationError(
+                        ('Item is not available on that period.')
+                    )
+
+
+        '''Display errors'''
         for day in days:
             opening_day.append(day[0])
         if self.start_date.weekday() not in opening_day:

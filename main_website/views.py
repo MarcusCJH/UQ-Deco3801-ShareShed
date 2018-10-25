@@ -50,7 +50,7 @@ def item_details(request, product_id):
         message = ''
 
         if request.method == 'POST':
-            if (current_user.balance - products.fee >= 0 ):
+            if (current_user.balance - products.fee >= 0):
                 form = ItemLendForm(request.POST)
                 form.instance.product = products
                 form.instance.user = current_user
