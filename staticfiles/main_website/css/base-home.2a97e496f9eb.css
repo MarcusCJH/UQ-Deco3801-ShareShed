@@ -199,6 +199,15 @@ span.psw {
   text-align: center;
 }
 
+
+
+
+
+
+
+
+
+
 /* CSS for Homepage */
 p, h1, h2, h3, h4, h5, h6{
   font-family: 'Montserrat';
@@ -206,7 +215,7 @@ p, h1, h2, h3, h4, h5, h6{
 
 .hero-image {
     /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/banner2.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("../img/banner2.14cb137ea6f9.jpg");
 
     /* Set a specific height */
     height: 60%;
@@ -236,47 +245,4 @@ p, h1, h2, h3, h4, h5, h6{
 }
 .center-align{
   text-align: center;
-}
-
-.yellowDot{
-  height: 70px;
-  width: 70px;
-  background-color: yellow;
-  border-radius: 50%;
-  display: inline-block;
-  margin: auto;
-  display:block;
-}
-.greenDot{
-  height: 70px;
-  width: 70px;
-  background-color: green;
-  border-radius: 50%;
-  display: inline-block;
-  margin: auto;
-  display:block;
-}
-.redDot{
-  height: 70px;
-  width: 70px;
-  background-color: red;
-  border-radius: 50%;
-  display: inline-block;
-  margin: auto;
-  display:block;
-}
-#red{
-  color: red;
-}
-
-#green{
-  color:green;
-}
-
-#yellow{
-  color:yellow;
-}
-#riskMatrix{
-  margin-left: 10rem !important;
-  margin-right: 10rem !important;
 }

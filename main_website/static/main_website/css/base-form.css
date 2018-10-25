@@ -1,6 +1,9 @@
 html, body{
   background-color: #f5f3f1;
 }
+main{
+  flex: 1;
+}
 .signupform{
   margin-left: 28%;
   margin-right: 28%;

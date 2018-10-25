@@ -13,7 +13,8 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
-from .models import User, Member, Payment, ProductCategory, Product, OpeningDay
+from .models import User, Member, Payment, ProductCategory, Product, \
+    ProductImage, OpeningDay
 from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
     OrderNoteForm, ItemLendForm
 from django.contrib.auth.forms import PasswordChangeForm
@@ -24,28 +25,51 @@ import datetime
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-
-def catalogue(request, category_id=0):
-    catagories = ProductCategory.objects.all().annotate(
-        num_count=Count('product'))
+def homepage(request):
+    categories = ProductCategory.objects.all()[:11]
     context = {
-        'catagories': catagories
+        'categories': categories,
     }
+    return render(request, 'home.html', context)
 
-    if category_id == 0:
-        products = Product.objects.all()
-        context['products'] = products
+
+def catalogue(request, category_id='0', availability_id='0'):
+    categories = ProductCategory.objects.all().annotate(
+        num_count=Count('product'))
+    current_category = ''
+
+    if category_id == '0':
+        if availability_id == '0':
+            products = Product.objects.all()
+        elif availability_id == '1':
+            products = Product.objects.filter(shown=True)
+        available_products = Product.objects.filter(shown=True)
+        whole_products = Product.objects.all()
 
     else:
-        products = Product.objects.filter(category=category_id)
-        context['products'] = products
+        if availability_id == '0':
+            products = Product.objects.filter(category=category_id)
+        elif availability_id == '1':
+            products = Product.objects.filter(category=category_id, shown=True)
+        available_products = Product.objects.filter(shown=True, category=category_id)
+        whole_products = Product.objects.filter(category=category_id)
+        current_category = ProductCategory.objects.get(id = category_id)
+
+    products_images = ProductImage.objects.all()
 
     return render(request, 'catalogue/catalogue.html',
-                  {'catagories': catagories, 'products': products})
+                  {'categories': categories, 'products': products,
+                  'available_products': available_products,
+                  'whole_products': whole_products,
+                  'category_id': category_id,
+                  'availability_id': availability_id,
+                  'products_images': products_images,
+                  'current_category': current_category})
 
 
 def item_details(request, product_id):
         products = Product.objects.get(id=product_id)
+        images = ProductImage.objects.filter(product_id=product_id)
         current_user = request.user
         message = ''
 
@@ -75,6 +99,7 @@ def item_details(request, product_id):
                             'start_date': form.instance.start_date,
                             'start_hours': start_hours,
                             'lending': lending,
+                            'images': images
                         })
                         to_email = current_user.email
                         send_mail(mail_subject,
@@ -99,7 +124,8 @@ def item_details(request, product_id):
                         'products': products,
                         'form': form,
                         'start_hours': start_hours,
-                        'return_hours': return_hours
+                        'return_hours': return_hours,
+                        'images': images
                         }
                         return render(request, 'catalogue/summary.html', context)
 
@@ -113,6 +139,7 @@ def item_details(request, product_id):
             "products": products,
             'form': form,
             'message': message,
+            'images': images
         }
         return render(request, 'catalogue/item-details.html', context)
 

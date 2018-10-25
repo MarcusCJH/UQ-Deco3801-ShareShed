@@ -164,6 +164,7 @@ class Product(models.Model):
     loan_period = models.IntegerField(default=7)
     components = models.TextField()
     care_information = models.TextField()
+    main_image = models.ImageField(upload_to='products', null=True)
     keywords = models.CharField(max_length=128)
     category = models.ForeignKey('ProductCategory',
                                  null=True, on_delete=models.SET_NULL)
@@ -192,6 +193,7 @@ class ProductImage(models.Model):
 class ProductCategory(models.Model):
     """Product type model to extend the product model."""
     category_name = models.CharField(max_length=32)
+    image = models.ImageField(upload_to='products', null=True)
 
     def __str__(self):
         return str(self.category_name)
