@@ -36,6 +36,7 @@ def homepage(request):
 def catalogue(request, category_id='0', availability_id='0'):
     categories = ProductCategory.objects.all().annotate(
         num_count=Count('product'))
+    current_category = ''
 
     if category_id == '0':
         if availability_id == '0':
@@ -52,6 +53,7 @@ def catalogue(request, category_id='0', availability_id='0'):
             products = Product.objects.filter(category=category_id, shown=True)
         available_products = Product.objects.filter(shown=True, category=category_id)
         whole_products = Product.objects.filter(category=category_id)
+        current_category = ProductCategory.objects.get(id = category_id)
 
     products_images = ProductImage.objects.all()
 
@@ -60,7 +62,9 @@ def catalogue(request, category_id='0', availability_id='0'):
                   'available_products': available_products,
                   'whole_products': whole_products,
                   'category_id': category_id,
-                  'products_images': products_images})
+                  'availability_id': availability_id,
+                  'products_images': products_images,
+                  'current_category': current_category})
 
 
 def item_details(request, product_id):
