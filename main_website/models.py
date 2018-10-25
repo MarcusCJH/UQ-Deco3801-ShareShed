@@ -193,6 +193,7 @@ class ProductImage(models.Model):
 class ProductCategory(models.Model):
     """Product type model to extend the product model."""
     category_name = models.CharField(max_length=32)
+    image = models.ImageField(upload_to='products', null=True)
 
     def __str__(self):
         return str(self.category_name)
