@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{ user.email }},
+You have an item booking to be picked up on {{ start_date|date:"l d M Y" }}.
+Booking ID : #{{ lending.id }}
+
+Item Name : {{ products.name }}
+Item Brand : {{ products.name }}
+Item Code : {{ products.code }}
+Condition : {{ products.brand }}
+
+You can pick the item up on Share Shed at {{ start_hours }}
+
+Sincerely,
+Share Shed
+{% endautoescape %}

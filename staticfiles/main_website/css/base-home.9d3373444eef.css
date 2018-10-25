@@ -1,0 +1,77 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+.hero-image {
+    /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../img/main-banner-2.2a68d841d85a.jpeg");
+
+
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+    text-align: center;
+    position: relative;
+    padding: 100px;
+    padding-left: 20%;
+    padding-right: 20%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,0%);
+    color: white;
+}
+
+.pt-6{
+  padding-top: 5.3rem!important
+}
+.center-align{
+  text-align: center;
+}
+.yellowDot{
+  height: 70px;
+  width: 70px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+  margin: auto;
+  display:block;
+}
+.greenDot{
+  height: 70px;
+  width: 70px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  margin: auto;
+  display:block;
+}
+.redDot{
+  height: 70px;
+  width: 70px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin: auto;
+  display:block;
+}
+#red{
+  color: red;
+}
+
+#green{
+  color:green;
+}
+
+#yellow{
+  color:yellow;
+}
+#riskMatrix{
+  margin-left: 10rem !important;
+  margin-right: 10rem !important;
+}

@@ -117,7 +117,10 @@
             <div class="col-lg-9">
                 <p>Share Shed runs on an annual membership basis. You can join online for $80 a year.
                 You can also purchase a gift membership for someone else! We are not-for-profit so all membership fees go towards running Share Shed, fixing items or acquiring new ones.</p>
-                <a href="#"><p>Sign up now!</p></a>
+                {% if not user.is_authenticated %}
+                  <a href="{% url 'signup' %}#"><p>Sign up now!</p></a>
+                {% endif %}
+                <a href="https://www.shareshed.org.au/volunteer"><p>Become a Volunteer</p></a>
                 <p>© Share Shed Inc</p>
             </div>
           </div>

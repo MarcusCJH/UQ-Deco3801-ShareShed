@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{ user.email }},
+You have an item due to return on {{ end_date|date:"l d M Y" }}.
+Booking ID : #{{ lending.id }}
+
+Item Name : {{ products.name }}
+Item Brand : {{ products.name }}
+Item Code : {{ products.code }}
+Condition : {{ products.brand }}
+
+You can return the item to Share Shed at {{ start_hours }}
+
+Sincerely,
+Share Shed
+{% endautoescape %}
