@@ -13,11 +13,13 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from .tokens import account_activation_token
-from .models import User, Member, Payment, ProductCategory, Product, ProductImage
+from .models import User, Member, Payment, ProductCategory, Product, \
+    ProductImage, OpeningDay
 from .forms import UserCreationForm, IdentificationForm, UserChangeForm, \
     OrderNoteForm, ItemLendForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
 import stripe
 import datetime
 
@@ -61,32 +63,79 @@ def item_details(request, product_id):
         products = Product.objects.get(id=product_id)
         images = ProductImage.objects.filter(product_id=product_id)
         current_user = request.user
+        message = ''
 
         if request.method == 'POST':
-            form = ItemLendForm(request.POST)
-            form.instance.product = products
-            form.instance.user = current_user
-            if form.is_valid():
-                lending = form.save(commit=False)
-                lending.product_status = 'RESERVED'
-                lending.save()
-                return redirect('/summary')
+            if (current_user.balance - products.fee >= 0 ):
+                form = ItemLendForm(request.POST)
+                form.instance.product = products
+                form.instance.user = current_user
+                if form.is_valid():
+                    if request.session.get('action') == "CONFIRMED":
+                        lending = form.save(commit=False)
+                        lending.product_status = 'RESERVED'
+                        current_user.balance -= products.fee
+                        lending.save()
+                        current_user.save()
+                        request.session['action'] = "UNCONFIRMED"
+
+                        start_day = int(form.instance.start_date.strftime('%w')) - 1
+                        if start_day < 0:
+                            start_day = 6
+                        start_hours = OpeningDay.objects.get(opening_day=start_day).opening_hour
+                        start_hours = (datetime.datetime.combine(datetime.date(1,1,1),start_hours) + datetime.timedelta(hours=1)).time()
+                        mail_subject = 'Share Shed Borrowing Summary'
+                        message = render_to_string('catalogue/email_summary.html', {
+                            'user': current_user,
+                            'products': products,
+                            'start_date': form.instance.start_date,
+                            'start_hours': start_hours,
+                            'lending': lending,
+                            'images': images
+                        })
+                        to_email = current_user.email
+                        send_mail(mail_subject,
+                                  message,
+                                  settings.EMAIL_HOST_USER,
+                                  [to_email],
+                                  fail_silently=False)
+
+                        return redirect('/loan_success')
+                    else:
+                        request.session['action'] = "CONFIRMED"
+                        start_day = int(form.instance.start_date.strftime('%w')) - 1
+                        if start_day < 0:
+                            start_day = 6
+                        return_day = int(form.instance.end_date.strftime('%w')) - 1
+                        if return_day < 0:
+                            return_day = 6
+                        start_hours = OpeningDay.objects.get(opening_day=start_day).opening_hour
+                        start_hours = (datetime.datetime.combine(datetime.date(1,1,1),start_hours) + datetime.timedelta(hours=1)).time()
+                        return_hours = OpeningDay.objects.get(opening_day=return_day).opening_hour
+                        context = {
+                        'products': products,
+                        'form': form,
+                        'start_hours': start_hours,
+                        'return_hours': return_hours,
+                        'images': images
+                        }
+                        return render(request, 'catalogue/summary.html', context)
+
+            else:
+                form = ItemLendForm(request.POST)
+                message = "You don't have the balance to borrow this item. Please top up first."
         else:
             form = ItemLendForm()
+        request.session['action'] = "UNCONFIRMED"
         context = {
             "products": products,
             'form': form,
+            'message': message,
             'images': images
         }
         return render(request, 'catalogue/item-details.html', context)
 
 
-def summary(request):
-    products = Product.objects.get(id=1)
-    context = {
-        "products": products,
-    }
-    return render(request, 'catalogue/summary.html', context)
 
 
 @login_required
