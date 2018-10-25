@@ -1,42 +1,42 @@
-h1, h2, h3, h4, h5, h6 {
+h1.catalogue, h2.catalogue, h3.catalogue, h4.catalogue, h5.catalogue, h6.catalogue {
   color: #383838;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   margin-top: 0;
 }
 
-h1 {
+h1.catalogue {
   font-size: 58px;
   line-height: 1;
   font-weight: 700;
 }
 
-h2 {
+h2.catalogue {
   font-size: 30px;
   line-height: 36px;
 }
 
-h3 {
+h3.catalogue {
   font-size: 24px;
   line-height: 30px;
 }
 
-h4 {
+h4.catalogue {
   font-size: 18px;
   line-height: 24px;
 }
 
-h5 {
+h5.catalogue {
   font-size: 14px;
   line-height: 18px;
 }
 
-h6 {
+h6.catalogue {
   font-size: 12px;
   line-height: 14px;
 }
 
-p {
+p.catalogue {
   font-family: "Open Sans", sans-serif;
 }
 

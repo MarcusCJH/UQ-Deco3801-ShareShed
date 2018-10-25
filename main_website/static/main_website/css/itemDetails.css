@@ -108,3 +108,34 @@ ul.item {
   margin: 0;
   padding: 0;
 }
+
+h1.item {
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+h2.item {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+h3.item {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+h4.item {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h5.item {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+h6.item {
+  font-size: 12px;
+  line-height: 14px;
+}
