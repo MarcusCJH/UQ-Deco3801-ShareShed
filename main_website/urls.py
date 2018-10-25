@@ -7,7 +7,7 @@ from django.contrib.auth import views as auth_views
 
 '''Contains all the url pattern and redirect to corresponding action'''
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', views.homepage, name='home'),
     path('catalogue/', views.catalogue, name='catalogue'),
     path('catalogue/<category_id>/', views.catalogue, name='catalogue'),
     path('catalogue/<category_id>/<availability_id>', views.catalogue, name='catalogue'),

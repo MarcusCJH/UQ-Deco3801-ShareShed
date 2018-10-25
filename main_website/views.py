@@ -25,13 +25,17 @@ import datetime
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+def homepage(request):
+    categories = ProductCategory.objects.all()[:11]
+    context = {
+        'categories': categories,
+    }
+    return render(request, 'home.html', context)
+
 
 def catalogue(request, category_id='0', availability_id='0'):
     categories = ProductCategory.objects.all().annotate(
         num_count=Count('product'))
-    context = {
-        'categories': categories
-    }
 
     if category_id == '0':
         if availability_id == '0':
