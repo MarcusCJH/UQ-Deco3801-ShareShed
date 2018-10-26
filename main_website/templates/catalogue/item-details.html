@@ -33,7 +33,7 @@
                 {% else %}
                   <p><span class="badge badge-secondary badge-danger">Unavailable</span></p>
                 {% endif %}
-                <h5><div class="row">
+                <h5 class="item"><div class="row">
                   <div class="col-sm-2">
                     <ul class="item">
                       <li>Condition</li>
@@ -49,8 +49,8 @@
                     </ul>
                   </div>
                 </div></h5>
-                <!-- <p><span class="badge badge-secondary">Household Needs</span>&nbsp;<span class="badge badge-secondary">Party & Event Supplies</span></p> -->
-                <h5 class="pb-2">{{ products.long_description }}</h5>
+                <p><span class="badge badge-secondary">{{ products.tags }}</span>&nbsp;</p>
+                <h5 class="item pb-2">{{ products.long_description }}</h5>
                 {% if not user.is_authenticated %}
                 <button class="blueBtn btn btn-sm" onclick="document.getElementById('id01').style.display='block'"> Log in to borrow or reserve </button>
                 {% elif user.membership.membership_type == 'm' %}

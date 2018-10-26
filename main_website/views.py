@@ -37,6 +37,7 @@ def catalogue(request, category_id='0', availability_id='0'):
     categories = ProductCategory.objects.all().annotate(
         num_count=Count('product'))
     current_category = ''
+    total_products = Product.objects.count()
 
     if category_id == '0':
         if availability_id == '0':
@@ -64,7 +65,8 @@ def catalogue(request, category_id='0', availability_id='0'):
                   'category_id': category_id,
                   'availability_id': availability_id,
                   'products_images': products_images,
-                  'current_category': current_category})
+                  'current_category': current_category,
+                  'total_products': total_products})
 
 
 def item_details(request, product_id):
