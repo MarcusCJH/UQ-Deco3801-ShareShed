@@ -23,7 +23,7 @@ pyasn1-modules==0.2.2
 python-dateutil==2.7.3
 pytz==2018.5
 requests==2.19.1
-rsa==4.0
+rsa==4.1
 six==1.11.0
 stripe==2.6.0
 tzlocal==1.5.1
